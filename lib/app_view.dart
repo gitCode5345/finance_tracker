@@ -1,6 +1,6 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
 import 'package:finance_tracker/presentation/screens/auth/main_page/main_screen.dart';
-import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_up_screen.dart';
 import 'package:finance_tracker/presentation/screens/auth/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
