@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User implements DiagnosticableTreeMixin {
 
- int? get id; String get firstName; String get lastName; String get email; String? get password; String? get hashPassword;
+ String? get id; String get firstName; String get lastName; String get email; String get phone; String get dateOfBirth; String get password;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,21 +29,21 @@ $UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$ide
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'User'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('firstName', firstName))..add(DiagnosticsProperty('lastName', lastName))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('hashPassword', hashPassword));
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('firstName', firstName))..add(DiagnosticsProperty('lastName', lastName))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('phone', phone))..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))..add(DiagnosticsProperty('password', password));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.hashPassword, hashPassword) || other.hashPassword == hashPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.password, password) || other.password == password));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,password,hashPassword);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,phone,dateOfBirth,password);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, password: $password, hashPassword: $hashPassword)';
+  return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, dateOfBirth: $dateOfBirth, password: $password)';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- int? id, String firstName, String lastName, String email, String? password, String? hashPassword
+ String? id, String firstName, String lastName, String email, String phone, String dateOfBirth, String password
 });
 
 
@@ -71,15 +71,16 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? firstName = null,Object? lastName = null,Object? email = null,Object? password = freezed,Object? hashPassword = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? firstName = null,Object? lastName = null,Object? email = null,Object? phone = null,Object? dateOfBirth = null,Object? password = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String?,hashPassword: freezed == hashPassword ? _self.hashPassword : hashPassword // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
+as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -164,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String firstName,  String lastName,  String email,  String? password,  String? hashPassword)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String firstName,  String lastName,  String email,  String phone,  String dateOfBirth,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.password,_that.hashPassword);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.phone,_that.dateOfBirth,_that.password);case _:
   return orElse();
 
 }
@@ -185,10 +186,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.passwo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String firstName,  String lastName,  String email,  String? password,  String? hashPassword)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String firstName,  String lastName,  String email,  String phone,  String dateOfBirth,  String password)  $default,) {final _that = this;
 switch (_that) {
 case _User():
-return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.password,_that.hashPassword);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.phone,_that.dateOfBirth,_that.password);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +206,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.passwo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String firstName,  String lastName,  String email,  String? password,  String? hashPassword)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String firstName,  String lastName,  String email,  String phone,  String dateOfBirth,  String password)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.password,_that.hashPassword);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.phone,_that.dateOfBirth,_that.password);case _:
   return null;
 
 }
@@ -217,18 +218,19 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.passwo
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _User with DiagnosticableTreeMixin implements User {
-  const _User({this.id, required this.firstName, required this.lastName, required this.email, this.password, this.hashPassword});
+  const _User({this.id, required this.firstName, required this.lastName, required this.email, required this.phone, required this.dateOfBirth, required this.password});
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-@override final  int? id;
+@override final  String? id;
 @override final  String firstName;
 @override final  String lastName;
 @override final  String email;
-@override final  String? password;
-@override final  String? hashPassword;
+@override final  String phone;
+@override final  String dateOfBirth;
+@override final  String password;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -244,21 +246,21 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'User'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('firstName', firstName))..add(DiagnosticsProperty('lastName', lastName))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('hashPassword', hashPassword));
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('firstName', firstName))..add(DiagnosticsProperty('lastName', lastName))..add(DiagnosticsProperty('email', email))..add(DiagnosticsProperty('phone', phone))..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))..add(DiagnosticsProperty('password', password));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.hashPassword, hashPassword) || other.hashPassword == hashPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.password, password) || other.password == password));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,password,hashPassword);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,phone,dateOfBirth,password);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, password: $password, hashPassword: $hashPassword)';
+  return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, dateOfBirth: $dateOfBirth, password: $password)';
 }
 
 
@@ -269,7 +271,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String firstName, String lastName, String email, String? password, String? hashPassword
+ String? id, String firstName, String lastName, String email, String phone, String dateOfBirth, String password
 });
 
 
@@ -286,15 +288,16 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? firstName = null,Object? lastName = null,Object? email = null,Object? password = freezed,Object? hashPassword = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? firstName = null,Object? lastName = null,Object? email = null,Object? phone = null,Object? dateOfBirth = null,Object? password = null,}) {
   return _then(_User(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String?,hashPassword: freezed == hashPassword ? _self.hashPassword : hashPassword // ignore: cast_nullable_to_non_nullable
-as String?,
+as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
+as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

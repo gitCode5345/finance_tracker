@@ -7,11 +7,11 @@ part of 'category.dart';
 // **************************************************************************
 
 _Category _$CategoryFromJson(Map<String, dynamic> json) => _Category(
-  id: (json['id'] as num?)?.toInt(),
+  id: json['id'] as String?,
   name: json['name'] as String,
   type: $enumDecode(_$TransactionTypeEnumMap, json['type']),
-  isSystem: json['isSystem'] as bool,
-  userId: (json['userId'] as num?)?.toInt(),
+  isSystem: json['is_system'] as bool,
+  userId: json['user_id'] as String?,
   icon: json['icon'] as String?,
 );
 
@@ -19,8 +19,8 @@ Map<String, dynamic> _$CategoryToJson(_Category instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
   'type': _$TransactionTypeEnumMap[instance.type]!,
-  'isSystem': instance.isSystem,
-  'userId': instance.userId,
+  'is_system': instance.isSystem,
+  'user_id': instance.userId,
   'icon': instance.icon,
 };
 

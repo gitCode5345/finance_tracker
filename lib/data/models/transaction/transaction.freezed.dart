@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Transaction implements DiagnosticableTreeMixin {
 
- int? get id; double get amount; String get date; TransactionType get type; int get categoryId; int? get userId; String? get note;
+ String? get id; double get amount; String get date; TransactionType get type; String get categoryId; String? get userId; String? get note;
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,7 +54,7 @@ abstract mixin class $TransactionCopyWith<$Res>  {
   factory $TransactionCopyWith(Transaction value, $Res Function(Transaction) _then) = _$TransactionCopyWithImpl;
 @useResult
 $Res call({
- int? id, double amount, String date, TransactionType type, int categoryId, int? userId, String? note
+ String? id, double amount, String date, TransactionType type, String categoryId, String? userId, String? note
 });
 
 
@@ -74,12 +74,12 @@ class _$TransactionCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? amount = null,Object? date = null,Object? type = null,Object? categoryId = null,Object? userId = freezed,Object? note = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as String?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as int,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  double amount,  String date,  TransactionType type,  int categoryId,  int? userId,  String? note)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  double amount,  String date,  TransactionType type,  String categoryId,  String? userId,  String? note)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
 return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_that.userId,_that.note);case _:
@@ -186,7 +186,7 @@ return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  double amount,  String date,  TransactionType type,  int categoryId,  int? userId,  String? note)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  double amount,  String date,  TransactionType type,  String categoryId,  String? userId,  String? note)  $default,) {final _that = this;
 switch (_that) {
 case _Transaction():
 return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_that.userId,_that.note);case _:
@@ -206,7 +206,7 @@ return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  double amount,  String date,  TransactionType type,  int categoryId,  int? userId,  String? note)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  double amount,  String date,  TransactionType type,  String categoryId,  String? userId,  String? note)?  $default,) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
 return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_that.userId,_that.note);case _:
@@ -218,18 +218,18 @@ return $default(_that.id,_that.amount,_that.date,_that.type,_that.categoryId,_th
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _Transaction with DiagnosticableTreeMixin implements Transaction {
   const _Transaction({this.id, required this.amount, required this.date, required this.type, required this.categoryId, this.userId, this.note});
   factory _Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
 
-@override final  int? id;
+@override final  String? id;
 @override final  double amount;
 @override final  String date;
 @override final  TransactionType type;
-@override final  int categoryId;
-@override final  int? userId;
+@override final  String categoryId;
+@override final  String? userId;
 @override final  String? note;
 
 /// Create a copy of Transaction
@@ -271,7 +271,7 @@ abstract mixin class _$TransactionCopyWith<$Res> implements $TransactionCopyWith
   factory _$TransactionCopyWith(_Transaction value, $Res Function(_Transaction) _then) = __$TransactionCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, double amount, String date, TransactionType type, int categoryId, int? userId, String? note
+ String? id, double amount, String date, TransactionType type, String categoryId, String? userId, String? note
 });
 
 
@@ -291,12 +291,12 @@ class __$TransactionCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? amount = null,Object? date = null,Object? type = null,Object? categoryId = null,Object? userId = freezed,Object? note = freezed,}) {
   return _then(_Transaction(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as String?,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as int,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
+as String,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

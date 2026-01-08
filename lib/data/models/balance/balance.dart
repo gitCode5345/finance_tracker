@@ -6,11 +6,12 @@ part 'balance.g.dart';
 
 @freezed
 abstract class Balance with _$Balance {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Balance({
-    int? id,
+     String? id,
     required double balance,
     required Currency currency,
-    required int userId,
+    String? userId,
   }) = _Balance;
 
   factory Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);

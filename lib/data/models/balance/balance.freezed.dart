@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Balance {
 
- int? get id; double get balance; Currency get currency; int get userId;
+ String? get id; double get balance; Currency get currency; String? get userId;
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $BalanceCopyWith<$Res>  {
   factory $BalanceCopyWith(Balance value, $Res Function(Balance) _then) = _$BalanceCopyWithImpl;
 @useResult
 $Res call({
- int? id, double balance, Currency currency, int userId
+ String? id, double balance, Currency currency, String? userId
 });
 
 
@@ -65,13 +65,13 @@ class _$BalanceCopyWithImpl<$Res>
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? balance = null,Object? currency = null,Object? userId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? balance = null,Object? currency = null,Object? userId = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as String?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
 as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as Currency,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,
+as Currency,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  double balance,  Currency currency,  int userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  double balance,  Currency currency,  String? userId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
 return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
@@ -177,7 +177,7 @@ return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  double balance,  Currency currency,  int userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  double balance,  Currency currency,  String? userId)  $default,) {final _that = this;
 switch (_that) {
 case _Balance():
 return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
@@ -197,7 +197,7 @@ return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  double balance,  Currency currency,  int userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  double balance,  Currency currency,  String? userId)?  $default,) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
 return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
@@ -209,16 +209,16 @@ return $default(_that.id,_that.balance,_that.currency,_that.userId);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _Balance implements Balance {
-  const _Balance({this.id, required this.balance, required this.currency, required this.userId});
+  const _Balance({this.id, required this.balance, required this.currency, this.userId});
   factory _Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);
 
-@override final  int? id;
+@override final  String? id;
 @override final  double balance;
 @override final  Currency currency;
-@override final  int userId;
+@override final  String? userId;
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +253,7 @@ abstract mixin class _$BalanceCopyWith<$Res> implements $BalanceCopyWith<$Res> {
   factory _$BalanceCopyWith(_Balance value, $Res Function(_Balance) _then) = __$BalanceCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, double balance, Currency currency, int userId
+ String? id, double balance, Currency currency, String? userId
 });
 
 
@@ -270,13 +270,13 @@ class __$BalanceCopyWithImpl<$Res>
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? balance = null,Object? currency = null,Object? userId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? balance = null,Object? currency = null,Object? userId = freezed,}) {
   return _then(_Balance(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as String?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
 as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
-as Currency,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,
+as Currency,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

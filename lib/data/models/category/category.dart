@@ -6,12 +6,13 @@ part 'category.g.dart';
 
 @freezed
 abstract class Category with _$Category {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Category({
-    int? id,
+    String? id,
     required String name,
     required TransactionType type,
     required bool isSystem,
-    int? userId,
+    String? userId,
     String? icon,
   }) = _Category;
 

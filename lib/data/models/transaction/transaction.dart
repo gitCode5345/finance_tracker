@@ -7,13 +7,14 @@ part 'transaction.g.dart';
 
 @freezed
 abstract class Transaction with _$Transaction {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Transaction({
-    int? id,
+    String? id,
     required double amount,
     required String date,
     required TransactionType type,
-    required int categoryId,
-    int? userId,
+    required String categoryId,
+    String? userId,
     String? note,
   }) = _Transaction;
 
