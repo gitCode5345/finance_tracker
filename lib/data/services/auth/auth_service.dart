@@ -1,18 +1,36 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
-  Future<void> saveAuthToken(String email) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
+  SupabaseClient get _client => Supabase.instance.client;
+  Stream<AuthState> get authStateChanges => _client.auth.onAuthStateChange;
+
+  User? get currentUser => _client.auth.currentUser;
+
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+    required String phone,
+    required Map<String, dynamic> userData,
+  }) async {
+    return await _client.auth.signUp(
+      email: email,
+      password: password,
+      phone: phone,
+      data: userData,
+    );
   }
 
-  Future<String> getAuthToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('email') ?? '';
+  Future<AuthResponse> signIn({
+    required String email,
+    required String password,
+  }) async {
+    return await _client.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
   }
 
-  Future<void> clearAuthToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('email');
+  Future<void> signOut() async {
+    await _client.auth.signOut();
   }
 }
