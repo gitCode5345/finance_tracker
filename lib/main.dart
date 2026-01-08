@@ -1,26 +1,19 @@
+import 'package:finance_tracker/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const MyApp());
-}
+  await  dotenv.load();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  await Supabase.initialize(
+    url: dotenv.get('SUPABASE_URL', fallback: ''),
+    anonKey: dotenv.get('SUPABASE_ANON_KEY', fallback: ''),
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Finance Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Placeholder(),
-    );
-  }
+  runApp(MyApp());
 }
