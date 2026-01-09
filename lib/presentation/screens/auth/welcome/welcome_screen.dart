@@ -1,4 +1,5 @@
-import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_up_screen.dart';
+import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:finance_tracker/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -92,7 +93,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignInScreen(),
+                            builder: (context) => SignUpScreen(),
                           ),
                         ),
                       },
