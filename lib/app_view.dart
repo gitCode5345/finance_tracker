@@ -1,6 +1,5 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
-import 'package:finance_tracker/presentation/screens/auth/main_page/main_screen.dart';
-import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_up_screen.dart';
+import 'package:finance_tracker/presentation/screens/main_page/main_screen.dart';
 import 'package:finance_tracker/presentation/screens/auth/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,18 +16,18 @@ class MyAppView extends StatelessWidget {
         scaffoldBackgroundColor: Color.fromRGBO(0, 208, 158, 1.0),
       ),
       home: BlocBuilder<AuthBloc, AuthState>(
+        buildWhen: (previous, current) {
+          return current.maybeWhen(
+            authenticated: (_) => true,
+            unauthenticated: () => true,
+            orElse: () => false,
+          );
+        },
         builder: (context, state) {
-          return state.when(
-            initial: () => const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            ),
-            loading: () => const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            ),
+          return state.maybeWhen(
             authenticated: (user) => MainScreen(user: user),
             unauthenticated: () => WelcomeScreen(),
-
-            error: (message) => SignInScreen(),
+            orElse: () => WelcomeScreen()
           );
         },
       ),
