@@ -6,28 +6,25 @@ class AuthService {
 
   User? get currentUser => _client.auth.currentUser;
 
-  Future<AuthResponse> signUp({
-    required String email,
-    required String password,
-    required String phone,
-    required Map<String, dynamic> userData,
-  }) async {
+  Future<AuthResponse> signUp({required String email, required String password, required Map<String, dynamic> userData,}) async {
     return await _client.auth.signUp(
       email: email,
       password: password,
-      phone: phone,
       data: userData,
     );
   }
 
-  Future<AuthResponse> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthResponse> signIn({required String email, required String password,}) async {
     return await _client.auth.signInWithPassword(
       email: email,
       password: password,
     );
+  }
+
+  Future<void> updateUser() async {
+    await _client.auth.updateUser(UserAttributes(
+      data: {'is_new_user' : false},
+    ));
   }
 
   Future<void> signOut() async {
