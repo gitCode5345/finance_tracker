@@ -14,6 +14,7 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   phone: json['phone'] as String,
   dateOfBirth: json['date_of_birth'] as String,
   password: json['password'] as String,
+  isNewUser: json['is_new_user'] as bool,
 );
 
 Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'phone': instance.phone,
   'date_of_birth': instance.dateOfBirth,
   'password': instance.password,
+  'is_new_user': instance.isNewUser,
 };

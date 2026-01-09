@@ -15,6 +15,7 @@ abstract class User with _$User {
     required String phone,
     required String dateOfBirth,
     required String password,
+    required bool isNewUser,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
