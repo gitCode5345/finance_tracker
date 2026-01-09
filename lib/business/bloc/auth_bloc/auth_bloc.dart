@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginUser>(_onLoginUser);
     on<LogoutUser>(_onLogoutUser);
     on<_AuthStatusChanged>(_onAuthStatusChanged);
+    on<RegisterUserSuccess>(_onRegisterUserSuccess);
 
     _authSubscription = authService.authStateChanges.listen((data) {
       add(AuthEvent.authStatusChanged(data.session?.user));
@@ -50,12 +51,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authService.signUp(
         email: event.user.email,
         password: event.user.password,
-        phone: event.user.phone,
         userData: {
           'first_name': event.user.firstName,
           'last_name': event.user.lastName,
           'phone': event.user.phone,
           'date_of_birth': event.user.dateOfBirth,
+          'is_new_user': event.user.isNewUser,
         },
       );
     } catch (e) {
@@ -83,6 +84,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  Future<void> _onRegisterUserSuccess(RegisterUserSuccess event, Emitter<AuthState> emit) async {
+    try {
+      await authService.updateUser();
+    } catch (e) {
+      emit(AuthState.error(error: e.toString()));
+    }
+  }
+
   @override
   Future<void> close() {
     _authSubscription?.cancel();
@@ -99,6 +108,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       lastName: metadata['last_name'] ?? '',
       phone: metadata['phone'] ?? '',
       dateOfBirth: metadata['date_of_birth'] ?? '',
+      isNewUser: metadata['is_new_user'] ?? false,
     );
   }
 }
