@@ -9,8 +9,7 @@ class OnBoardingSectionWidget extends StatefulWidget {
   const OnBoardingSectionWidget({super.key, required this.onFinish});
 
   @override
-  State<OnBoardingSectionWidget> createState() =>
-      _OnBoardingSectionWidgetState();
+  State<OnBoardingSectionWidget> createState() => _OnBoardingSectionWidgetState();
 }
 
 class _OnBoardingSectionWidgetState extends State<OnBoardingSectionWidget> {
