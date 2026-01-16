@@ -11,7 +11,7 @@ abstract class Transaction with _$Transaction {
   const factory Transaction({
     String? id,
     required double amount,
-    required String date,
+    required DateTime createdAt,
     required TransactionType type,
     required String categoryId,
     String? userId,
