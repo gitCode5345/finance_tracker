@@ -16,7 +16,13 @@ class BodyContainerWidget extends StatelessWidget {
           topRight: Radius.circular(70.0),
         ),
       ),
-      child: child,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(70.0),
+          topRight: Radius.circular(70.0),
+        ),
+        child: child
+      ),
     );
   }
 }
