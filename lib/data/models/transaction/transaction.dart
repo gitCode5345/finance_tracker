@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:finance_tracker/data/models/enums/transaction_type_enum.dart';
-
+import 'package:finance_tracker/data/models/category/category.dart';
 part 'transaction.freezed.dart';
 part 'transaction.g.dart';
 
@@ -10,10 +9,12 @@ abstract class Transaction with _$Transaction {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Transaction({
     String? id,
+    required String title,
     required double amount,
-    required DateTime createdAt,
+    required DateTime date,
     required TransactionType type,
     required String categoryId,
+    Category? category,
     String? userId,
     String? note,
   }) = _Transaction;
