@@ -49,8 +49,9 @@ class TransactionsService {
         .from('Transactions')
         .select('*, category:Categories(*)')
         .eq('user_id', user!.id)
-        .gte('date', range.start)
-        .lt('date', range.end);
+        .gte('date', range.start.toIso8601String())
+        .lt('date', range.end.toIso8601String())
+        .order('date', ascending: false);
 
     return data
         .map<Transaction>((json) => Transaction.fromJson(json))
@@ -68,7 +69,7 @@ class TransactionsService {
 
     if (period != null && period.isNotEmpty) {
       final range = _getRangeByPeriod(period);
-      query = query.gte('date', range.start).lt('date', range.end);
+      query = query.gte('date', range.start.toIso8601String()).lt('date', range.end.toIso8601String());
     }
 
     final data = await query.order('date', ascending: false);
