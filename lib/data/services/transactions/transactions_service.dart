@@ -47,7 +47,7 @@ class TransactionsService {
 
     final data = await _client
         .from('Transactions')
-        .select()
+        .select('*, category:Categories(*)')
         .eq('user_id', user!.id)
         .gte('created_at', range.start)
         .lt('created_at', range.end);
@@ -55,5 +55,55 @@ class TransactionsService {
     return data
         .map<Transaction>((json) => Transaction.fromJson(json))
         .toList();
+  }
+
+  Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period}) async {
+    if (user == null) return [];
+
+    var query = _client
+        .from('Transactions')
+        .select('*, category:Categories(*)')
+        .eq('user_id', user!.id)
+        .eq('category_id', categoryId);
+
+    if (period != null && period.isNotEmpty) {
+      final range = _getRangeByPeriod(period);
+      query = query.gte('created_at', range.start).lt('created_at', range.end);
+    }
+
+    final data = await query.order('created_at', ascending: false);
+    return data
+        .map<Transaction>((json) => Transaction.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Transaction>> getAllTransactions() async {
+    if (user == null) return [];
+
+    final data = await _client
+        .from('Transactions')
+        .select('*, category:Categories(*)')
+        .eq('user_id', user!.id)
+        .order('created_at', ascending: false);
+
+    return data
+        .map<Transaction>((json) => Transaction.fromJson(json))
+        .toList();
+  }
+
+  Future<void> addTransaction(Transaction transaction) async {
+    if (user == null) return;
+
+    final transactionData = {
+      'title': transaction.title,
+      'amount': transaction.amount,
+      'date': transaction.date.toUtc().toIso8601String(),
+      'type': transaction.type.name,
+      'category_id': transaction.categoryId,
+      'user_id': user!.id,
+      'note': transaction.note,
+    };
+
+    await _client.from('Transactions').insert(transactionData);
   }
 }
