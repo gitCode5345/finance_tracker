@@ -55,7 +55,7 @@ extension TransactionsEventPatterns on TransactionsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( GetTransactionsEvent value)?  getTransactions,TResult Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult Function( SaveTransactionEvent value)?  saveTransaction,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( GetTransactionsEvent value)?  getTransactions,TResult Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult Function( SaveTransactionEvent value)?  saveTransaction,TResult Function( RefreshTransactionsEvent value)?  refreshTransactions,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
@@ -63,7 +63,8 @@ return started(_that);case GetTransactionsEvent() when getTransactions != null:
 return getTransactions(_that);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions(_that);case SaveTransactionEvent() when saveTransaction != null:
-return saveTransaction(_that);case _:
+return saveTransaction(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
+return refreshTransactions(_that);case _:
   return orElse();
 
 }
@@ -81,7 +82,7 @@ return saveTransaction(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( GetTransactionsEvent value)  getTransactions,required TResult Function( GetTransactionsByCategoryEvent value)  getTransactionsByCategory,required TResult Function( LoadingTransactionsEvent value)  loadingTransactions,required TResult Function( SaveTransactionEvent value)  saveTransaction,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( GetTransactionsEvent value)  getTransactions,required TResult Function( GetTransactionsByCategoryEvent value)  getTransactionsByCategory,required TResult Function( LoadingTransactionsEvent value)  loadingTransactions,required TResult Function( SaveTransactionEvent value)  saveTransaction,required TResult Function( RefreshTransactionsEvent value)  refreshTransactions,}){
 final _that = this;
 switch (_that) {
 case _Started():
@@ -89,7 +90,8 @@ return started(_that);case GetTransactionsEvent():
 return getTransactions(_that);case GetTransactionsByCategoryEvent():
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent():
 return loadingTransactions(_that);case SaveTransactionEvent():
-return saveTransaction(_that);case _:
+return saveTransaction(_that);case RefreshTransactionsEvent():
+return refreshTransactions(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -106,7 +108,7 @@ return saveTransaction(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( GetTransactionsEvent value)?  getTransactions,TResult? Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult? Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult? Function( SaveTransactionEvent value)?  saveTransaction,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( GetTransactionsEvent value)?  getTransactions,TResult? Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult? Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult? Function( SaveTransactionEvent value)?  saveTransaction,TResult? Function( RefreshTransactionsEvent value)?  refreshTransactions,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
@@ -114,7 +116,8 @@ return started(_that);case GetTransactionsEvent() when getTransactions != null:
 return getTransactions(_that);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions(_that);case SaveTransactionEvent() when saveTransaction != null:
-return saveTransaction(_that);case _:
+return saveTransaction(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
+return refreshTransactions(_that);case _:
   return null;
 
 }
@@ -131,14 +134,15 @@ return saveTransaction(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String period)?  getTransactions,TResult Function( String categoryId,  String period)?  getTransactionsByCategory,TResult Function()?  loadingTransactions,TResult Function( Transaction transaction)?  saveTransaction,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String period)?  getTransactions,TResult Function( String categoryId,  String period)?  getTransactionsByCategory,TResult Function()?  loadingTransactions,TResult Function( Transaction transaction)?  saveTransaction,TResult Function()?  refreshTransactions,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case GetTransactionsEvent() when getTransactions != null:
 return getTransactions(_that.period);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions();case SaveTransactionEvent() when saveTransaction != null:
-return saveTransaction(_that.transaction);case _:
+return saveTransaction(_that.transaction);case RefreshTransactionsEvent() when refreshTransactions != null:
+return refreshTransactions();case _:
   return orElse();
 
 }
@@ -156,14 +160,15 @@ return saveTransaction(_that.transaction);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String period)  getTransactions,required TResult Function( String categoryId,  String period)  getTransactionsByCategory,required TResult Function()  loadingTransactions,required TResult Function( Transaction transaction)  saveTransaction,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String period)  getTransactions,required TResult Function( String categoryId,  String period)  getTransactionsByCategory,required TResult Function()  loadingTransactions,required TResult Function( Transaction transaction)  saveTransaction,required TResult Function()  refreshTransactions,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case GetTransactionsEvent():
 return getTransactions(_that.period);case GetTransactionsByCategoryEvent():
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent():
 return loadingTransactions();case SaveTransactionEvent():
-return saveTransaction(_that.transaction);case _:
+return saveTransaction(_that.transaction);case RefreshTransactionsEvent():
+return refreshTransactions();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -180,14 +185,15 @@ return saveTransaction(_that.transaction);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String period)?  getTransactions,TResult? Function( String categoryId,  String period)?  getTransactionsByCategory,TResult? Function()?  loadingTransactions,TResult? Function( Transaction transaction)?  saveTransaction,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String period)?  getTransactions,TResult? Function( String categoryId,  String period)?  getTransactionsByCategory,TResult? Function()?  loadingTransactions,TResult? Function( Transaction transaction)?  saveTransaction,TResult? Function()?  refreshTransactions,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case GetTransactionsEvent() when getTransactions != null:
 return getTransactions(_that.period);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions();case SaveTransactionEvent() when saveTransaction != null:
-return saveTransaction(_that.transaction);case _:
+return saveTransaction(_that.transaction);case RefreshTransactionsEvent() when refreshTransactions != null:
+return refreshTransactions();case _:
   return null;
 
 }
@@ -467,6 +473,38 @@ $TransactionCopyWith<$Res> get transaction {
   });
 }
 }
+
+/// @nodoc
+
+
+class RefreshTransactionsEvent implements TransactionsEvent {
+  const RefreshTransactionsEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RefreshTransactionsEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionsEvent.refreshTransactions()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$TransactionsState {

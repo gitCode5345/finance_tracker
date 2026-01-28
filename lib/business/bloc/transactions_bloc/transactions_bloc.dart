@@ -18,22 +18,12 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     on<GetTransactionsEvent>(onGetTransaction);
     on<GetTransactionsByCategoryEvent>(onGetTransactionsByCategory);
     on<SaveTransactionEvent>(onSaveTransaction);
+    on<RefreshTransactionsEvent>(onRefreshTransactions);
   }
 
   Future<void> onGetTransaction(GetTransactionsEvent e, Emitter emit) async {
-    try {
-      _currentPeriod = e.period;
-      _isCategoryView = false;
-      _currentCategoryId = null;
-
-      emit(Loading(currentPeriod: _currentPeriod));
-      
-      final transactions = await transactionsService.getTransactionsByPeriod(e.period);
-      
-      emit(Updated(transactions, currentPeriod: _currentPeriod));
-    } catch (e) {
-      emit(Error(error: e.toString()));
-    }
+    _currentPeriod = e.period;
+    await _loadTransactions(emit);
   }
 
   Future<void> onGetTransactionsByCategory(GetTransactionsByCategoryEvent e, Emitter emit) async {
@@ -68,6 +58,25 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
         final transactions = await transactionsService.getTransactionsByPeriod(_currentPeriod);
         emit(Updated(transactions, currentPeriod: _currentPeriod));
       }
+    } catch (e) {
+      emit(Error(error: e.toString()));
+    }
+  }
+
+  Future<void> onRefreshTransactions(RefreshTransactionsEvent e, Emitter emit) async {
+    await _loadTransactions(emit);
+  }
+
+  Future<void> _loadTransactions(Emitter emit) async {
+    try {
+      _isCategoryView = false;
+      _currentCategoryId = null;
+
+      emit(Loading(currentPeriod: _currentPeriod));
+      
+      final transactions = await transactionsService.getTransactionsByPeriod(_currentPeriod);
+      
+      emit(Updated(transactions, currentPeriod: _currentPeriod));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
