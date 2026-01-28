@@ -1,5 +1,7 @@
 import 'package:finance_tracker/app_view.dart';
+import 'package:finance_tracker/business/bloc/category_bloc/category_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
+import 'package:finance_tracker/data/services/category/category_service.dart';
 import 'package:finance_tracker/data/services/transactions/transactions_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,11 @@ class MyApp extends StatelessWidget {
           create: (context) => TransactionsBloc(
             transactionsService: TransactionsService()
           )..add(const TransactionsEvent.getTransactions(period: 'daily')),
+        ),
+        BlocProvider<CategoryBloc>(
+          create: (context) => CategoryBloc(
+            categoryService: CategoryService()
+          )..add(const CategoryEvent.loadCategories()),
         ),
       ],
       child: MyAppView(),
