@@ -1,12 +1,16 @@
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
+import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/green_container.dart';
+import 'package:finance_tracker/presentation/widgets/header_widget.dart';
+import 'package:finance_tracker/presentation/widgets/transaction_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import 'package:finance_tracker/data/models/user/user.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final User user;
+  const HomeScreen({super.key, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,221 +21,235 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth * 0.8;
-        return SizedBox(
-          width: maxWidth,
-          child: Column(
-            children: [
-              SizedBox(height: 40.0),
-              GreenContainer(
-                widget: Text('Future widget'),
-                radius: BorderRadius.all(Radius.circular(12)),
-              ),
-              SizedBox(height: 20.0),
-              GreenContainer(
-                width: maxWidth,
-                height: 60.0,
-                padding: EdgeInsets.all(8.0),
-                widget: Row(
+    return Column(
+      children: [
+        HeaderWidget(
+          padding: const EdgeInsets.only(top: 50.0, left: 24.0, right: 24.0, bottom: 24.0,),
+          children: [
+            Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedTransactions = 0;
-                            context.read<TransactionsBloc>().add(
-                              const TransactionsEvent.getTransactions(
-                                period: 'daily',
-                              ),
-                            );
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: selectedTransactions == 0
-                              ? Color.fromRGBO(0, 208, 158, 1.0)
-                              : null,
-                        ),
-                        child: Text(
-                          'Daily',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.0,
-                            height: 1.5,
-                            color: Color.fromRGBO(5, 34, 36, 1.0),
-                          ),
-                        ),
+                    Text(
+                      'Welcome, ${widget.user.firstName}!',
+                      style: TextStyle(
+                        color: Color.fromRGBO(5, 34, 36, 1.0),
+                        fontFamily: 'Poppins',
+                        fontSize: 24,
+                        height: 1.5,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.normal,
                       ),
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedTransactions = 1;
-                            context.read<TransactionsBloc>().add(
-                              const TransactionsEvent.getTransactions(
-                                period: 'weekly',
-                              ),
-                            );
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: selectedTransactions == 1
-                              ? Color.fromRGBO(0, 208, 158, 1.0)
-                              : null,
-                        ),
-                        child: Text(
-                          'Weekly',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.0,
-                            height: 1.5,
-                            color: Color.fromRGBO(5, 34, 36, 1.0),
-                          ),
-                        ),
+                    IconButton(
+                      style: IconButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                       ),
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedTransactions = 2;
-                            context.read<TransactionsBloc>().add(
-                              const TransactionsEvent.getTransactions(
-                                period: 'monthly',
-                              ),
-                            );
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: selectedTransactions == 2
-                              ? Color.fromRGBO(0, 208, 158, 1.0)
-                              : null,
-                        ),
-                        child: Text(
-                          'Monthly',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.0,
-                            height: 1.5,
-                            color: Color.fromRGBO(5, 34, 36, 1.0),
-                          ),
-                        ),
-                      ),
+                      onPressed: () {},
+                      icon: Icon(Icons.notifications_none),
                     ),
                   ],
                 ),
-                radius: BorderRadius.all(Radius.circular(22)),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: BlocBuilder<TransactionsBloc, TransactionsState>(
-                  builder: (context, state) {
-                    return state.maybeWhen(
-                      loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (error) => Center(child: Text('Error: $error')),
-                      updated: (transactions) => ListView.builder(
-                        itemCount: transactions.length,
-                        itemBuilder: (context, index) {
-                          final tx = transactions[index];
-                          final date = tx.createdAt;
-                          final String fullMonthName ='${DateFormat('MMMM').format(date.toLocal())} ${date.toLocal().day}';
-                          return ListTile(
-                            title: IntrinsicHeight(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/food.svg',
-                                    width: 57,
-                                    height: 53,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            tx.type.name,
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15.0,
-                                              height: 1.5,
-                                              color: Color.fromRGBO(5, 34, 36, 1.0,),
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                          ),
-                                          Text(
-                                            '${DateFormat('HH:mm').format(date.toLocal())} - $fullMonthName',
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const VerticalDivider(
-                                    color: Color.fromRGBO(0, 208, 157, 1.0),
-                                    thickness: 1,
-                                    width: 35,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                SizedBox(height: 24.0),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/Income.svg',
+                                width: 12,
+                                height: 12,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'Total balance',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(5, 34, 36, 1.0),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 16,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w400,
+                                  fontStyle: FontStyle.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '7,7883\$',
+                            style: TextStyle(
+                              color: Color.fromRGBO(241, 255, 243, 1.0),
+                              fontFamily: 'Poppins',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      VerticalDivider(
+                        color: Color.fromRGBO(223, 247, 226, 1.0),
+                        indent: 5.0,
+                        endIndent: 5.0,
+                        thickness: 2,
+                        width: 42,
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/Expense.svg',
+                                width: 12,
+                                height: 12,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'Total expense',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(5, 34, 36, 1.0),
+                                  fontFamily: 'Poppins',
+                                  fontSize: 16,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w400,
+                                  fontStyle: FontStyle.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '7,7883\$',
+                            style: TextStyle(
+                              color: Color.fromRGBO(0, 104, 255, 1.0),
+                              fontFamily: 'Poppins',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10.0),
+              ],
+            ),
+          ],
+        ),
+        Expanded(
+          child: BodyContainerWidget(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final maxWidth = constraints.maxWidth * 0.8;
+                return SizedBox(
+                  width: maxWidth,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 40.0),
+                      const GreenContainer(
+                        widget: Text('Future widget'),
+                        radius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Expanded(
+                        child: BlocBuilder<TransactionsBloc, TransactionsState>(
+                          builder: (context, state) {
+                            final currentPeriod = state.maybeWhen(
+                              loading: (period) => period,
+                              updated: (_, period) => period ?? 'daily',
+                              orElse: () => 'daily',
+                            );
+                            return Column(
+                              children: [
+                                GreenContainer(
+                                  width: maxWidth,
+                                  height: 60.0,
+                                  padding: const EdgeInsets.all(8.0),
+                                  widget: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        tx.type.name,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
+                                      _buildFilterButton(context, 'Daily', 'daily', currentPeriod!),
+                                      _buildFilterButton(context, 'Weekly', 'weekly', currentPeriod),
+                                      _buildFilterButton(context, 'Monthly', 'monthly', currentPeriod),
                                     ],
                                   ),
-                                  const VerticalDivider(
-                                    color: Color.fromRGBO(0, 208, 157, 1.0),
-                                    thickness: 1,
-                                    width: 35,
+                                  radius: const BorderRadius.all(Radius.circular(22)),
+                                ),
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: state.maybeWhen(
+                                    loading: (_) => const Center(child: CircularProgressIndicator()),
+                                    error: (msg) => Center(child: Text('Error: $msg')),
+                                    updated: (transactions, _) => transactions.isEmpty 
+                                      ? const Center(child: Text("No transactions"))
+                                      : ListView.builder(
+                                          itemCount: transactions.length,
+                                          itemBuilder: (context, index) {
+                                            return buildTransactionItem(transactions[index]);
+                                          },
+                                        ),
+                                    orElse: () => const SizedBox.shrink(),
                                   ),
-                                  Text(
-                                    tx.amount.toString(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                      orElse: () => const SizedBox.shrink(),
-                    );
-                  },
-                ),
-              ),
-            ],
+                      const SizedBox(height: 5),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        );
-      },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFilterButton(
+    BuildContext context, 
+    String title, 
+    String value, 
+    String activePeriod
+  ) {
+    final isActive = value == activePeriod;
+    
+    return Expanded(
+      child: TextButton(
+        onPressed: () {
+          context.read<TransactionsBloc>().add(
+            TransactionsEvent.getTransactions(period: value),
+          );
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: isActive 
+              ? const Color.fromRGBO(0, 208, 158, 1.0) 
+              : null,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            fontSize: 15.0,
+            height: 1.5,
+            color: const Color.fromRGBO(5, 34, 36, 1.0),
+          ),
+        ),
+      ),
     );
   }
 }
