@@ -1,4 +1,5 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
+import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
 import 'package:finance_tracker/presentation/screens/categories/categories_screen.dart';
 import 'package:finance_tracker/presentation/screens/home/home_screen.dart';
@@ -56,6 +57,8 @@ class _MainScreenState extends State<MainScreen> {
                         setState(() {
                           selectedPageIndex = 0;
                         });
+                        
+                        context.read<TransactionsBloc>().add(RefreshTransactionsEvent());
                       },
                       icon: SvgPicture.asset(
                         selectedPageIndex == 0
