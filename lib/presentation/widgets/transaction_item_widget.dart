@@ -1,3 +1,4 @@
+import 'package:finance_tracker/data/models/enums/transaction_type_enum.dart';
 import 'package:finance_tracker/data/models/transaction/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +46,7 @@ Widget buildTransactionItem(Transaction tx) {
             ),
           ),
           Text(
-            tx.amount.toString(),
+            tx.type == TransactionType.expense ?'-${tx.amount}' : '${tx.amount}',
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
