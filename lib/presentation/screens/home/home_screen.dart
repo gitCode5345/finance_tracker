@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context, state) {
                             final currentPeriod = state.maybeWhen(
                               loading: (period) => period,
-                              updated: (_, period) => period ?? 'daily',
+                              updated: (_, period) => period,
                               orElse: () => 'daily',
                             );
                             return Column(

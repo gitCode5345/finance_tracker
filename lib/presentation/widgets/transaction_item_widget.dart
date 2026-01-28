@@ -24,7 +24,7 @@ Widget buildTransactionItem(Transaction tx) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tx.type.name,
+                    tx.title,
                     style: const TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
