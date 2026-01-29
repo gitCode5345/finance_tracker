@@ -55,11 +55,11 @@ extension CategoryEventPatterns on CategoryEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _LoadCategories value)?  loadCategories,TResult Function( _AddCategory value)?  addCategory,TResult Function( _DeleteCategory value)?  deleteCategory,TResult Function( _UpdateCategory value)?  updateCategory,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( LoadCategories value)?  loadCategories,TResult Function( _AddCategory value)?  addCategory,TResult Function( _DeleteCategory value)?  deleteCategory,TResult Function( _UpdateCategory value)?  updateCategory,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _LoadCategories() when loadCategories != null:
+return started(_that);case LoadCategories() when loadCategories != null:
 return loadCategories(_that);case _AddCategory() when addCategory != null:
 return addCategory(_that);case _DeleteCategory() when deleteCategory != null:
 return deleteCategory(_that);case _UpdateCategory() when updateCategory != null:
@@ -81,11 +81,11 @@ return updateCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _LoadCategories value)  loadCategories,required TResult Function( _AddCategory value)  addCategory,required TResult Function( _DeleteCategory value)  deleteCategory,required TResult Function( _UpdateCategory value)  updateCategory,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( LoadCategories value)  loadCategories,required TResult Function( _AddCategory value)  addCategory,required TResult Function( _DeleteCategory value)  deleteCategory,required TResult Function( _UpdateCategory value)  updateCategory,}){
 final _that = this;
 switch (_that) {
 case _Started():
-return started(_that);case _LoadCategories():
+return started(_that);case LoadCategories():
 return loadCategories(_that);case _AddCategory():
 return addCategory(_that);case _DeleteCategory():
 return deleteCategory(_that);case _UpdateCategory():
@@ -106,11 +106,11 @@ return updateCategory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _LoadCategories value)?  loadCategories,TResult? Function( _AddCategory value)?  addCategory,TResult? Function( _DeleteCategory value)?  deleteCategory,TResult? Function( _UpdateCategory value)?  updateCategory,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( LoadCategories value)?  loadCategories,TResult? Function( _AddCategory value)?  addCategory,TResult? Function( _DeleteCategory value)?  deleteCategory,TResult? Function( _UpdateCategory value)?  updateCategory,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _LoadCategories() when loadCategories != null:
+return started(_that);case LoadCategories() when loadCategories != null:
 return loadCategories(_that);case _AddCategory() when addCategory != null:
 return addCategory(_that);case _DeleteCategory() when deleteCategory != null:
 return deleteCategory(_that);case _UpdateCategory() when updateCategory != null:
@@ -134,7 +134,7 @@ return updateCategory(_that);case _:
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  loadCategories,TResult Function( Category category)?  addCategory,TResult Function( String categoryId)?  deleteCategory,TResult Function( Category category)?  updateCategory,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _LoadCategories() when loadCategories != null:
+return started();case LoadCategories() when loadCategories != null:
 return loadCategories();case _AddCategory() when addCategory != null:
 return addCategory(_that.category);case _DeleteCategory() when deleteCategory != null:
 return deleteCategory(_that.categoryId);case _UpdateCategory() when updateCategory != null:
@@ -159,7 +159,7 @@ return updateCategory(_that.category);case _:
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  loadCategories,required TResult Function( Category category)  addCategory,required TResult Function( String categoryId)  deleteCategory,required TResult Function( Category category)  updateCategory,}) {final _that = this;
 switch (_that) {
 case _Started():
-return started();case _LoadCategories():
+return started();case LoadCategories():
 return loadCategories();case _AddCategory():
 return addCategory(_that.category);case _DeleteCategory():
 return deleteCategory(_that.categoryId);case _UpdateCategory():
@@ -183,7 +183,7 @@ return updateCategory(_that.category);case _:
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  loadCategories,TResult? Function( Category category)?  addCategory,TResult? Function( String categoryId)?  deleteCategory,TResult? Function( Category category)?  updateCategory,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _LoadCategories() when loadCategories != null:
+return started();case LoadCategories() when loadCategories != null:
 return loadCategories();case _AddCategory() when addCategory != null:
 return addCategory(_that.category);case _DeleteCategory() when deleteCategory != null:
 return deleteCategory(_that.categoryId);case _UpdateCategory() when updateCategory != null:
@@ -230,8 +230,8 @@ String toString() {
 /// @nodoc
 
 
-class _LoadCategories implements CategoryEvent {
-  const _LoadCategories();
+class LoadCategories implements CategoryEvent {
+  const LoadCategories();
   
 
 
@@ -241,7 +241,7 @@ class _LoadCategories implements CategoryEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadCategories);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadCategories);
 }
 
 

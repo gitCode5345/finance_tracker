@@ -10,9 +10,9 @@ part 'category_bloc.freezed.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryService categoryService;
   CategoryBloc({required this.categoryService}) : super(_Initial()) {
-    on<_LoadCategories>(onLoadCategories);
+    on<LoadCategories>(onLoadCategories);
   }
-  Future<void> onLoadCategories(_LoadCategories e, Emitter emit) async {
+  Future<void> onLoadCategories(LoadCategories e, Emitter emit) async {
     try {
       emit(_Loading());
       final data = await categoryService.getAllCategories();
