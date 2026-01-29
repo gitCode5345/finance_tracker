@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class GreenContainer extends StatelessWidget {
   final Widget widget;
@@ -26,7 +27,7 @@ class GreenContainer extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(223, 247, 226, 1.0),
+        color: AppColors.secondary,
         borderRadius: radius,
       ),
       child: widget,

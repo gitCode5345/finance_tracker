@@ -7,6 +7,7 @@ import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:finance_tracker/presentation/widgets/transaction_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class TransactionsByCategory extends StatelessWidget {
   final Category category;
@@ -25,8 +26,8 @@ class TransactionsByCategory extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: IconButton(
                   style: IconButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.white,
+                    iconSize: 32.0
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -61,7 +62,7 @@ class TransactionsByCategory extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(0, 208, 158, 1.0),
+                            backgroundColor: AppColors.primary,
                             side: BorderSide.none,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
@@ -81,7 +82,7 @@ class TransactionsByCategory extends StatelessWidget {
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
                               fontSize: 20.0,
-                              color: Color.fromRGBO(9, 48, 48, 1.0),
+                              color: AppColors.textButton,
                             ),
                           ),
                         ),

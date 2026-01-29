@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class HeaderWidget extends StatelessWidget {
   final EdgeInsets padding;
@@ -17,7 +18,7 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 208, 158, 1.0),
+        color: AppColors.primary,
       ),
       child: Padding(
         padding: padding,

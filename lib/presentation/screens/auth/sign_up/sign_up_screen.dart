@@ -6,6 +6,7 @@ import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -70,12 +71,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Color.fromRGBO(9, 48, 48, 1.0),
-                            ),
-                            onPressed: () => Navigator.pop(context),
+                          style: IconButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            iconSize: 32.0
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back),
+                        ),
                         ),
                         const Text(
                           'Create account',
@@ -83,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(9, 48, 48, 1.0),
+                            color: AppColors.textButton,
                           ),
                         ),
                       ],
@@ -106,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -121,14 +125,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: 'John Doe',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -141,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -156,14 +160,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: 'example@example.com',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -176,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -191,14 +195,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: '+123 456 7890',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -211,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -226,14 +230,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: 'DD / MM / YYYY',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -246,7 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -269,14 +273,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: 'Enter your password',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -289,7 +293,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(54, 49, 48, 1.0),
+                                        color: AppColors.textSecondary,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -314,14 +318,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                       floatingLabelBehavior: FloatingLabelBehavior.never,
                                       filled: true,
-                                      fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                      fillColor: AppColors.secondary,
                                       hintText: 'Confirm your password',
                                       hintStyle: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
-                                        color: Color.fromRGBO(48, 62, 62, 0.45),
+                                        color: AppColors.textHint,
                                       ),
                                     ),
                                   ),
@@ -340,6 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w400,
                                               fontSize: 14.0,
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ),
@@ -350,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Center(
                                     child: OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        backgroundColor: Color.fromRGBO(0, 208, 158, 1.0),
+                                        backgroundColor: AppColors.primary,
                                         side: BorderSide.none,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(30.0),
@@ -388,7 +393,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 20.0,
-                                          color: Color.fromRGBO(9, 48, 48, 1.0),
+                                          color: AppColors.textButton,
                                         ),
                                       ),
                                     ),
@@ -404,7 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             fontStyle: FontStyle.normal,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14.0,
-                                            color: Color.fromRGBO(9, 48, 48, 1.0),
+                                            color: AppColors.textButton,
                                           ),
                                         ),
                                         TextButton(

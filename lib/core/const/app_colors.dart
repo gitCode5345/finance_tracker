@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+
+abstract class AppColors {
+  static const Color primary = Color.fromRGBO(0, 208, 158, 1.0);       // Основний зелений (кнопки, хедер, активні елементи)
+  static const Color secondary = Color.fromRGBO(223, 247, 226, 1.0);   // Світло-зелений (фони полів вводу, контейнери)
+  static const Color backgroundLight = Color.fromRGBO(241, 255, 243, 1.0); // Дуже світлий фон (Welcome screen)
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+
+  static const Color textPrimary = Color.fromRGBO(5, 34, 36, 1.0);     // Основний темний текст (заголовки)
+  static const Color textSecondary = Color.fromRGBO(54, 49, 48, 1.0);  // Текст лейблів (Label text)
+  static const Color textSubtitle = Color.fromRGBO(75, 69, 68, 1.0);   // Підзаголовки
+  static const Color textButton = Color.fromRGBO(9, 48, 48, 1.0);      // Текст на кнопках
+  static const Color textHint = Color.fromRGBO(48, 62, 62, 0.45);      // Підказки в полях вводу (Hint text)
+  static const Color textOnboarding = Color.fromRGBO(14, 62, 62, 1.0); // Текст кнопок онбордингу
+  
+  static const Color accentBlue = Color.fromRGBO(0, 104, 255, 1.0);    // Синій (для витрат/Expense)
+}

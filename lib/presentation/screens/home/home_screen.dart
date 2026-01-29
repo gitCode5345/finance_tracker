@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Welcome, ${widget.user.firstName}!',
                       style: TextStyle(
-                        color: Color.fromRGBO(5, 34, 36, 1.0),
+                        color: AppColors.textPrimary,
                         fontFamily: 'Poppins',
                         fontSize: 24,
                         height: 1.5,
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 'Total balance',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(5, 34, 36, 1.0),
+                                  color: AppColors.textPrimary,
                                   fontFamily: 'Poppins',
                                   fontSize: 16,
                                   height: 1.5,
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             '7,7883\$',
                             style: TextStyle(
-                              color: Color.fromRGBO(241, 255, 243, 1.0),
+                              color: AppColors.backgroundLight,
                               fontFamily: 'Poppins',
                               fontSize: 24,
                               fontWeight: FontWeight.w700,
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       VerticalDivider(
-                        color: Color.fromRGBO(223, 247, 226, 1.0),
+                        color: AppColors.secondary,
                         indent: 5.0,
                         endIndent: 5.0,
                         thickness: 2,
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 'Total expense',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(5, 34, 36, 1.0),
+                                  color: AppColors.textPrimary,
                                   fontFamily: 'Poppins',
                                   fontSize: 16,
                                   height: 1.5,
@@ -126,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             '7,7883\$',
                             style: TextStyle(
-                              color: Color.fromRGBO(0, 104, 255, 1.0),
+                              color: AppColors.accentBlue,
                               fontFamily: 'Poppins',
                               fontSize: 24,
                               fontWeight: FontWeight.w700,
@@ -233,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         style: TextButton.styleFrom(
           backgroundColor: isActive 
-              ? const Color.fromRGBO(0, 208, 158, 1.0) 
+              ? AppColors.primary
               : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
@@ -246,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.w400,
             fontSize: 15.0,
             height: 1.5,
-            color: const Color.fromRGBO(5, 34, 36, 1.0),
+            color: AppColors.textPrimary,
           ),
         ),
       ),

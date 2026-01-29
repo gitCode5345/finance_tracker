@@ -3,6 +3,7 @@ import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class OnBoardingSectionWidget extends StatefulWidget {
   final VoidCallback onFinish;
@@ -63,7 +64,7 @@ class _OnBoardingSectionWidgetState extends State<OnBoardingSectionWidget> {
                         _pages[index]['text']!,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color.fromRGBO(5, 34, 36, 1.0),
+                          color: AppColors.textPrimary,
                           fontFamily: 'Poppins',
                           fontSize: 24,
                           height: 1.5,
@@ -105,7 +106,7 @@ class _OnBoardingSectionWidgetState extends State<OnBoardingSectionWidget> {
                       child: Text(
                         isLastPage ? 'Get Started' : 'Next',
                         style: TextStyle(
-                          color: Color.fromRGBO(14, 62, 62, 1.0),
+                          color: AppColors.textOnboarding,
                           fontFamily: 'Poppins',
                           fontStyle: FontStyle.normal,
                           fontSize: 30,
@@ -127,7 +128,7 @@ class _OnBoardingSectionWidgetState extends State<OnBoardingSectionWidget> {
                         ),
                         activeDotDecoration: DotDecoration(
                           borderRadius: BorderRadius.circular(14.0),
-                          color: Color.fromRGBO(0, 208, 158, 1.0),
+                          color: AppColors.primary,
                           height: 14.0,
                           width: 14.0,
                         ),

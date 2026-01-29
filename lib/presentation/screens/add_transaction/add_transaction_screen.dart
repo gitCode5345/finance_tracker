@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({super.key});
@@ -43,7 +44,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               Text(
                 'Add Transaction',
                 style: TextStyle(
-                  color: Color.fromRGBO(5, 34, 36, 1.0),
+                  color: AppColors.textPrimary,
                   fontFamily: 'Poppins',
                   fontSize: 20,
                   height: 1.5,
@@ -101,7 +102,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                       fontFamily: 'Poppins',
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(54, 49, 48, 1.0),
+                                      color: AppColors.textSecondary,
                                       fontStyle: FontStyle.normal,
                                     ),
                                   ),
@@ -117,10 +118,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                   minTime: DateTime(2000, 1, 1, 10, 0),
                                   maxTime: DateTime.now(),
                                   theme: picker.DatePickerTheme(
-                                    headerColor: const Color.fromRGBO(0, 208, 158, 1.0),
+                                    headerColor: AppColors.primary,
                                     backgroundColor: Colors.white,
                                     itemStyle: TextStyle(
-                                        color: const Color.fromRGBO(5, 34, 36, 1.0),
+                                        color: AppColors.textPrimary,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                     doneStyle: TextStyle(color: Colors.white, fontSize: 16),
@@ -143,14 +144,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
                                 filled: true,
-                                fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                fillColor: AppColors.secondary,
                                 hintText: 'Select a date',
                                 hintStyle: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500,
                                   height: 1.5,
-                                  color: Color.fromRGBO(48, 62, 62, 0.45),
+                                  color: AppColors.textHint,
                                 ),
                               ),
                             ),
@@ -165,7 +166,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                       fontFamily: 'Poppins',
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(54, 49, 48, 1.0),
+                                      color: AppColors.textSecondary,
                                       fontStyle: FontStyle.normal,
                                     ),
                                   ),
@@ -200,7 +201,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                           borderSide: BorderSide.none,
                                         ),
                                         filled: true,
-                                        fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                        fillColor: AppColors.secondary,
                                       ),
                                     );
                                   },
@@ -219,7 +220,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                       fontFamily: 'Poppins',
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(54, 49, 48, 1.0),
+                                      color: AppColors.textSecondary,
                                       fontStyle: FontStyle.normal,
                                     ),
                                   ),
@@ -238,14 +239,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
                                 filled: true,
-                                fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                fillColor: AppColors.secondary,
                                 hintText: 'Enter amount',
                                 hintStyle: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500,
                                   height: 1.5,
-                                  color: Color.fromRGBO(48, 62, 62, 0.45),
+                                  color: AppColors.textHint,
                                 ),
                               ),
                             ),
@@ -260,7 +261,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                       fontFamily: 'Poppins',
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(54, 49, 48, 1.0),
+                                      color: AppColors.textSecondary,
                                       fontStyle: FontStyle.normal,
                                     ),
                                   ),
@@ -279,14 +280,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
                                 filled: true,
-                                fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                fillColor: AppColors.secondary,
                                 hintText: 'Enter title',
                                 hintStyle: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500,
                                   height: 1.5,
-                                  color: Color.fromRGBO(48, 62, 62, 0.45),
+                                  color: AppColors.textHint,
                                 ),
                               ),
                             ),
@@ -306,14 +307,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.never,
                                   filled: true,
-                                  fillColor: Color.fromRGBO(223, 247, 226, 1.0),
+                                  fillColor: AppColors.secondary,
                                   hintText: 'Enter note',
                                   hintStyle: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500,
                                     height: 1.5,
-                                    color: Color.fromRGBO(48, 62, 62, 0.45),
+                                    color: AppColors.textHint,
                                   ),
                                 ),
                               ),
@@ -323,7 +324,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                               padding: const EdgeInsets.only(bottom: 20.0),
                               child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  backgroundColor: Color.fromRGBO(0, 208, 158, 1.0),
+                                  backgroundColor: AppColors.primary,
                                   side: BorderSide.none,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
@@ -354,7 +355,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20.0,
-                                    color: Color.fromRGBO(9, 48, 48, 1.0),
+                                    color: AppColors.textSecondary,
                                   ),
                                 ),
                               ),

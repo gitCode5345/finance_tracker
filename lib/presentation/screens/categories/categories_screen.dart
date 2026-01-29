@@ -6,6 +6,7 @@ import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -20,7 +21,7 @@ class CategoriesScreen extends StatelessWidget {
             Text(
               'Categories',
               style: TextStyle(
-                color: Color.fromRGBO(5, 34, 36, 1.0),
+                color: AppColors.textPrimary,
                 fontFamily: 'Poppins',
                 fontSize: 20,
                 height: 1.5,

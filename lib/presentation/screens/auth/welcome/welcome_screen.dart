@@ -2,6 +2,7 @@ import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_in_screen
 import 'package:finance_tracker/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -9,7 +10,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(241, 255, 243, 1.0),
+      backgroundColor: AppColors.backgroundLight,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = constraints.maxWidth * 0.7;
@@ -34,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: 52,
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.normal,
-                        color: Color.fromRGBO(0, 208, 158, 1.0),
+                        color: AppColors.primary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -46,14 +47,14 @@ class WelcomeScreen extends StatelessWidget {
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(75, 69, 68, 1.0),
+                        color: AppColors.textSubtitle,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 40),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(0, 208, 158, 1.0),
+                        backgroundColor: AppColors.primary,
                         side: BorderSide.none,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -75,14 +76,14 @@ class WelcomeScreen extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
                           fontSize: 20.0,
-                          color: Color.fromRGBO(9, 48, 48, 1.0),
+                          color: AppColors.textButton,
                         ),
                       ),
                     ),
                     SizedBox(height: 10),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(223, 247, 226, 1.0),
+                        backgroundColor: AppColors.secondary,
                         side: BorderSide.none,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -104,7 +105,7 @@ class WelcomeScreen extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
                           fontSize: 20.0,
-                          color: Color.fromRGBO(9, 48, 48, 1.0),
+                          color: AppColors.textButton,
                         ),
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:finance_tracker/presentation/screens/main_page/main_screen.dart'
 import 'package:finance_tracker/presentation/screens/auth/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:finance_tracker/core/const/app_colors.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
@@ -13,7 +14,7 @@ class MyAppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Finance Tracker',
       theme: ThemeData(
-        scaffoldBackgroundColor: Color.fromRGBO(0, 208, 158, 1.0),
+        scaffoldBackgroundColor: AppColors.primary,
       ),
       home: BlocBuilder<AuthBloc, AuthState>(
         buildWhen: (previous, current) {
