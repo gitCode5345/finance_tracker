@@ -3,6 +3,7 @@ import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_blo
 import 'package:finance_tracker/data/models/user/user.dart';
 import 'package:finance_tracker/presentation/screens/categories/categories_screen.dart';
 import 'package:finance_tracker/presentation/screens/home/home_screen.dart';
+import 'package:finance_tracker/presentation/screens/profile/profile_screen.dart';
 import 'package:finance_tracker/presentation/widgets/green_container.dart';
 import 'package:finance_tracker/presentation/widgets/on_boarding_section_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
       Text('Statistics Page'),
       Text('Transactions Page'),
       CategoriesScreen(),
-      Text('Profile Page'),
+      ProfileScreen(user: widget.user),
     ];
   }
 
