@@ -44,7 +44,6 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: !widget.user.isNewUser
           ? GreenContainer(
               width: double.infinity,
-              height: 108.0,
               radius: BorderRadius.only(
                 topLeft: Radius.circular(70.0),
                 topRight: Radius.circular(70.0),
