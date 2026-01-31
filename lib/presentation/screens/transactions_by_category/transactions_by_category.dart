@@ -1,6 +1,7 @@
 import 'package:finance_tracker/business/bloc/category_bloc/category_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/data/models/category/category.dart';
+import 'package:finance_tracker/data/models/extensions/transactions_extension.dart';
 import 'package:finance_tracker/presentation/screens/add_transaction/add_transaction_screen.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
@@ -21,7 +22,17 @@ class TransactionsByCategory extends StatelessWidget {
           HeaderWidget(
             padding: const EdgeInsets.only(top: 50.0, left: 24.0, right: 24.0, bottom: 24.0),
             children: [
-              Text(category.name),
+              Text(
+                category.name,
+                style: TextStyle(
+                color: AppColors.textPrimary,
+                fontFamily: 'Poppins',
+                fontSize: 20,
+                height: 1.5,
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+              ),
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
@@ -47,13 +58,58 @@ class TransactionsByCategory extends StatelessWidget {
                         child: state.maybeWhen(
                           loading: (_) => Center(child: CircularProgressIndicator()),
                           updated: (transactions, _) {
-                            return transactions.isNotEmpty ? ListView.builder(
-                              itemCount: transactions.length,
-                              itemBuilder: (context, index) {
-                                final transaction = transactions[index];
-                                return buildTransactionItem(transaction);
-                              },
-                            ) : Center(child: Text('No transactions found'));
+                            final grouped = transactions.groupByYearAndMonth();
+
+                            if (grouped.isEmpty) {
+                              return const Center(child: Text('No transactions found'));
+                            }
+
+                            return ListView(
+                              children: grouped.entries.map((yearEntry) {
+                                final year = yearEntry.key;
+                                final months = yearEntry.value;
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                      child: Center(
+                                        child: Text(
+                                          year.toString(),
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    ...months.entries.map((monthEntry) {
+                                      final month = monthEntry.key;
+                                      final items = monthEntry.value;
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                                            child: Text(
+                                              month,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                          ...items.map(
+                                            (transaction) => buildTransactionItem(transaction),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ],
+                                );
+                              }).toList(),
+                            );
                           },
                           orElse: () => Center(child: Text('Something went wrong')),
                         ),
