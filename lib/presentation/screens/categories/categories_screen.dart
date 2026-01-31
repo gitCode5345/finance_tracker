@@ -53,9 +53,9 @@ class CategoriesScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        crossAxisSpacing: 50,
+                        crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        childAspectRatio: 0.6,
+                        childAspectRatio: 0.55,
                       ),
                       itemCount: categories.length,
                       itemBuilder: (context, index) {
