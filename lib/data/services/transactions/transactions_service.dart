@@ -58,7 +58,7 @@ class TransactionsService {
         .toList();
   }
 
-  Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period}) async {
+  Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period,}) async {
     if (user == null) return [];
 
     var query = _client
@@ -69,14 +69,16 @@ class TransactionsService {
 
     if (period != null && period.isNotEmpty) {
       final range = _getRangeByPeriod(period);
-      query = query.gte('date', range.start.toIso8601String()).lt('date', range.end.toIso8601String());
+      query = query
+          .gte('date', range.start.toIso8601String())
+          .lt('date', range.end.toIso8601String());
     }
 
     final data = await query.order('date', ascending: false);
-    return data
-        .map<Transaction>((json) => Transaction.fromJson(json))
-        .toList();
+
+    return data.map((e) => Transaction.fromJson(e)).toList();
   }
+
 
   Future<List<Transaction>> getAllTransactions() async {
     if (user == null) return [];
