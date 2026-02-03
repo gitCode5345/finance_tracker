@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:finance_tracker/data/models/user/user.dart' as user_model;
 
 class AuthService {
   SupabaseClient get _client => Supabase.instance.client;
@@ -25,6 +26,20 @@ class AuthService {
     await _client.auth.updateUser(UserAttributes(
       data: {'is_new_user' : false},
     ));
+  }
+
+  Future<void> updateUserData(user_model.User user) async {
+    await _client.auth.updateUser(
+      UserAttributes(
+        data: {
+          'first_name': user.firstName,
+          'last_name': user.lastName,
+          'phone': user.phone,
+          'date_of_birth': user.dateOfBirth,
+        },
+        email: user.email
+      ),
+    );
   }
 
   Future<void> signOut() async {

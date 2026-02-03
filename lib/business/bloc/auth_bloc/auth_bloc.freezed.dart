@@ -55,7 +55,7 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CheckAuth value)?  checkAuthEvent,TResult Function( _AuthStatusChanged value)?  authStatusChanged,TResult Function( RegisterUser value)?  registerUserEvent,TResult Function( LoginUser value)?  loginUserEvent,TResult Function( RegisterUserSuccess value)?  registerUserSuccessEvent,TResult Function( LogoutUser value)?  logoutEvent,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CheckAuth value)?  checkAuthEvent,TResult Function( _AuthStatusChanged value)?  authStatusChanged,TResult Function( RegisterUser value)?  registerUserEvent,TResult Function( LoginUser value)?  loginUserEvent,TResult Function( RegisterUserSuccess value)?  registerUserSuccessEvent,TResult Function( UserDataChanged value)?  userDataChanged,TResult Function( LogoutUser value)?  logoutEvent,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case CheckAuth() when checkAuthEvent != null:
@@ -63,7 +63,8 @@ return checkAuthEvent(_that);case _AuthStatusChanged() when authStatusChanged !=
 return authStatusChanged(_that);case RegisterUser() when registerUserEvent != null:
 return registerUserEvent(_that);case LoginUser() when loginUserEvent != null:
 return loginUserEvent(_that);case RegisterUserSuccess() when registerUserSuccessEvent != null:
-return registerUserSuccessEvent(_that);case LogoutUser() when logoutEvent != null:
+return registerUserSuccessEvent(_that);case UserDataChanged() when userDataChanged != null:
+return userDataChanged(_that);case LogoutUser() when logoutEvent != null:
 return logoutEvent(_that);case _:
   return orElse();
 
@@ -82,7 +83,7 @@ return logoutEvent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CheckAuth value)  checkAuthEvent,required TResult Function( _AuthStatusChanged value)  authStatusChanged,required TResult Function( RegisterUser value)  registerUserEvent,required TResult Function( LoginUser value)  loginUserEvent,required TResult Function( RegisterUserSuccess value)  registerUserSuccessEvent,required TResult Function( LogoutUser value)  logoutEvent,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CheckAuth value)  checkAuthEvent,required TResult Function( _AuthStatusChanged value)  authStatusChanged,required TResult Function( RegisterUser value)  registerUserEvent,required TResult Function( LoginUser value)  loginUserEvent,required TResult Function( RegisterUserSuccess value)  registerUserSuccessEvent,required TResult Function( UserDataChanged value)  userDataChanged,required TResult Function( LogoutUser value)  logoutEvent,}){
 final _that = this;
 switch (_that) {
 case CheckAuth():
@@ -90,7 +91,8 @@ return checkAuthEvent(_that);case _AuthStatusChanged():
 return authStatusChanged(_that);case RegisterUser():
 return registerUserEvent(_that);case LoginUser():
 return loginUserEvent(_that);case RegisterUserSuccess():
-return registerUserSuccessEvent(_that);case LogoutUser():
+return registerUserSuccessEvent(_that);case UserDataChanged():
+return userDataChanged(_that);case LogoutUser():
 return logoutEvent(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -108,7 +110,7 @@ return logoutEvent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CheckAuth value)?  checkAuthEvent,TResult? Function( _AuthStatusChanged value)?  authStatusChanged,TResult? Function( RegisterUser value)?  registerUserEvent,TResult? Function( LoginUser value)?  loginUserEvent,TResult? Function( RegisterUserSuccess value)?  registerUserSuccessEvent,TResult? Function( LogoutUser value)?  logoutEvent,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CheckAuth value)?  checkAuthEvent,TResult? Function( _AuthStatusChanged value)?  authStatusChanged,TResult? Function( RegisterUser value)?  registerUserEvent,TResult? Function( LoginUser value)?  loginUserEvent,TResult? Function( RegisterUserSuccess value)?  registerUserSuccessEvent,TResult? Function( UserDataChanged value)?  userDataChanged,TResult? Function( LogoutUser value)?  logoutEvent,}){
 final _that = this;
 switch (_that) {
 case CheckAuth() when checkAuthEvent != null:
@@ -116,7 +118,8 @@ return checkAuthEvent(_that);case _AuthStatusChanged() when authStatusChanged !=
 return authStatusChanged(_that);case RegisterUser() when registerUserEvent != null:
 return registerUserEvent(_that);case LoginUser() when loginUserEvent != null:
 return loginUserEvent(_that);case RegisterUserSuccess() when registerUserSuccessEvent != null:
-return registerUserSuccessEvent(_that);case LogoutUser() when logoutEvent != null:
+return registerUserSuccessEvent(_that);case UserDataChanged() when userDataChanged != null:
+return userDataChanged(_that);case LogoutUser() when logoutEvent != null:
 return logoutEvent(_that);case _:
   return null;
 
@@ -134,14 +137,15 @@ return logoutEvent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  checkAuthEvent,TResult Function( supabase.User? user)?  authStatusChanged,TResult Function( User user)?  registerUserEvent,TResult Function( String email,  String password)?  loginUserEvent,TResult Function( User user)?  registerUserSuccessEvent,TResult Function()?  logoutEvent,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  checkAuthEvent,TResult Function( supabase.User? user)?  authStatusChanged,TResult Function( User user)?  registerUserEvent,TResult Function( String email,  String password)?  loginUserEvent,TResult Function( User user)?  registerUserSuccessEvent,TResult Function( User user)?  userDataChanged,TResult Function()?  logoutEvent,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CheckAuth() when checkAuthEvent != null:
 return checkAuthEvent();case _AuthStatusChanged() when authStatusChanged != null:
 return authStatusChanged(_that.user);case RegisterUser() when registerUserEvent != null:
 return registerUserEvent(_that.user);case LoginUser() when loginUserEvent != null:
 return loginUserEvent(_that.email,_that.password);case RegisterUserSuccess() when registerUserSuccessEvent != null:
-return registerUserSuccessEvent(_that.user);case LogoutUser() when logoutEvent != null:
+return registerUserSuccessEvent(_that.user);case UserDataChanged() when userDataChanged != null:
+return userDataChanged(_that.user);case LogoutUser() when logoutEvent != null:
 return logoutEvent();case _:
   return orElse();
 
@@ -160,14 +164,15 @@ return logoutEvent();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  checkAuthEvent,required TResult Function( supabase.User? user)  authStatusChanged,required TResult Function( User user)  registerUserEvent,required TResult Function( String email,  String password)  loginUserEvent,required TResult Function( User user)  registerUserSuccessEvent,required TResult Function()  logoutEvent,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  checkAuthEvent,required TResult Function( supabase.User? user)  authStatusChanged,required TResult Function( User user)  registerUserEvent,required TResult Function( String email,  String password)  loginUserEvent,required TResult Function( User user)  registerUserSuccessEvent,required TResult Function( User user)  userDataChanged,required TResult Function()  logoutEvent,}) {final _that = this;
 switch (_that) {
 case CheckAuth():
 return checkAuthEvent();case _AuthStatusChanged():
 return authStatusChanged(_that.user);case RegisterUser():
 return registerUserEvent(_that.user);case LoginUser():
 return loginUserEvent(_that.email,_that.password);case RegisterUserSuccess():
-return registerUserSuccessEvent(_that.user);case LogoutUser():
+return registerUserSuccessEvent(_that.user);case UserDataChanged():
+return userDataChanged(_that.user);case LogoutUser():
 return logoutEvent();case _:
   throw StateError('Unexpected subclass');
 
@@ -185,14 +190,15 @@ return logoutEvent();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  checkAuthEvent,TResult? Function( supabase.User? user)?  authStatusChanged,TResult? Function( User user)?  registerUserEvent,TResult? Function( String email,  String password)?  loginUserEvent,TResult? Function( User user)?  registerUserSuccessEvent,TResult? Function()?  logoutEvent,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  checkAuthEvent,TResult? Function( supabase.User? user)?  authStatusChanged,TResult? Function( User user)?  registerUserEvent,TResult? Function( String email,  String password)?  loginUserEvent,TResult? Function( User user)?  registerUserSuccessEvent,TResult? Function( User user)?  userDataChanged,TResult? Function()?  logoutEvent,}) {final _that = this;
 switch (_that) {
 case CheckAuth() when checkAuthEvent != null:
 return checkAuthEvent();case _AuthStatusChanged() when authStatusChanged != null:
 return authStatusChanged(_that.user);case RegisterUser() when registerUserEvent != null:
 return registerUserEvent(_that.user);case LoginUser() when loginUserEvent != null:
 return loginUserEvent(_that.email,_that.password);case RegisterUserSuccess() when registerUserSuccessEvent != null:
-return registerUserSuccessEvent(_that.user);case LogoutUser() when logoutEvent != null:
+return registerUserSuccessEvent(_that.user);case UserDataChanged() when userDataChanged != null:
+return userDataChanged(_that.user);case LogoutUser() when logoutEvent != null:
 return logoutEvent();case _:
   return null;
 
@@ -500,6 +506,81 @@ class _$RegisterUserSuccessCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? user = null,}) {
   return _then(RegisterUserSuccess(
+user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as User,
+  ));
+}
+
+/// Create a copy of AuthEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get user {
+  
+  return $UserCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class UserDataChanged implements AuthEvent {
+  const UserDataChanged({required this.user});
+  
+
+ final  User user;
+
+/// Create a copy of AuthEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UserDataChangedCopyWith<UserDataChanged> get copyWith => _$UserDataChangedCopyWithImpl<UserDataChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDataChanged&&(identical(other.user, user) || other.user == user));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,user);
+
+@override
+String toString() {
+  return 'AuthEvent.userDataChanged(user: $user)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UserDataChangedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+  factory $UserDataChangedCopyWith(UserDataChanged value, $Res Function(UserDataChanged) _then) = _$UserDataChangedCopyWithImpl;
+@useResult
+$Res call({
+ User user
+});
+
+
+$UserCopyWith<$Res> get user;
+
+}
+/// @nodoc
+class _$UserDataChangedCopyWithImpl<$Res>
+    implements $UserDataChangedCopyWith<$Res> {
+  _$UserDataChangedCopyWithImpl(this._self, this._then);
+
+  final UserDataChanged _self;
+  final $Res Function(UserDataChanged) _then;
+
+/// Create a copy of AuthEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? user = null,}) {
+  return _then(UserDataChanged(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,
   ));

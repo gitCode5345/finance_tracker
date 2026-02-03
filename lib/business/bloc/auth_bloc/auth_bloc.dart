@@ -22,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutUser>(_onLogoutUser);
     on<_AuthStatusChanged>(_onAuthStatusChanged);
     on<RegisterUserSuccess>(_onRegisterUserSuccess);
+    on<UserDataChanged>(_onUserDataChanged);
 
     _authSubscription = authService.authStateChanges.listen((data) {
       add(AuthEvent.authStatusChanged(data.session?.user));
@@ -87,6 +88,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onRegisterUserSuccess(RegisterUserSuccess event, Emitter<AuthState> emit) async {
     try {
       await authService.updateUser();
+    } catch (e) {
+      emit(AuthState.error(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUserDataChanged(UserDataChanged event, Emitter<AuthState> emit) async {
+    try {
+      await authService.updateUserData(event.user);
+      emit(AuthState.authenticated(user: event.user));
     } catch (e) {
       emit(AuthState.error(error: e.toString()));
     }
