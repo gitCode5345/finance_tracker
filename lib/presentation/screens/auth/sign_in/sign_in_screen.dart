@@ -162,8 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                                     fontFamily: 'Poppins',
                                                     fontSize: 15.0,
                                                     fontWeight: FontWeight.w500,
-                                                    color:
-                                                        AppColors.textSecondary,
+                                                    color: AppColors.textSecondary,
                                                     fontStyle: FontStyle.normal,
                                                   ),
                                                 ),
@@ -220,10 +219,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               minimumSize: Size(200.0, 50.0),
                                             ),
                                             onPressed: () {
-                                              final bool isValid =
-                                                  _formKey.currentState
-                                                      ?.validate() ??
-                                                  false;
+                                              final bool isValid = _formKey.currentState?.validate() ?? false;
                                               if (isValid) {
                                               final email = _emailController.text;
                                               final password = _passwordController.text;

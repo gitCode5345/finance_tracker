@@ -1,6 +1,7 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
 import 'package:finance_tracker/core/const/app_colors.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
+import 'package:finance_tracker/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,12 @@ class ProfileScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               ListTile(
-                                onTap: () => print('Edit Profile tapped'),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen(user: user),
+                                  ),
+                                ),
                                 leading: SvgPicture.asset(
                                   'assets/images/profile_edit.svg',
                                   width: 57,

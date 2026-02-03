@@ -20,27 +20,27 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int selectedPageIndex = 0;
-  late final List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
-    _pages = [
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> pages = [
       HomeScreen(user: widget.user),
       Text('Statistics Page'),
       Text('Transactions Page'),
       CategoriesScreen(),
       ProfileScreen(user: widget.user),
     ];
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       body: widget.user.isNewUser
           ? _buildOnBoardingPage(context)
-          : Center(child: _pages[selectedPageIndex]),
+          : Center(child: pages[selectedPageIndex]),
       bottomNavigationBar: !widget.user.isNewUser
           ? GreenContainer(
               width: double.infinity,
