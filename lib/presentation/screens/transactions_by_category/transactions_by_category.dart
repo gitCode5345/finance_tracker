@@ -56,7 +56,7 @@ class TransactionsByCategory extends StatelessWidget {
                     children: [
                       Expanded(
                         child: state.maybeWhen(
-                          loading: (_) => Center(child: CircularProgressIndicator()),
+                          loading: (_, _) => Center(child: CircularProgressIndicator()),
                           updated: (transactions, _) {
                             final grouped = transactions.groupByYearAndMonth();
 
