@@ -623,11 +623,11 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? currentPeriod)?  loading,TResult Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? currentPeriod,  List<Transaction>? transactions)?  loading,TResult Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
-return loading(_that.currentPeriod);case Updated() when updated != null:
+return loading(_that.currentPeriod,_that.transactions);case Updated() when updated != null:
 return updated(_that.transactions,_that.currentPeriod);case Error() when error != null:
 return error(_that.error);case _:
   return orElse();
@@ -647,11 +647,11 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? currentPeriod)  loading,required TResult Function( List<Transaction> transactions,  String? currentPeriod)  updated,required TResult Function( String error)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? currentPeriod,  List<Transaction>? transactions)  loading,required TResult Function( List<Transaction> transactions,  String? currentPeriod)  updated,required TResult Function( String error)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case Loading():
-return loading(_that.currentPeriod);case Updated():
+return loading(_that.currentPeriod,_that.transactions);case Updated():
 return updated(_that.transactions,_that.currentPeriod);case Error():
 return error(_that.error);case _:
   throw StateError('Unexpected subclass');
@@ -670,11 +670,11 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? currentPeriod)?  loading,TResult? Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult? Function( String error)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? currentPeriod,  List<Transaction>? transactions)?  loading,TResult? Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult? Function( String error)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
-return loading(_that.currentPeriod);case Updated() when updated != null:
+return loading(_that.currentPeriod,_that.transactions);case Updated() when updated != null:
 return updated(_that.transactions,_that.currentPeriod);case Error() when error != null:
 return error(_that.error);case _:
   return null;
@@ -720,10 +720,19 @@ String toString() {
 
 
 class Loading implements TransactionsState {
-  const Loading({this.currentPeriod});
+  const Loading({this.currentPeriod, final  List<Transaction>? transactions}): _transactions = transactions;
   
 
  final  String? currentPeriod;
+ final  List<Transaction>? _transactions;
+ List<Transaction>? get transactions {
+  final value = _transactions;
+  if (value == null) return null;
+  if (_transactions is EqualUnmodifiableListView) return _transactions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
@@ -735,16 +744,16 @@ $LoadingCopyWith<Loading> get copyWith => _$LoadingCopyWithImpl<Loading>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loading&&(identical(other.currentPeriod, currentPeriod) || other.currentPeriod == currentPeriod));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loading&&(identical(other.currentPeriod, currentPeriod) || other.currentPeriod == currentPeriod)&&const DeepCollectionEquality().equals(other._transactions, _transactions));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentPeriod);
+int get hashCode => Object.hash(runtimeType,currentPeriod,const DeepCollectionEquality().hash(_transactions));
 
 @override
 String toString() {
-  return 'TransactionsState.loading(currentPeriod: $currentPeriod)';
+  return 'TransactionsState.loading(currentPeriod: $currentPeriod, transactions: $transactions)';
 }
 
 
@@ -755,7 +764,7 @@ abstract mixin class $LoadingCopyWith<$Res> implements $TransactionsStateCopyWit
   factory $LoadingCopyWith(Loading value, $Res Function(Loading) _then) = _$LoadingCopyWithImpl;
 @useResult
 $Res call({
- String? currentPeriod
+ String? currentPeriod, List<Transaction>? transactions
 });
 
 
@@ -772,10 +781,11 @@ class _$LoadingCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? currentPeriod = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? currentPeriod = freezed,Object? transactions = freezed,}) {
   return _then(Loading(
 currentPeriod: freezed == currentPeriod ? _self.currentPeriod : currentPeriod // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,transactions: freezed == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
+as List<Transaction>?,
   ));
 }
 

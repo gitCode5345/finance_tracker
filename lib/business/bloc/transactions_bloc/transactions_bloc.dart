@@ -72,7 +72,13 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       _isCategoryView = false;
       _currentCategoryId = null;
 
-      emit(Loading(currentPeriod: _currentPeriod));
+      final previousTransactions = state.maybeWhen(
+        loading: (_, transactions) => transactions,
+        updated: (transactions, _) => transactions,
+        orElse: () => <Transaction>[],
+      );
+
+      emit(Loading(currentPeriod: _currentPeriod, transactions: previousTransactions));
       
       final transactions = await transactionsService.getTransactionsByPeriod(_currentPeriod);
       
