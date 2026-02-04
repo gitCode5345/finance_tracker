@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:finance_tracker/data/models/enums/currency_type_enum.dart';
 
 part 'balance.freezed.dart';
 part 'balance.g.dart';
@@ -8,9 +7,8 @@ part 'balance.g.dart';
 abstract class Balance with _$Balance {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Balance({
-     String? id,
+    String? id,
     required double balance,
-    required Currency currency,
     String? userId,
   }) = _Balance;
 
