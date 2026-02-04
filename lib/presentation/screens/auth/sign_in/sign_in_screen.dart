@@ -228,8 +228,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                                     email: email,
                                                     password: password,
                                                   ),
-                                                );
-                                              }
+                                                );                                              }
                                             },
                                             child: Text(
                                               'Log in',

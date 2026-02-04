@@ -378,7 +378,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             password: textControllerPassword.text,
                                             isNewUser: true
                                           );
-
+                                          
                                           context.read<AuthBloc>().add(
                                             AuthEvent.registerUserEvent(
                                               user: user,
