@@ -121,8 +121,8 @@ class TransactionsService {
     if (user == null) return [];
 
     final transactions = await _client.from('Transactions')
-                                .select('*, category:Categories(*)')
-                                .eq('type', type);
+        .select('*, category:Categories(*)')
+        .eq('type', type);
 
     return transactions
         .map((e) => Transaction.fromJson(e))
