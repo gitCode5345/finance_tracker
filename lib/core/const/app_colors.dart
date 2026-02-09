@@ -15,4 +15,8 @@ abstract class AppColors {
   static const Color textOnboarding = Color.fromRGBO(14, 62, 62, 1.0); // Текст кнопок онбордингу
   
   static const Color accentBlue = Color.fromRGBO(0, 104, 255, 1.0);    // Синій (для витрат/Expense)
+
+  static const Color leftTitles = Color.fromRGBO(109, 182, 254, 1.0);
+  static const Color borderGrafik = Color.fromRGBO(14, 62, 62, 1.0);
+
 }
