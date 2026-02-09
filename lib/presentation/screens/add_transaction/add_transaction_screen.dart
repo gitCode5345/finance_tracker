@@ -67,8 +67,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 alignment: Alignment.topLeft,
                 child: IconButton(
                   style: IconButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.white,
+                    iconSize: 32.0
                   ),
                   onPressed: () => Navigator.pop(context),
                   icon: Icon(Icons.arrow_back),
@@ -79,11 +79,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           Expanded(
             child: BodyContainerWidget(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 24.0,
-                  bottom: 24.0,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 5,
+                  left: 20,
+                  right: 20,
                 ),
                 child: Form(
                   key: _formKey,

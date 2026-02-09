@@ -16,7 +16,12 @@ class CategoriesScreen extends StatelessWidget {
     return Column(
       children: [
         HeaderWidget(
-          padding: const EdgeInsets.only(top: 50.0, left: 24.0, right: 24.0, bottom: 24.0),
+         padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 5,
+            left: 20,
+            right: 20,
+            bottom: 20
+          ),
           children: [
             Text(
               'Categories',

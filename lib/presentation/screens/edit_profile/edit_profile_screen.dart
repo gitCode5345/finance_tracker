@@ -60,7 +60,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         body: Column(
           children: [
             HeaderWidget(
-              padding: const EdgeInsets.only(top: 50.0, left: 16.0, right: 16.0, bottom: 65.0),
+              padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 5,
+              left: 20,
+              right: 20,
+              bottom: 40,
+            ),
               children: [
                 const Text(
                   'Edit Profile',
@@ -76,8 +81,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     style: IconButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.white,
+                      iconSize: 32.0
                     ),
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.arrow_back),

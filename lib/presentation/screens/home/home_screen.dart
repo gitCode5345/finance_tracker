@@ -1,6 +1,7 @@
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/data/models/extensions/transactions_extension.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
+import 'package:finance_tracker/presentation/widgets/filter_button.dart';
 import 'package:finance_tracker/presentation/widgets/green_container.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:finance_tracker/presentation/widgets/transaction_item_widget.dart';
@@ -45,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return Column(
           children: [
             HeaderWidget(
-              padding: const EdgeInsets.only(
-                top: 50.0,
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 5,
                 left: 24.0,
                 right: 24.0,
                 bottom: 24.0,
@@ -195,19 +196,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                       widget: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          _buildFilterButton(
+                                          buildFilterButton(
                                             context,
                                             'Daily',
                                             'daily',
                                             currentPeriod!,
                                           ),
-                                          _buildFilterButton(
+                                          buildFilterButton(
                                             context,
                                             'Weekly',
                                             'weekly',
                                             currentPeriod,
                                           ),
-                                          _buildFilterButton(
+                                          buildFilterButton(
                                             context,
                                             'Monthly',
                                             'monthly',
@@ -257,41 +258,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         );
       },
-    );
-  }
-
-  Widget _buildFilterButton(
-    BuildContext context,
-    String title,
-    String value,
-    String activePeriod,
-  ) {
-    final isActive = value == activePeriod;
-
-    return Expanded(
-      child: TextButton(
-        onPressed: () {
-          context.read<TransactionsBloc>().add(
-            TransactionsEvent.getTransactions(period: value),
-          );
-        },
-        style: TextButton.styleFrom(
-          backgroundColor: isActive ? AppColors.primary : null,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w400,
-            fontSize: 15.0,
-            height: 1.5,
-            color: AppColors.textPrimary,
-          ),
-        ),
-      ),
     );
   }
 }
