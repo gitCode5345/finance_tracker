@@ -23,6 +23,7 @@ dependencies:
   smooth_page_indicator: ^2.0.1
   flutter_datetime_picker_plus: ^2.2.0
   intl: ^0.20.2
+  fl_chart: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +45,7 @@ flutter:
       fonts:
         - asset: assets/fonts/LeagueSpartan-Bold.ttf
         - asset: assets/fonts/LeagueSpartan-SemiBold.ttf
+        - asset: assets/fonts/LeagueSpartan-Regular.ttf
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Medium.ttf
