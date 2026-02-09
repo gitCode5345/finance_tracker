@@ -1,9 +1,11 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
+import 'package:finance_tracker/presentation/screens/analytics/analytics_screen.dart';
 import 'package:finance_tracker/presentation/screens/categories/categories_screen.dart';
 import 'package:finance_tracker/presentation/screens/home/home_screen.dart';
 import 'package:finance_tracker/presentation/screens/profile/profile_screen.dart';
+import 'package:finance_tracker/presentation/screens/transactions/transactions_screen.dart';
 import 'package:finance_tracker/presentation/widgets/green_container.dart';
 import 'package:finance_tracker/presentation/widgets/on_boarding_section_widget.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +32,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       HomeScreen(user: widget.user),
-      Text('Statistics Page'),
-      Text('Transactions Page'),
+      AnalyticsScreen(user: widget.user),
+      TransactionsScreen(),
       CategoriesScreen(),
       ProfileScreen(user: widget.user),
     ];
@@ -83,6 +85,8 @@ class _MainScreenState extends State<MainScreen> {
                         setState(() {
                           selectedPageIndex = 2;
                         });
+
+                        context.read<TransactionsBloc>().add(GetAllTransactionsEvent());
                       },
                       icon: SvgPicture.asset(
                         selectedPageIndex == 2
