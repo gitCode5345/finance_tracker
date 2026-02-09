@@ -5,7 +5,7 @@ import 'package:finance_tracker/data/models/extensions/transactions_extension.da
 import 'package:finance_tracker/presentation/screens/add_transaction/add_transaction_screen.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
-import 'package:finance_tracker/presentation/widgets/transaction_item_widget.dart';
+import 'package:finance_tracker/presentation/widgets/transactions_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:finance_tracker/core/const/app_colors.dart';
@@ -20,7 +20,12 @@ class TransactionsByCategory extends StatelessWidget {
       body: Column(
         children: [
           HeaderWidget(
-            padding: const EdgeInsets.only(top: 50.0, left: 24.0, right: 24.0, bottom: 24.0),
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 5,
+              left: 20,
+              right: 20,
+              bottom: 20,
+            ),
             children: [
               Text(
                 category.name,
@@ -64,52 +69,7 @@ class TransactionsByCategory extends StatelessWidget {
                               return const Center(child: Text('No transactions found'));
                             }
 
-                            return ListView(
-                              children: grouped.entries.map((yearEntry) {
-                                final year = yearEntry.key;
-                                final months = yearEntry.value;
-
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                      child: Center(
-                                        child: Text(
-                                          year.toString(),
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    ...months.entries.map((monthEntry) {
-                                      final month = monthEntry.key;
-                                      final items = monthEntry.value;
-                                      return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                                            child: Text(
-                                              month,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ),
-                                          ...items.map(
-                                            (transaction) => buildTransactionItem(transaction),
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                  ],
-                                );
-                              }).toList(),
-                            );
+                            return buildTransactions(grouped);
                           },
                           orElse: () => Center(child: Text('Something went wrong')),
                         ),
