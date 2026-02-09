@@ -17,7 +17,12 @@ class ProfileScreen extends StatelessWidget {
     return Column(
       children: [
         HeaderWidget(
-          padding: EdgeInsets.only(top: 50.0, left: 16.0, right: 16.0, bottom: 65.0,),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 5,
+            left: 20,
+            right: 20,
+            bottom: 50,
+          ),
           children: [
             Text(
               'Profile',
