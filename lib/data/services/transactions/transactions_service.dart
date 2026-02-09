@@ -30,6 +30,11 @@ class TransactionsService {
         endLocal = DateTime(nowLocal.year, nowLocal.month + 1, 1);
         break;
 
+        case TransactionsPeriod.yearly:
+          startLocal = DateTime(nowLocal.year, 1, 1);
+          endLocal = DateTime(nowLocal.year + 1, 1, 1);
+          break;
+
       default:
         throw Exception('Unknown period');
     }
@@ -76,7 +81,9 @@ class TransactionsService {
 
     final data = await query.order('date', ascending: false);
 
-    return data.map((e) => Transaction.fromJson(e)).toList();
+    return data
+        .map((e) => Transaction.fromJson(e))
+        .toList();
   }
 
 
@@ -101,12 +108,24 @@ class TransactionsService {
       'title': transaction.title,
       'amount': transaction.amount,
       'date': transaction.date.toUtc().toIso8601String(),
-      'type': transaction.type.name,
+      'type': transaction.type,
       'category_id': transaction.categoryId,
       'user_id': user!.id,
       'note': transaction.note,
     };
 
     await _client.from('Transactions').insert(transactionData);
+  }
+
+  Future<List<Transaction>> getTransactionsByType(String type) async {
+    if (user == null) return [];
+
+    final transactions = await _client.from('Transactions')
+                                .select('*, category:Categories(*)')
+                                .eq('type', type);
+
+    return transactions
+        .map((e) => Transaction.fromJson(e))
+        .toList();
   }
 }
