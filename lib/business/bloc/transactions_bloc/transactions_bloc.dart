@@ -16,7 +16,9 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   TransactionsBloc({required this.transactionsService}) : super(const _Initial()) {
     on<GetTransactionsEvent>(onGetTransaction);
+    on<GetAllTransactionsEvent>(onGetAllTransactions);
     on<GetTransactionsByCategoryEvent>(onGetTransactionsByCategory);
+    on<GetTransactionsByTypeEvent>(onGetTransactionsByType);
     on<SaveTransactionEvent>(onSaveTransaction);
     on<RefreshTransactionsEvent>(onRefreshTransactions);
   }
@@ -24,6 +26,21 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   Future<void> onGetTransaction(GetTransactionsEvent e, Emitter emit) async {
     _currentPeriod = e.period;
     await _loadTransactions(emit);
+  }
+
+  Future<void> onGetAllTransactions(GetAllTransactionsEvent e, Emitter emit) async {
+    try {
+      _isCategoryView = false;
+      _currentCategoryId = null;
+
+      emit(const Loading(currentPeriod: null));
+      
+      final transactions = await transactionsService.getAllTransactions();
+      
+      emit(Updated(transactions, currentPeriod: null));
+    } catch (e) {
+      emit(Error(error: e.toString()));
+    }
   }
 
   Future<void> onGetTransactionsByCategory(GetTransactionsByCategoryEvent e, Emitter emit) async {
@@ -39,6 +56,18 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       );
       
       emit(Updated(transactions, currentPeriod: _currentPeriod));
+    } catch (e) {
+      emit(Error(error: e.toString()));
+    }
+  }
+
+  Future<void> onGetTransactionsByType(GetTransactionsByTypeEvent e, Emitter emit) async {
+    try {
+      emit(Loading());
+
+      final transactions = await transactionsService.getTransactionsByType(e.type);
+
+      emit(Updated(transactions));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
