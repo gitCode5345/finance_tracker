@@ -21,17 +21,14 @@ class AnalyticsScreen extends StatefulWidget {
 }
 
 class _AnalyticsScreenState extends State<AnalyticsScreen> {
-  // Зберігаємо, яка кнопка фільтру зараз активна в UI (Daily, Weekly...)
   String _activeViewMode = TransactionsPeriod.daily;
 
   @override
   void initState() {
     super.initState();
-    // При ініціалізації завантажуємо дані для дефолтного view
     _fetchDataForView(TransactionsPeriod.daily);
   }
 
-  /// Цей метод вирішує, які дані потрібні з бази для обраного виду графіка
   void _fetchDataForView(String viewMode) {
     setState(() {
       _activeViewMode = viewMode;
@@ -72,20 +69,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     return BlocBuilder<TransactionsBloc, TransactionsState>(
       builder: (context, state) {
         
-        // ВИПРАВЛЕННЯ 1: Явно вказуємо тип List<Transaction>
         final List<Transaction> transactions = state.maybeWhen(
           updated: (transactions, _) => transactions,
           loading: (_, transactions) => transactions ?? <Transaction>[],
           orElse: () => <Transaction>[],
         );
 
-        // Тепер методи calculateChartData, totalIncome, totalExpense будуть доступні
         final chartData = transactions.calculateChartData(_activeViewMode);
         
         final totalIncome = transactions.totalIncome;
         final totalExpense = transactions.totalExpense;
 
-        // Знаходимо максимальне значення Y для масштабу графіка
         double maxY = 0;
         for (var point in chartData) {
           if (point.income > maxY) maxY = point.income;
@@ -160,7 +154,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                             ),
                             const SizedBox(height: 30.0),
                             
-                            // Графік
                             GreenContainer(
                               radius: BorderRadius.circular(30.0),
                               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
@@ -255,14 +248,12 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                             x: data.x,
                                             barsSpace: 4, 
                                             barRods: [
-                                              // Income Bar
                                               BarChartRodData(
                                                 toY: data.income,
                                                 color: AppColors.primary,
                                                 width: 6,
                                                 borderRadius: BorderRadius.circular(4),
                                               ),
-                                              // Expense Bar
                                               BarChartRodData(
                                                 toY: data.expense,
                                                 color: AppColors.accentBlue,
@@ -280,7 +271,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                             ),
                             const SizedBox(height: 30.0),
                             
-                            // Інформація про суми знизу
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -313,7 +303,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 
-  // Віджет підписів знизу графіка
   Widget _bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(
       color: AppColors.borderGrafik,
@@ -340,7 +329,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         break;
     }
 
-    // ВИПРАВЛЕННЯ 2: Використовуємо meta замість axisSide, оскільки це SideTitleWidget
     return SideTitleWidget(
       meta: meta, 
       space: 4, 
@@ -348,7 +336,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 
-  // Кастомна кнопка фільтру
   Widget _buildCustomFilterBtn(String title, String mode) {
     final isActive = _activeViewMode == mode;
     return Expanded(
