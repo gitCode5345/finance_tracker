@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Transaction {
 
- String? get id; String get title; double get amount; DateTime get date; TransactionType get type; String get categoryId; Category? get category; String? get userId; String? get note;
+ String? get id; String get title; double get amount; DateTime get date; String get type; String get categoryId; Category? get category; String? get userId; String? get note;
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TransactionCopyWith<$Res>  {
   factory $TransactionCopyWith(Transaction value, $Res Function(Transaction) _then) = _$TransactionCopyWithImpl;
 @useResult
 $Res call({
- String? id, String title, double amount, DateTime date, TransactionType type, String categoryId, Category? category, String? userId, String? note
+ String? id, String title, double amount, DateTime date, String type, String categoryId, Category? category, String? userId, String? note
 });
 
 
@@ -72,7 +72,7 @@ as String?,title: null == title ? _self.title : title // ignore: cast_nullable_t
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String title,  double amount,  DateTime date,  TransactionType type,  String categoryId,  Category? category,  String? userId,  String? note)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String title,  double amount,  DateTime date,  String type,  String categoryId,  Category? category,  String? userId,  String? note)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
 return $default(_that.id,_that.title,_that.amount,_that.date,_that.type,_that.categoryId,_that.category,_that.userId,_that.note);case _:
@@ -194,7 +194,7 @@ return $default(_that.id,_that.title,_that.amount,_that.date,_that.type,_that.ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String title,  double amount,  DateTime date,  TransactionType type,  String categoryId,  Category? category,  String? userId,  String? note)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String title,  double amount,  DateTime date,  String type,  String categoryId,  Category? category,  String? userId,  String? note)  $default,) {final _that = this;
 switch (_that) {
 case _Transaction():
 return $default(_that.id,_that.title,_that.amount,_that.date,_that.type,_that.categoryId,_that.category,_that.userId,_that.note);case _:
@@ -214,7 +214,7 @@ return $default(_that.id,_that.title,_that.amount,_that.date,_that.type,_that.ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String title,  double amount,  DateTime date,  TransactionType type,  String categoryId,  Category? category,  String? userId,  String? note)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String title,  double amount,  DateTime date,  String type,  String categoryId,  Category? category,  String? userId,  String? note)?  $default,) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
 return $default(_that.id,_that.title,_that.amount,_that.date,_that.type,_that.categoryId,_that.category,_that.userId,_that.note);case _:
@@ -236,7 +236,7 @@ class _Transaction implements Transaction {
 @override final  String title;
 @override final  double amount;
 @override final  DateTime date;
-@override final  TransactionType type;
+@override final  String type;
 @override final  String categoryId;
 @override final  Category? category;
 @override final  String? userId;
@@ -275,7 +275,7 @@ abstract mixin class _$TransactionCopyWith<$Res> implements $TransactionCopyWith
   factory _$TransactionCopyWith(_Transaction value, $Res Function(_Transaction) _then) = __$TransactionCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String title, double amount, DateTime date, TransactionType type, String categoryId, Category? category, String? userId, String? note
+ String? id, String title, double amount, DateTime date, String type, String categoryId, Category? category, String? userId, String? note
 });
 
 
@@ -299,7 +299,7 @@ as String?,title: null == title ? _self.title : title // ignore: cast_nullable_t
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category?,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable

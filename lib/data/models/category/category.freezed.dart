@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Category {
 
- String? get id; String get name; TransactionType get type; bool get isSystem; String? get userId; String? get icon;
+ String? get id; String get name; String get type; bool get isSystem; String? get userId; String? get icon;
 /// Create a copy of Category
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CategoryCopyWith<$Res>  {
   factory $CategoryCopyWith(Category value, $Res Function(Category) _then) = _$CategoryCopyWithImpl;
 @useResult
 $Res call({
- String? id, String name, TransactionType type, bool isSystem, String? userId, String? icon
+ String? id, String name, String type, bool isSystem, String? userId, String? icon
 });
 
 
@@ -70,7 +70,7 @@ class _$CategoryCopyWithImpl<$Res>
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as TransactionType,isSystem: null == isSystem ? _self.isSystem : isSystem // ignore: cast_nullable_to_non_nullable
+as String,isSystem: null == isSystem ? _self.isSystem : isSystem // ignore: cast_nullable_to_non_nullable
 as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String name,  TransactionType type,  bool isSystem,  String? userId,  String? icon)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String name,  String type,  bool isSystem,  String? userId,  String? icon)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Category() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.isSystem,_that.userId,_that.icon);case _:
@@ -179,7 +179,7 @@ return $default(_that.id,_that.name,_that.type,_that.isSystem,_that.userId,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String name,  TransactionType type,  bool isSystem,  String? userId,  String? icon)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String name,  String type,  bool isSystem,  String? userId,  String? icon)  $default,) {final _that = this;
 switch (_that) {
 case _Category():
 return $default(_that.id,_that.name,_that.type,_that.isSystem,_that.userId,_that.icon);case _:
@@ -199,7 +199,7 @@ return $default(_that.id,_that.name,_that.type,_that.isSystem,_that.userId,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String name,  TransactionType type,  bool isSystem,  String? userId,  String? icon)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String name,  String type,  bool isSystem,  String? userId,  String? icon)?  $default,) {final _that = this;
 switch (_that) {
 case _Category() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.isSystem,_that.userId,_that.icon);case _:
@@ -219,7 +219,7 @@ class _Category implements Category {
 
 @override final  String? id;
 @override final  String name;
-@override final  TransactionType type;
+@override final  String type;
 @override final  bool isSystem;
 @override final  String? userId;
 @override final  String? icon;
@@ -257,7 +257,7 @@ abstract mixin class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res>
   factory _$CategoryCopyWith(_Category value, $Res Function(_Category) _then) = __$CategoryCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String name, TransactionType type, bool isSystem, String? userId, String? icon
+ String? id, String name, String type, bool isSystem, String? userId, String? icon
 });
 
 
@@ -279,7 +279,7 @@ class __$CategoryCopyWithImpl<$Res>
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as TransactionType,isSystem: null == isSystem ? _self.isSystem : isSystem // ignore: cast_nullable_to_non_nullable
+as String,isSystem: null == isSystem ? _self.isSystem : isSystem // ignore: cast_nullable_to_non_nullable
 as bool,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
 as String?,

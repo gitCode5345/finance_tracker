@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:finance_tracker/data/models/enums/transaction_type_enum.dart';
 import 'package:finance_tracker/data/models/category/category.dart';
+
 part 'transaction.freezed.dart';
 part 'transaction.g.dart';
 
@@ -12,7 +12,7 @@ abstract class Transaction with _$Transaction {
     required String title,
     required double amount,
     required DateTime date,
-    required TransactionType type,
+    required String type,
     required String categoryId,
     Category? category,
     String? userId,
