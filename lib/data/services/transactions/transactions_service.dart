@@ -1,5 +1,8 @@
 import 'package:finance_tracker/core/const/transactions_period.dart';
+import 'package:finance_tracker/core/const/transaction_type.dart';
+import 'package:finance_tracker/data/models/balance/balance.dart';
 import 'package:finance_tracker/data/models/transaction/transaction.dart';
+import 'package:finance_tracker/data/models/transactions_get_count/transactions_get_count.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TransactionsService {
@@ -45,7 +48,33 @@ class TransactionsService {
     );
   }
 
-  Future<List<Transaction>> getTransactionsByPeriod(String period) async {
+  Future<Balance> getTotalBalance() async {
+    if (user == null) return Balance();
+
+    final data = await _client
+        .from('Transactions')
+        .select('type, amount')
+        .eq('user_id', user!.id);
+
+    double income = 0.0;
+    double expense = 0.0;
+
+    for (var elem in data) {
+      if (elem['type'] == TransactionType.income) {
+        income += elem['amount'] as double;
+      } else {
+        expense += elem['amount'] as double;
+      }
+    }
+
+    return Balance(
+      totalBalance: income - expense,
+      income: income, 
+      expense: expense
+    );
+  }
+
+  Future<List<Transaction>> getTransactionsByPeriod(String period, TransactionsGetCount count) async {
     if (user == null) return [];
 
     final range = _getRangeByPeriod(period);
@@ -56,14 +85,15 @@ class TransactionsService {
         .eq('user_id', user!.id)
         .gte('date', range.start.toIso8601String())
         .lt('date', range.end.toIso8601String())
-        .order('date', ascending: false);
+        .order('date', ascending: false)
+        .range(count.firstPage, count.lastPage);
 
     return data
         .map<Transaction>((json) => Transaction.fromJson(json))
         .toList();
   }
 
-  Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period}) async {
+  Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period, required TransactionsGetCount count}) async {
     if (user == null) return [];
 
     var query = _client
@@ -79,7 +109,8 @@ class TransactionsService {
         .lt('date', range.end.toIso8601String());
     }
 
-    final data = await query.order('date', ascending: false);
+    final data = await query.order('date', ascending: false)
+        .range(count.firstPage, count.lastPage);
 
     return data
         .map((e) => Transaction.fromJson(e))
@@ -87,14 +118,15 @@ class TransactionsService {
   }
 
 
-  Future<List<Transaction>> getAllTransactions() async {
+  Future<List<Transaction>> getAllTransactions(TransactionsGetCount count) async {
     if (user == null) return [];
 
     final data = await _client
         .from('Transactions')
         .select('*, category:Categories(*)')
         .eq('user_id', user!.id)
-        .order('date', ascending: false);
+        .order('date', ascending: false)
+        .range(count.firstPage, count.lastPage);
 
     return data
         .map<Transaction>((json) => Transaction.fromJson(json))
@@ -117,15 +149,22 @@ class TransactionsService {
     await _client.from('Transactions').insert(transactionData);
   }
 
-  Future<List<Transaction>> getTransactionsByType(String type) async {
+  Future<List<Transaction>> getTransactionsByType(String type, {String? period, TransactionsGetCount? count}) async {
     if (user == null) return [];
 
-    final transactions = await _client.from('Transactions')
-        .select('*, category:Categories(*)')
-        .eq('type', type);
+    var query = _client.from('Transactions').select('*, category:Categories(*)').eq('user_id', user!.id).eq('type', type);
 
-    return transactions
-        .map((e) => Transaction.fromJson(e))
-        .toList();
+    if (period != null && period.isNotEmpty) {
+      final range = _getRangeByPeriod(period);
+      query = query.gte('date', range.start.toIso8601String()).lt('date', range.end.toIso8601String());
+    }
+
+    if (count != null) {
+      final data = await query.order('date', ascending: false).range(count.firstPage, count.lastPage);
+      return data.map((e) => Transaction.fromJson(e)).toList();
+    }
+
+    final data = await query.order('date', ascending: false);
+    return data.map((e) => Transaction.fromJson(e)).toList();
   }
 }

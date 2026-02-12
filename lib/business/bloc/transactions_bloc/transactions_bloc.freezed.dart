@@ -55,17 +55,20 @@ extension TransactionsEventPatterns on TransactionsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( GetTransactionsEvent value)?  getTransactions,TResult Function( GetAllTransactionsEvent value)?  getAllTransactions,TResult Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult Function( SaveTransactionEvent value)?  saveTransaction,TResult Function( GetTransactionsByTypeEvent value)?  getTransactionsByType,TResult Function( RefreshTransactionsEvent value)?  refreshTransactions,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( GetTransactionsEvent value)?  getTransactions,TResult Function( GetTransactionsSilentEvent value)?  getTransactionsSilent,TResult Function( GetAllTransactionsEvent value)?  getAllTransactions,TResult Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult Function( SaveTransactionEvent value)?  saveTransaction,TResult Function( GetTransactionsByTypeEvent value)?  getTransactionsByType,TResult Function( GetTransactionsByTypeSilentEvent value)?  getTransactionsByTypeSilent,TResult Function( LoadMoreTransactionsEvent value)?  loadMoreTransactions,TResult Function( RefreshTransactionsEvent value)?  refreshTransactions,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case GetTransactionsEvent() when getTransactions != null:
-return getTransactions(_that);case GetAllTransactionsEvent() when getAllTransactions != null:
+return getTransactions(_that);case GetTransactionsSilentEvent() when getTransactionsSilent != null:
+return getTransactionsSilent(_that);case GetAllTransactionsEvent() when getAllTransactions != null:
 return getAllTransactions(_that);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions(_that);case SaveTransactionEvent() when saveTransaction != null:
 return saveTransaction(_that);case GetTransactionsByTypeEvent() when getTransactionsByType != null:
-return getTransactionsByType(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
+return getTransactionsByType(_that);case GetTransactionsByTypeSilentEvent() when getTransactionsByTypeSilent != null:
+return getTransactionsByTypeSilent(_that);case LoadMoreTransactionsEvent() when loadMoreTransactions != null:
+return loadMoreTransactions(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
 return refreshTransactions(_that);case _:
   return orElse();
 
@@ -84,17 +87,20 @@ return refreshTransactions(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( GetTransactionsEvent value)  getTransactions,required TResult Function( GetAllTransactionsEvent value)  getAllTransactions,required TResult Function( GetTransactionsByCategoryEvent value)  getTransactionsByCategory,required TResult Function( LoadingTransactionsEvent value)  loadingTransactions,required TResult Function( SaveTransactionEvent value)  saveTransaction,required TResult Function( GetTransactionsByTypeEvent value)  getTransactionsByType,required TResult Function( RefreshTransactionsEvent value)  refreshTransactions,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( GetTransactionsEvent value)  getTransactions,required TResult Function( GetTransactionsSilentEvent value)  getTransactionsSilent,required TResult Function( GetAllTransactionsEvent value)  getAllTransactions,required TResult Function( GetTransactionsByCategoryEvent value)  getTransactionsByCategory,required TResult Function( LoadingTransactionsEvent value)  loadingTransactions,required TResult Function( SaveTransactionEvent value)  saveTransaction,required TResult Function( GetTransactionsByTypeEvent value)  getTransactionsByType,required TResult Function( GetTransactionsByTypeSilentEvent value)  getTransactionsByTypeSilent,required TResult Function( LoadMoreTransactionsEvent value)  loadMoreTransactions,required TResult Function( RefreshTransactionsEvent value)  refreshTransactions,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case GetTransactionsEvent():
-return getTransactions(_that);case GetAllTransactionsEvent():
+return getTransactions(_that);case GetTransactionsSilentEvent():
+return getTransactionsSilent(_that);case GetAllTransactionsEvent():
 return getAllTransactions(_that);case GetTransactionsByCategoryEvent():
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent():
 return loadingTransactions(_that);case SaveTransactionEvent():
 return saveTransaction(_that);case GetTransactionsByTypeEvent():
-return getTransactionsByType(_that);case RefreshTransactionsEvent():
+return getTransactionsByType(_that);case GetTransactionsByTypeSilentEvent():
+return getTransactionsByTypeSilent(_that);case LoadMoreTransactionsEvent():
+return loadMoreTransactions(_that);case RefreshTransactionsEvent():
 return refreshTransactions(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -112,17 +118,20 @@ return refreshTransactions(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( GetTransactionsEvent value)?  getTransactions,TResult? Function( GetAllTransactionsEvent value)?  getAllTransactions,TResult? Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult? Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult? Function( SaveTransactionEvent value)?  saveTransaction,TResult? Function( GetTransactionsByTypeEvent value)?  getTransactionsByType,TResult? Function( RefreshTransactionsEvent value)?  refreshTransactions,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( GetTransactionsEvent value)?  getTransactions,TResult? Function( GetTransactionsSilentEvent value)?  getTransactionsSilent,TResult? Function( GetAllTransactionsEvent value)?  getAllTransactions,TResult? Function( GetTransactionsByCategoryEvent value)?  getTransactionsByCategory,TResult? Function( LoadingTransactionsEvent value)?  loadingTransactions,TResult? Function( SaveTransactionEvent value)?  saveTransaction,TResult? Function( GetTransactionsByTypeEvent value)?  getTransactionsByType,TResult? Function( GetTransactionsByTypeSilentEvent value)?  getTransactionsByTypeSilent,TResult? Function( LoadMoreTransactionsEvent value)?  loadMoreTransactions,TResult? Function( RefreshTransactionsEvent value)?  refreshTransactions,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case GetTransactionsEvent() when getTransactions != null:
-return getTransactions(_that);case GetAllTransactionsEvent() when getAllTransactions != null:
+return getTransactions(_that);case GetTransactionsSilentEvent() when getTransactionsSilent != null:
+return getTransactionsSilent(_that);case GetAllTransactionsEvent() when getAllTransactions != null:
 return getAllTransactions(_that);case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions(_that);case SaveTransactionEvent() when saveTransaction != null:
 return saveTransaction(_that);case GetTransactionsByTypeEvent() when getTransactionsByType != null:
-return getTransactionsByType(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
+return getTransactionsByType(_that);case GetTransactionsByTypeSilentEvent() when getTransactionsByTypeSilent != null:
+return getTransactionsByTypeSilent(_that);case LoadMoreTransactionsEvent() when loadMoreTransactions != null:
+return loadMoreTransactions(_that);case RefreshTransactionsEvent() when refreshTransactions != null:
 return refreshTransactions(_that);case _:
   return null;
 
@@ -140,16 +149,19 @@ return refreshTransactions(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String period)?  getTransactions,TResult Function()?  getAllTransactions,TResult Function( String categoryId,  String period)?  getTransactionsByCategory,TResult Function()?  loadingTransactions,TResult Function( Transaction transaction)?  saveTransaction,TResult Function( String type,  String? period)?  getTransactionsByType,TResult Function()?  refreshTransactions,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String period,  TransactionsGetCount? count)?  getTransactions,TResult Function( String period,  TransactionsGetCount? count)?  getTransactionsSilent,TResult Function()?  getAllTransactions,TResult Function( String categoryId,  String period)?  getTransactionsByCategory,TResult Function()?  loadingTransactions,TResult Function( Transaction transaction)?  saveTransaction,TResult Function( String type,  String? period)?  getTransactionsByType,TResult Function( String type,  String? period,  TransactionsGetCount? count)?  getTransactionsByTypeSilent,TResult Function()?  loadMoreTransactions,TResult Function()?  refreshTransactions,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case GetTransactionsEvent() when getTransactions != null:
-return getTransactions(_that.period);case GetAllTransactionsEvent() when getAllTransactions != null:
+return getTransactions(_that.period,_that.count);case GetTransactionsSilentEvent() when getTransactionsSilent != null:
+return getTransactionsSilent(_that.period,_that.count);case GetAllTransactionsEvent() when getAllTransactions != null:
 return getAllTransactions();case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions();case SaveTransactionEvent() when saveTransaction != null:
 return saveTransaction(_that.transaction);case GetTransactionsByTypeEvent() when getTransactionsByType != null:
-return getTransactionsByType(_that.type,_that.period);case RefreshTransactionsEvent() when refreshTransactions != null:
+return getTransactionsByType(_that.type,_that.period);case GetTransactionsByTypeSilentEvent() when getTransactionsByTypeSilent != null:
+return getTransactionsByTypeSilent(_that.type,_that.period,_that.count);case LoadMoreTransactionsEvent() when loadMoreTransactions != null:
+return loadMoreTransactions();case RefreshTransactionsEvent() when refreshTransactions != null:
 return refreshTransactions();case _:
   return orElse();
 
@@ -168,16 +180,19 @@ return refreshTransactions();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String period)  getTransactions,required TResult Function()  getAllTransactions,required TResult Function( String categoryId,  String period)  getTransactionsByCategory,required TResult Function()  loadingTransactions,required TResult Function( Transaction transaction)  saveTransaction,required TResult Function( String type,  String? period)  getTransactionsByType,required TResult Function()  refreshTransactions,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String period,  TransactionsGetCount? count)  getTransactions,required TResult Function( String period,  TransactionsGetCount? count)  getTransactionsSilent,required TResult Function()  getAllTransactions,required TResult Function( String categoryId,  String period)  getTransactionsByCategory,required TResult Function()  loadingTransactions,required TResult Function( Transaction transaction)  saveTransaction,required TResult Function( String type,  String? period)  getTransactionsByType,required TResult Function( String type,  String? period,  TransactionsGetCount? count)  getTransactionsByTypeSilent,required TResult Function()  loadMoreTransactions,required TResult Function()  refreshTransactions,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case GetTransactionsEvent():
-return getTransactions(_that.period);case GetAllTransactionsEvent():
+return getTransactions(_that.period,_that.count);case GetTransactionsSilentEvent():
+return getTransactionsSilent(_that.period,_that.count);case GetAllTransactionsEvent():
 return getAllTransactions();case GetTransactionsByCategoryEvent():
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent():
 return loadingTransactions();case SaveTransactionEvent():
 return saveTransaction(_that.transaction);case GetTransactionsByTypeEvent():
-return getTransactionsByType(_that.type,_that.period);case RefreshTransactionsEvent():
+return getTransactionsByType(_that.type,_that.period);case GetTransactionsByTypeSilentEvent():
+return getTransactionsByTypeSilent(_that.type,_that.period,_that.count);case LoadMoreTransactionsEvent():
+return loadMoreTransactions();case RefreshTransactionsEvent():
 return refreshTransactions();case _:
   throw StateError('Unexpected subclass');
 
@@ -195,16 +210,19 @@ return refreshTransactions();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String period)?  getTransactions,TResult? Function()?  getAllTransactions,TResult? Function( String categoryId,  String period)?  getTransactionsByCategory,TResult? Function()?  loadingTransactions,TResult? Function( Transaction transaction)?  saveTransaction,TResult? Function( String type,  String? period)?  getTransactionsByType,TResult? Function()?  refreshTransactions,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String period,  TransactionsGetCount? count)?  getTransactions,TResult? Function( String period,  TransactionsGetCount? count)?  getTransactionsSilent,TResult? Function()?  getAllTransactions,TResult? Function( String categoryId,  String period)?  getTransactionsByCategory,TResult? Function()?  loadingTransactions,TResult? Function( Transaction transaction)?  saveTransaction,TResult? Function( String type,  String? period)?  getTransactionsByType,TResult? Function( String type,  String? period,  TransactionsGetCount? count)?  getTransactionsByTypeSilent,TResult? Function()?  loadMoreTransactions,TResult? Function()?  refreshTransactions,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case GetTransactionsEvent() when getTransactions != null:
-return getTransactions(_that.period);case GetAllTransactionsEvent() when getAllTransactions != null:
+return getTransactions(_that.period,_that.count);case GetTransactionsSilentEvent() when getTransactionsSilent != null:
+return getTransactionsSilent(_that.period,_that.count);case GetAllTransactionsEvent() when getAllTransactions != null:
 return getAllTransactions();case GetTransactionsByCategoryEvent() when getTransactionsByCategory != null:
 return getTransactionsByCategory(_that.categoryId,_that.period);case LoadingTransactionsEvent() when loadingTransactions != null:
 return loadingTransactions();case SaveTransactionEvent() when saveTransaction != null:
 return saveTransaction(_that.transaction);case GetTransactionsByTypeEvent() when getTransactionsByType != null:
-return getTransactionsByType(_that.type,_that.period);case RefreshTransactionsEvent() when refreshTransactions != null:
+return getTransactionsByType(_that.type,_that.period);case GetTransactionsByTypeSilentEvent() when getTransactionsByTypeSilent != null:
+return getTransactionsByTypeSilent(_that.type,_that.period,_that.count);case LoadMoreTransactionsEvent() when loadMoreTransactions != null:
+return loadMoreTransactions();case RefreshTransactionsEvent() when refreshTransactions != null:
 return refreshTransactions();case _:
   return null;
 
@@ -249,10 +267,11 @@ String toString() {
 
 
 class GetTransactionsEvent implements TransactionsEvent {
-  const GetTransactionsEvent({required this.period});
+  const GetTransactionsEvent({required this.period, this.count});
   
 
  final  String period;
+ final  TransactionsGetCount? count;
 
 /// Create a copy of TransactionsEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -264,16 +283,16 @@ $GetTransactionsEventCopyWith<GetTransactionsEvent> get copyWith => _$GetTransac
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTransactionsEvent&&(identical(other.period, period) || other.period == period));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTransactionsEvent&&(identical(other.period, period) || other.period == period)&&(identical(other.count, count) || other.count == count));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,period);
+int get hashCode => Object.hash(runtimeType,period,count);
 
 @override
 String toString() {
-  return 'TransactionsEvent.getTransactions(period: $period)';
+  return 'TransactionsEvent.getTransactions(period: $period, count: $count)';
 }
 
 
@@ -284,11 +303,11 @@ abstract mixin class $GetTransactionsEventCopyWith<$Res> implements $Transaction
   factory $GetTransactionsEventCopyWith(GetTransactionsEvent value, $Res Function(GetTransactionsEvent) _then) = _$GetTransactionsEventCopyWithImpl;
 @useResult
 $Res call({
- String period
+ String period, TransactionsGetCount? count
 });
 
 
-
+$TransactionsGetCountCopyWith<$Res>? get count;
 
 }
 /// @nodoc
@@ -301,14 +320,107 @@ class _$GetTransactionsEventCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? period = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? period = null,Object? count = freezed,}) {
   return _then(GetTransactionsEvent(
 period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
-as String,
+as String,count: freezed == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as TransactionsGetCount?,
   ));
 }
 
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionsGetCountCopyWith<$Res>? get count {
+    if (_self.count == null) {
+    return null;
+  }
 
+  return $TransactionsGetCountCopyWith<$Res>(_self.count!, (value) {
+    return _then(_self.copyWith(count: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class GetTransactionsSilentEvent implements TransactionsEvent {
+  const GetTransactionsSilentEvent({required this.period, this.count});
+  
+
+ final  String period;
+ final  TransactionsGetCount? count;
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetTransactionsSilentEventCopyWith<GetTransactionsSilentEvent> get copyWith => _$GetTransactionsSilentEventCopyWithImpl<GetTransactionsSilentEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTransactionsSilentEvent&&(identical(other.period, period) || other.period == period)&&(identical(other.count, count) || other.count == count));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,period,count);
+
+@override
+String toString() {
+  return 'TransactionsEvent.getTransactionsSilent(period: $period, count: $count)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetTransactionsSilentEventCopyWith<$Res> implements $TransactionsEventCopyWith<$Res> {
+  factory $GetTransactionsSilentEventCopyWith(GetTransactionsSilentEvent value, $Res Function(GetTransactionsSilentEvent) _then) = _$GetTransactionsSilentEventCopyWithImpl;
+@useResult
+$Res call({
+ String period, TransactionsGetCount? count
+});
+
+
+$TransactionsGetCountCopyWith<$Res>? get count;
+
+}
+/// @nodoc
+class _$GetTransactionsSilentEventCopyWithImpl<$Res>
+    implements $GetTransactionsSilentEventCopyWith<$Res> {
+  _$GetTransactionsSilentEventCopyWithImpl(this._self, this._then);
+
+  final GetTransactionsSilentEvent _self;
+  final $Res Function(GetTransactionsSilentEvent) _then;
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? period = null,Object? count = freezed,}) {
+  return _then(GetTransactionsSilentEvent(
+period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as String,count: freezed == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as TransactionsGetCount?,
+  ));
+}
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionsGetCountCopyWith<$Res>? get count {
+    if (_self.count == null) {
+    return null;
+  }
+
+  return $TransactionsGetCountCopyWith<$Res>(_self.count!, (value) {
+    return _then(_self.copyWith(count: value));
+  });
+}
 }
 
 /// @nodoc
@@ -589,6 +701,120 @@ as String?,
 /// @nodoc
 
 
+class GetTransactionsByTypeSilentEvent implements TransactionsEvent {
+  const GetTransactionsByTypeSilentEvent({required this.type, this.period, this.count});
+  
+
+ final  String type;
+ final  String? period;
+ final  TransactionsGetCount? count;
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetTransactionsByTypeSilentEventCopyWith<GetTransactionsByTypeSilentEvent> get copyWith => _$GetTransactionsByTypeSilentEventCopyWithImpl<GetTransactionsByTypeSilentEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTransactionsByTypeSilentEvent&&(identical(other.type, type) || other.type == type)&&(identical(other.period, period) || other.period == period)&&(identical(other.count, count) || other.count == count));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,type,period,count);
+
+@override
+String toString() {
+  return 'TransactionsEvent.getTransactionsByTypeSilent(type: $type, period: $period, count: $count)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetTransactionsByTypeSilentEventCopyWith<$Res> implements $TransactionsEventCopyWith<$Res> {
+  factory $GetTransactionsByTypeSilentEventCopyWith(GetTransactionsByTypeSilentEvent value, $Res Function(GetTransactionsByTypeSilentEvent) _then) = _$GetTransactionsByTypeSilentEventCopyWithImpl;
+@useResult
+$Res call({
+ String type, String? period, TransactionsGetCount? count
+});
+
+
+$TransactionsGetCountCopyWith<$Res>? get count;
+
+}
+/// @nodoc
+class _$GetTransactionsByTypeSilentEventCopyWithImpl<$Res>
+    implements $GetTransactionsByTypeSilentEventCopyWith<$Res> {
+  _$GetTransactionsByTypeSilentEventCopyWithImpl(this._self, this._then);
+
+  final GetTransactionsByTypeSilentEvent _self;
+  final $Res Function(GetTransactionsByTypeSilentEvent) _then;
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? type = null,Object? period = freezed,Object? count = freezed,}) {
+  return _then(GetTransactionsByTypeSilentEvent(
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,period: freezed == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as String?,count: freezed == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as TransactionsGetCount?,
+  ));
+}
+
+/// Create a copy of TransactionsEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionsGetCountCopyWith<$Res>? get count {
+    if (_self.count == null) {
+    return null;
+  }
+
+  return $TransactionsGetCountCopyWith<$Res>(_self.count!, (value) {
+    return _then(_self.copyWith(count: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class LoadMoreTransactionsEvent implements TransactionsEvent {
+  const LoadMoreTransactionsEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadMoreTransactionsEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionsEvent.loadMoreTransactions()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class RefreshTransactionsEvent implements TransactionsEvent {
   const RefreshTransactionsEvent();
   
@@ -662,13 +888,14 @@ extension TransactionsStatePatterns on TransactionsState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( Loading value)?  loading,TResult Function( Updated value)?  updated,TResult Function( Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( Loading value)?  loading,TResult Function( Updated value)?  updated,TResult Function( SilentUpdated value)?  silentUpdated,TResult Function( Error value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case Loading() when loading != null:
 return loading(_that);case Updated() when updated != null:
-return updated(_that);case Error() when error != null:
+return updated(_that);case SilentUpdated() when silentUpdated != null:
+return silentUpdated(_that);case Error() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -687,13 +914,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( Loading value)  loading,required TResult Function( Updated value)  updated,required TResult Function( Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( Loading value)  loading,required TResult Function( Updated value)  updated,required TResult Function( SilentUpdated value)  silentUpdated,required TResult Function( Error value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case Loading():
 return loading(_that);case Updated():
-return updated(_that);case Error():
+return updated(_that);case SilentUpdated():
+return silentUpdated(_that);case Error():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -711,13 +939,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( Loading value)?  loading,TResult? Function( Updated value)?  updated,TResult? Function( Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( Loading value)?  loading,TResult? Function( Updated value)?  updated,TResult? Function( SilentUpdated value)?  silentUpdated,TResult? Function( Error value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case Loading() when loading != null:
 return loading(_that);case Updated() when updated != null:
-return updated(_that);case Error() when error != null:
+return updated(_that);case SilentUpdated() when silentUpdated != null:
+return silentUpdated(_that);case Error() when error != null:
 return error(_that);case _:
   return null;
 
@@ -735,12 +964,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? currentPeriod,  List<Transaction>? transactions)?  loading,TResult Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( TransactionsView? view)?  loading,TResult Function( TransactionsView view)?  updated,TResult Function( TransactionsView view)?  silentUpdated,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
-return loading(_that.currentPeriod,_that.transactions);case Updated() when updated != null:
-return updated(_that.transactions,_that.currentPeriod);case Error() when error != null:
+return loading(_that.view);case Updated() when updated != null:
+return updated(_that.view);case SilentUpdated() when silentUpdated != null:
+return silentUpdated(_that.view);case Error() when error != null:
 return error(_that.error);case _:
   return orElse();
 
@@ -759,12 +989,13 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? currentPeriod,  List<Transaction>? transactions)  loading,required TResult Function( List<Transaction> transactions,  String? currentPeriod)  updated,required TResult Function( String error)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( TransactionsView? view)  loading,required TResult Function( TransactionsView view)  updated,required TResult Function( TransactionsView view)  silentUpdated,required TResult Function( String error)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case Loading():
-return loading(_that.currentPeriod,_that.transactions);case Updated():
-return updated(_that.transactions,_that.currentPeriod);case Error():
+return loading(_that.view);case Updated():
+return updated(_that.view);case SilentUpdated():
+return silentUpdated(_that.view);case Error():
 return error(_that.error);case _:
   throw StateError('Unexpected subclass');
 
@@ -782,12 +1013,13 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? currentPeriod,  List<Transaction>? transactions)?  loading,TResult? Function( List<Transaction> transactions,  String? currentPeriod)?  updated,TResult? Function( String error)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( TransactionsView? view)?  loading,TResult? Function( TransactionsView view)?  updated,TResult? Function( TransactionsView view)?  silentUpdated,TResult? Function( String error)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
-return loading(_that.currentPeriod,_that.transactions);case Updated() when updated != null:
-return updated(_that.transactions,_that.currentPeriod);case Error() when error != null:
+return loading(_that.view);case Updated() when updated != null:
+return updated(_that.view);case SilentUpdated() when silentUpdated != null:
+return silentUpdated(_that.view);case Error() when error != null:
 return error(_that.error);case _:
   return null;
 
@@ -832,19 +1064,10 @@ String toString() {
 
 
 class Loading implements TransactionsState {
-  const Loading({this.currentPeriod, final  List<Transaction>? transactions}): _transactions = transactions;
+  const Loading({this.view});
   
 
- final  String? currentPeriod;
- final  List<Transaction>? _transactions;
- List<Transaction>? get transactions {
-  final value = _transactions;
-  if (value == null) return null;
-  if (_transactions is EqualUnmodifiableListView) return _transactions;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
+ final  TransactionsView? view;
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
@@ -856,16 +1079,16 @@ $LoadingCopyWith<Loading> get copyWith => _$LoadingCopyWithImpl<Loading>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loading&&(identical(other.currentPeriod, currentPeriod) || other.currentPeriod == currentPeriod)&&const DeepCollectionEquality().equals(other._transactions, _transactions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loading&&(identical(other.view, view) || other.view == view));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentPeriod,const DeepCollectionEquality().hash(_transactions));
+int get hashCode => Object.hash(runtimeType,view);
 
 @override
 String toString() {
-  return 'TransactionsState.loading(currentPeriod: $currentPeriod, transactions: $transactions)';
+  return 'TransactionsState.loading(view: $view)';
 }
 
 
@@ -876,7 +1099,7 @@ abstract mixin class $LoadingCopyWith<$Res> implements $TransactionsStateCopyWit
   factory $LoadingCopyWith(Loading value, $Res Function(Loading) _then) = _$LoadingCopyWithImpl;
 @useResult
 $Res call({
- String? currentPeriod, List<Transaction>? transactions
+ TransactionsView? view
 });
 
 
@@ -893,11 +1116,10 @@ class _$LoadingCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? currentPeriod = freezed,Object? transactions = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? view = freezed,}) {
   return _then(Loading(
-currentPeriod: freezed == currentPeriod ? _self.currentPeriod : currentPeriod // ignore: cast_nullable_to_non_nullable
-as String?,transactions: freezed == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
-as List<Transaction>?,
+view: freezed == view ? _self.view : view // ignore: cast_nullable_to_non_nullable
+as TransactionsView?,
   ));
 }
 
@@ -908,17 +1130,10 @@ as List<Transaction>?,
 
 
 class Updated implements TransactionsState {
-  const Updated(final  List<Transaction> transactions, {this.currentPeriod}): _transactions = transactions;
+  const Updated(this.view);
   
 
- final  List<Transaction> _transactions;
- List<Transaction> get transactions {
-  if (_transactions is EqualUnmodifiableListView) return _transactions;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_transactions);
-}
-
- final  String? currentPeriod;
+ final  TransactionsView view;
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
@@ -930,16 +1145,16 @@ $UpdatedCopyWith<Updated> get copyWith => _$UpdatedCopyWithImpl<Updated>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Updated&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.currentPeriod, currentPeriod) || other.currentPeriod == currentPeriod));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Updated&&(identical(other.view, view) || other.view == view));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_transactions),currentPeriod);
+int get hashCode => Object.hash(runtimeType,view);
 
 @override
 String toString() {
-  return 'TransactionsState.updated(transactions: $transactions, currentPeriod: $currentPeriod)';
+  return 'TransactionsState.updated(view: $view)';
 }
 
 
@@ -950,7 +1165,7 @@ abstract mixin class $UpdatedCopyWith<$Res> implements $TransactionsStateCopyWit
   factory $UpdatedCopyWith(Updated value, $Res Function(Updated) _then) = _$UpdatedCopyWithImpl;
 @useResult
 $Res call({
- List<Transaction> transactions, String? currentPeriod
+ TransactionsView view
 });
 
 
@@ -967,11 +1182,76 @@ class _$UpdatedCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? transactions = null,Object? currentPeriod = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? view = null,}) {
   return _then(Updated(
-null == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
-as List<Transaction>,currentPeriod: freezed == currentPeriod ? _self.currentPeriod : currentPeriod // ignore: cast_nullable_to_non_nullable
-as String?,
+null == view ? _self.view : view // ignore: cast_nullable_to_non_nullable
+as TransactionsView,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SilentUpdated implements TransactionsState {
+  const SilentUpdated(this.view);
+  
+
+ final  TransactionsView view;
+
+/// Create a copy of TransactionsState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SilentUpdatedCopyWith<SilentUpdated> get copyWith => _$SilentUpdatedCopyWithImpl<SilentUpdated>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SilentUpdated&&(identical(other.view, view) || other.view == view));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,view);
+
+@override
+String toString() {
+  return 'TransactionsState.silentUpdated(view: $view)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SilentUpdatedCopyWith<$Res> implements $TransactionsStateCopyWith<$Res> {
+  factory $SilentUpdatedCopyWith(SilentUpdated value, $Res Function(SilentUpdated) _then) = _$SilentUpdatedCopyWithImpl;
+@useResult
+$Res call({
+ TransactionsView view
+});
+
+
+
+
+}
+/// @nodoc
+class _$SilentUpdatedCopyWithImpl<$Res>
+    implements $SilentUpdatedCopyWith<$Res> {
+  _$SilentUpdatedCopyWithImpl(this._self, this._then);
+
+  final SilentUpdated _self;
+  final $Res Function(SilentUpdated) _then;
+
+/// Create a copy of TransactionsState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? view = null,}) {
+  return _then(SilentUpdated(
+null == view ? _self.view : view // ignore: cast_nullable_to_non_nullable
+as TransactionsView,
   ));
 }
 
