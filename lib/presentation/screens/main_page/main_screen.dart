@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
       extendBody: true,
       body: widget.user.isNewUser
           ? _buildOnBoardingPage(context)
-          : Center(child: pages[selectedPageIndex]),
+          : pages[selectedPageIndex],
       bottomNavigationBar: !widget.user.isNewUser
           ? GreenContainer(
               width: double.infinity,
