@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Balance {
 
- String? get id; double get balance; String? get userId;
+ double get totalBalance; double get expense; double get income;
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $BalanceCopyWith<Balance> get copyWith => _$BalanceCopyWithImpl<Balance>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Balance&&(identical(other.id, id) || other.id == id)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Balance&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.expense, expense) || other.expense == expense)&&(identical(other.income, income) || other.income == income));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,balance,userId);
+int get hashCode => Object.hash(runtimeType,totalBalance,expense,income);
 
 @override
 String toString() {
-  return 'Balance(id: $id, balance: $balance, userId: $userId)';
+  return 'Balance(totalBalance: $totalBalance, expense: $expense, income: $income)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $BalanceCopyWith<$Res>  {
   factory $BalanceCopyWith(Balance value, $Res Function(Balance) _then) = _$BalanceCopyWithImpl;
 @useResult
 $Res call({
- String? id, double balance, String? userId
+ double totalBalance, double expense, double income
 });
 
 
@@ -65,12 +65,12 @@ class _$BalanceCopyWithImpl<$Res>
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? balance = null,Object? userId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? totalBalance = null,Object? expense = null,Object? income = null,}) {
   return _then(_self.copyWith(
-id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
-as double,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String?,
+totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
+as double,expense: null == expense ? _self.expense : expense // ignore: cast_nullable_to_non_nullable
+as double,income: null == income ? _self.income : income // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  double balance,  String? userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double totalBalance,  double expense,  double income)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
-return $default(_that.id,_that.balance,_that.userId);case _:
+return $default(_that.totalBalance,_that.expense,_that.income);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.id,_that.balance,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  double balance,  String? userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double totalBalance,  double expense,  double income)  $default,) {final _that = this;
 switch (_that) {
 case _Balance():
-return $default(_that.id,_that.balance,_that.userId);case _:
+return $default(_that.totalBalance,_that.expense,_that.income);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return $default(_that.id,_that.balance,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  double balance,  String? userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double totalBalance,  double expense,  double income)?  $default,) {final _that = this;
 switch (_that) {
 case _Balance() when $default != null:
-return $default(_that.id,_that.balance,_that.userId);case _:
+return $default(_that.totalBalance,_that.expense,_that.income);case _:
   return null;
 
 }
@@ -211,12 +211,12 @@ return $default(_that.id,_that.balance,_that.userId);case _:
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _Balance implements Balance {
-  const _Balance({this.id, required this.balance, this.userId});
+  const _Balance({this.totalBalance = 0.0, this.expense = 0.0, this.income = 0.0});
   factory _Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);
 
-@override final  String? id;
-@override final  double balance;
-@override final  String? userId;
+@override@JsonKey() final  double totalBalance;
+@override@JsonKey() final  double expense;
+@override@JsonKey() final  double income;
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Balance&&(identical(other.id, id) || other.id == id)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Balance&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.expense, expense) || other.expense == expense)&&(identical(other.income, income) || other.income == income));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,balance,userId);
+int get hashCode => Object.hash(runtimeType,totalBalance,expense,income);
 
 @override
 String toString() {
-  return 'Balance(id: $id, balance: $balance, userId: $userId)';
+  return 'Balance(totalBalance: $totalBalance, expense: $expense, income: $income)';
 }
 
 
@@ -251,7 +251,7 @@ abstract mixin class _$BalanceCopyWith<$Res> implements $BalanceCopyWith<$Res> {
   factory _$BalanceCopyWith(_Balance value, $Res Function(_Balance) _then) = __$BalanceCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, double balance, String? userId
+ double totalBalance, double expense, double income
 });
 
 
@@ -268,12 +268,12 @@ class __$BalanceCopyWithImpl<$Res>
 
 /// Create a copy of Balance
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? balance = null,Object? userId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? totalBalance = null,Object? expense = null,Object? income = null,}) {
   return _then(_Balance(
-id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
-as double,userId: freezed == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String?,
+totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
+as double,expense: null == expense ? _self.expense : expense // ignore: cast_nullable_to_non_nullable
+as double,income: null == income ? _self.income : income // ignore: cast_nullable_to_non_nullable
+as double,
   ));
 }
 

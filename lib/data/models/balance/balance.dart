@@ -7,9 +7,9 @@ part 'balance.g.dart';
 abstract class Balance with _$Balance {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Balance({
-    String? id,
-    required double balance,
-    String? userId,
+    @Default(0.0) double totalBalance,
+    @Default(0.0) double expense,
+    @Default(0.0) double income,
   }) = _Balance;
 
   factory Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);

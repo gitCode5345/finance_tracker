@@ -7,13 +7,13 @@ part of 'balance.dart';
 // **************************************************************************
 
 _Balance _$BalanceFromJson(Map<String, dynamic> json) => _Balance(
-  id: json['id'] as String?,
-  balance: (json['balance'] as num).toDouble(),
-  userId: json['user_id'] as String?,
+  totalBalance: (json['total_balance'] as num?)?.toDouble() ?? 0.0,
+  expense: (json['expense'] as num?)?.toDouble() ?? 0.0,
+  income: (json['income'] as num?)?.toDouble() ?? 0.0,
 );
 
 Map<String, dynamic> _$BalanceToJson(_Balance instance) => <String, dynamic>{
-  'id': instance.id,
-  'balance': instance.balance,
-  'user_id': instance.userId,
+  'total_balance': instance.totalBalance,
+  'expense': instance.expense,
+  'income': instance.income,
 };
