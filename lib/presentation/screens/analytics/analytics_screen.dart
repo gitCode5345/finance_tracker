@@ -10,7 +10,10 @@ import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:finance_tracker/presentation/widgets/filter_button.dart';
+import 'package:finance_tracker/data/models/transactions_get_count/transactions_get_count.dart';
+import 'package:finance_tracker/presentation/widgets/small_icon_button.dart';
+import 'package:finance_tracker/presentation/widgets/summary_item.dart';
 
 class AnalyticsScreen extends StatefulWidget {
   final User user;
@@ -22,11 +25,13 @@ class AnalyticsScreen extends StatefulWidget {
 
 class _AnalyticsScreenState extends State<AnalyticsScreen> {
   String _activeViewMode = TransactionsPeriod.daily;
+  List<Transaction> _localTransactions = [];
+  String? _lastFetchedDataPeriod;
 
   @override
   void initState() {
     super.initState();
-    _fetchDataForView(TransactionsPeriod.daily);
+    _fetchDataForView(_activeViewMode);
   }
 
   void _fetchDataForView(String viewMode) {
@@ -37,24 +42,42 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     String dataPeriodNeeded;
     switch (viewMode) {
       case TransactionsPeriod.daily:
-        dataPeriodNeeded = TransactionsPeriod.weekly; 
+        dataPeriodNeeded = TransactionsPeriod.weekly;
         break;
       case TransactionsPeriod.weekly:
-        dataPeriodNeeded = TransactionsPeriod.monthly; 
+        dataPeriodNeeded = TransactionsPeriod.monthly;
         break;
       case TransactionsPeriod.monthly:
-        dataPeriodNeeded = TransactionsPeriod.yearly; 
+        dataPeriodNeeded = TransactionsPeriod.yearly;
         break;
       case TransactionsPeriod.yearly:
-        dataPeriodNeeded = TransactionsPeriod.yearly; 
-        break;
       default:
-        dataPeriodNeeded = TransactionsPeriod.daily;
+        dataPeriodNeeded = TransactionsPeriod.yearly;
     }
 
-    context.read<TransactionsBloc>().add(
-      GetTransactionsEvent(period: dataPeriodNeeded),
-    );
+    _lastFetchedDataPeriod = dataPeriodNeeded;
+
+    if (viewMode == TransactionsPeriod.monthly) {
+      context.read<TransactionsBloc>().service.getAllTransactions(TransactionsGetCount(firstPage: 0, lastPage: 999)).then((res) {
+        final cutoff = DateTime.now().subtract(Duration(days: 365));
+        setState(() {
+          _localTransactions = res.where((t) => !t.date.toLocal().isBefore(cutoff)).toList();
+        });
+      }).catchError((_) {});
+      return;
+    }
+
+    if (viewMode == TransactionsPeriod.yearly) {
+      context.read<TransactionsBloc>().service.getAllTransactions(TransactionsGetCount(firstPage: 0, lastPage: 999)).then((res) {
+        final cutoff = DateTime.now().subtract(Duration(days: 365 * 3));
+        setState(() {
+          _localTransactions = res.where((t) => !t.date.toLocal().isBefore(cutoff)).toList();
+        });
+      }).catchError((_) {});
+      return;
+    }
+
+    context.read<TransactionsBloc>().add(TransactionsEvent.getTransactionsSilent(period: dataPeriodNeeded, count: TransactionsGetCount(firstPage: 0, lastPage: 49)));
   }
 
   String _formatYAxisValue(double value) {
@@ -66,19 +89,39 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionsBloc, TransactionsState>(
-      builder: (context, state) {
+    return BlocListener<TransactionsBloc, TransactionsState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          silentUpdated: (view) {
+            if (view.currentPeriod == _lastFetchedDataPeriod) {
+              setState(() {
+                _localTransactions = view.transactions ?? <Transaction>[];
+              });
+            }
+          },
+          orElse: () {},
+        );
+      },
+      child: BlocBuilder<TransactionsBloc, TransactionsState>(
+        builder: (context, state) {
         
         final List<Transaction> transactions = state.maybeWhen(
-          updated: (transactions, _) => transactions,
-          loading: (_, transactions) => transactions ?? <Transaction>[],
+          updated: (view) => view.transactions ?? <Transaction>[],
+          loading: (view) => view?.transactions ?? <Transaction>[],
           orElse: () => <Transaction>[],
         );
 
-        final chartData = transactions.calculateChartData(_activeViewMode);
-        
-        final totalIncome = transactions.totalIncome;
-        final totalExpense = transactions.totalExpense;
+        final usingLocal = _lastFetchedDataPeriod != null && _lastFetchedDataPeriod!.isNotEmpty && _localTransactions.isNotEmpty;
+        final sourceTransactions = usingLocal ? _localTransactions : transactions;
+
+        final dataToUse = usingLocal
+          ? sourceTransactions
+          : (_activeViewMode == TransactionsPeriod.daily ? sourceTransactions : sourceTransactions.filterByPeriod(_activeViewMode));
+
+        final chartData = dataToUse.calculateChartData(_activeViewMode);
+
+        final totalIncome = dataToUse.totalIncome;
+        final totalExpense = dataToUse.totalExpense;
 
         double maxY = 0;
         for (var point in chartData) {
@@ -135,7 +178,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         child: Column(
                           children: [
                             const SizedBox(height: 40.0),
-                            // Фільтри
                             GreenContainer(
                               width: maxWidth,
                               height: 60.0,
@@ -144,10 +186,38 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Row(
                                   children: [
-                                    _buildCustomFilterBtn('Daily', TransactionsPeriod.daily),
-                                    _buildCustomFilterBtn('Weekly', TransactionsPeriod.weekly),
-                                    _buildCustomFilterBtn('Monthly', TransactionsPeriod.monthly),
-                                    _buildCustomFilterBtn('Yearly', TransactionsPeriod.yearly),
+                                    buildFilterButton(
+                                      context,
+                                      'Daily',
+                                      TransactionsPeriod.daily,
+                                      _activeViewMode,
+                                      TransactionsGetCount(firstPage: 0, lastPage: 49),
+                                      onPressed: () => _fetchDataForView(TransactionsPeriod.daily),
+                                    ),
+                                    buildFilterButton(
+                                      context,
+                                      'Weekly',
+                                      TransactionsPeriod.weekly,
+                                      _activeViewMode,
+                                      TransactionsGetCount(firstPage: 0, lastPage: 49),
+                                      onPressed: () => _fetchDataForView(TransactionsPeriod.weekly),
+                                    ),
+                                    buildFilterButton(
+                                      context,
+                                      'Monthly',
+                                      TransactionsPeriod.monthly,
+                                      _activeViewMode,
+                                      TransactionsGetCount(firstPage: 0, lastPage: 49),
+                                      onPressed: () => _fetchDataForView(TransactionsPeriod.monthly),
+                                    ),
+                                    buildFilterButton(
+                                      context,
+                                      'Yearly',
+                                      TransactionsPeriod.yearly,
+                                      _activeViewMode,
+                                      TransactionsGetCount(firstPage: 0, lastPage: 49),
+                                      onPressed: () => _fetchDataForView(TransactionsPeriod.yearly),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -160,7 +230,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                               width: maxWidth,
                               height: 320.0,
                               widget: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,11 +243,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      Row(
+                                          Row(
                                         children: [
-                                          _buildIconBtn('assets/images/find.svg'),
+                                          SmallIconButton(asset: 'assets/images/find.svg'),
                                           const SizedBox(width: 8.0),
-                                          _buildIconBtn('assets/images/calendar.svg'),
+                                          SmallIconButton(asset: 'assets/images/calendar.svg'),
                                         ],
                                       )
                                     ],
@@ -214,10 +283,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                           leftTitles: AxisTitles(
                                             sideTitles: SideTitles(
                                               showTitles: true,
-                                              interval: interval, // ВАЖЛИВО: Крок шкали
-                                              reservedSize: 35,   // Місце під текст зліва
+                                              interval: interval,
+                                              reservedSize: 35,
                                               getTitlesWidget: (value, meta) {
-                                                if (value == 0) return const SizedBox.shrink(); // Можна приховати 0, якщо хочете
+                                                if (value == 0) return const SizedBox.shrink();
                                                 return SideTitleWidget(
                                                   meta: meta,
                                                   space: 1,
@@ -238,7 +307,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                           bottomTitles: AxisTitles(
                                             sideTitles: SideTitles(
                                               showTitles: true,
-                                              getTitlesWidget: (value, meta) => _bottomTitles(value, meta),
+                                              getTitlesWidget: (value, meta) => _bottomTitles(value, meta, _activeViewMode),
                                               reservedSize: 30,
                                             ),
                                           ),
@@ -274,17 +343,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                _buildSummaryItem(
-                                  'Income', 
-                                  totalIncome.toStringAsFixed(2), 
-                                  'assets/images/Income.svg',
-                                  AppColors.primary
+                                SummaryItem(
+                                  label: 'Income',
+                                  amount: totalIncome.toStringAsFixed(2),
+                                  iconPath: 'assets/images/Income.svg',
+                                  color: AppColors.primary,
                                 ),
-                                _buildSummaryItem(
-                                  'Expense', 
-                                  totalExpense.toStringAsFixed(2), 
-                                  'assets/images/Expense.svg',
-                                  AppColors.accentBlue
+                                SummaryItem(
+                                  label: 'Expense',
+                                  amount: totalExpense.toStringAsFixed(2),
+                                  iconPath: 'assets/images/Expense.svg',
+                                  color: AppColors.accentBlue,
                                 ),
                               ],
                             ),
@@ -299,11 +368,12 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             ),
           ],
         );
-      },
+        },
+      ),
     );
   }
 
-  Widget _bottomTitles(double value, TitleMeta meta) {
+  Widget _bottomTitles(double value, TitleMeta meta, String activeViewMode) {
     const style = TextStyle(
       color: AppColors.borderGrafik,
       fontWeight: FontWeight.w400,
@@ -314,18 +384,28 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     String text = '';
     int index = value.toInt();
 
-    switch (_activeViewMode) {
+    switch (activeViewMode) {
       case TransactionsPeriod.daily:
         const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         if (index >= 0 && index < days.length) text = days[index];
         break;
       case TransactionsPeriod.weekly:
-        text = '${index + 1} wk';
+        text = 'Week ${index + 1}';
         break;
       case TransactionsPeriod.monthly:
       case TransactionsPeriod.yearly:
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        if (index >= 0 && index < months.length) text = months[index];
+        if (activeViewMode == TransactionsPeriod.monthly) {
+          final now = DateTime.now();
+          final monthOffset = index - 11;
+          final dt = DateTime(now.year, now.month + monthOffset, 1);
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          text = months[dt.month - 1];
+        } else {
+          final now = DateTime.now();
+          final years = 3;
+          final year = now.year - (years - 1 - index);
+          text = year.toString();
+        }
         break;
     }
 
@@ -336,75 +416,5 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 
-  Widget _buildCustomFilterBtn(String title, String mode) {
-    final isActive = _activeViewMode == mode;
-    return Expanded(
-      child: SizedBox(
-        height: 50.0,
-        child: TextButton(
-          onPressed: () => _fetchDataForView(mode),
-          style: TextButton.styleFrom(
-            backgroundColor: isActive ? AppColors.primary : Colors.transparent,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          ),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-              fontSize: 14.0,
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildIconBtn(String asset) {
-    return Container(
-      width: 32.0,
-      height: 32.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: AppColors.primary
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SvgPicture.asset(asset),
-      ),
-    );
-  }
-
-  Widget _buildSummaryItem(String label, String amount, String iconPath, Color color) {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          iconPath,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-          width: 25.0,
-          height: 25.0,
-        ),
-        const SizedBox(height: 5.0),
-        Text(
-          label,
-          style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontFamily: 'Poppins',
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        Text(
-          '\$$amount',
-          style: TextStyle(
-            color: color,
-            fontFamily: 'Poppins',
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
+  
 }
