@@ -1,7 +1,7 @@
 import 'package:finance_tracker/core/const/transaction_type.dart';
 import 'package:finance_tracker/data/models/transaction/transaction.dart';
 import 'package:intl/intl.dart';
-import 'package:finance_tracker/core/const/transactions_period.dart'; // Переконайся, що імпорт правильний
+import 'package:finance_tracker/core/const/transactions_period.dart';
 
 class ChartDataPoint {
   final int x;
@@ -71,65 +71,115 @@ extension TransactionsByPeriod on List<Transaction> {
   }
 
   List<ChartDataPoint> calculateChartData(String viewMode) {
-    Map<int, ({double income, double expense})> groupedData = {};
-    int maxPoints = 7; 
+    final now = DateTime.now();
+    if (viewMode == TransactionsPeriod.daily) {
+      final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      final days = List.generate(7, (i) => DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day + i));
 
-    switch (viewMode) {
-      case TransactionsPeriod.daily:
-        maxPoints = 7;
-        break;
-      case TransactionsPeriod.weekly:
-        maxPoints = 5; 
-        break;
-      case TransactionsPeriod.monthly:
-      case TransactionsPeriod.yearly: 
-        maxPoints = 12;
-        break;
-    }
+      final Map<int, ({double income, double expense})> data = {for (var i = 0; i < 7; i++) i: (income: 0.0, expense: 0.0)};
 
-    for (int i = 0; i < maxPoints; i++) {
-      groupedData[i] = (income: 0.0, expense: 0.0);
-    }
-
-    for (var tx in this) {
-      int index = 0;
-
-      switch (viewMode) {
-        case TransactionsPeriod.daily:
-          index = tx.date.weekday - 1; 
-          break;
-        case TransactionsPeriod.weekly:
-          index = ((tx.date.day - 1) / 7).floor();
-          if (index >= 4) index = 4;
-          break;
-        case TransactionsPeriod.monthly:
-        case TransactionsPeriod.yearly:
-          index = tx.date.month - 1;
-          break;
+      for (var tx in this) {
+        final txDate = tx.date.toLocal();
+        for (var i = 0; i < days.length; i++) {
+          final d = days[i];
+          if (txDate.year == d.year && txDate.month == d.month && txDate.day == d.day) {
+            final cur = data[i]!;
+            if (tx.type == TransactionType.income) {
+              data[i] = (income: cur.income + tx.amount, expense: cur.expense);
+            } else {
+              data[i] = (income: cur.income, expense: cur.expense + tx.amount);
+            }
+            break;
+          }
+        }
       }
 
-      if (groupedData.containsKey(index)) {
-        final current = groupedData[index]!;
-        if (tx.type == TransactionType.income) {
-          groupedData[index] = (
-            income: current.income + tx.amount, 
-            expense: current.expense
-          );
-        } else {
-          groupedData[index] = (
-            income: current.income, 
-            expense: current.expense + tx.amount
-          );
+      return data.entries.map((e) => ChartDataPoint(x: e.key, income: e.value.income, expense: e.value.expense)).toList();
+    }
+
+    if (viewMode == TransactionsPeriod.weekly) {
+      final firstDayOfMonth = DateTime(now.year, now.month, 1);
+      final startOfNextMonth = DateTime(now.year, now.month + 1, 1);
+      final daysInMonth = startOfNextMonth.difference(firstDayOfMonth).inDays;
+
+      final List<DateTime> weekStarts = [];
+      for (var d = 0; d < daysInMonth; d += 7) {
+        weekStarts.add(DateTime(firstDayOfMonth.year, firstDayOfMonth.month, firstDayOfMonth.day + d));
+      }
+
+      final Map<int, ({double income, double expense})> data = {for (var i = 0; i < weekStarts.length; i++) i: (income: 0.0, expense: 0.0)};
+
+      for (var tx in this) {
+        for (var i = 0; i < weekStarts.length; i++) {
+          final start = weekStarts[i];
+          final end = (i + 1 < weekStarts.length) ? weekStarts[i + 1] : startOfNextMonth;
+          final txDate = tx.date.toLocal();
+          if (!txDate.isBefore(start) && txDate.isBefore(end)) {
+            final cur = data[i]!;
+            if (tx.type == TransactionType.income) {
+              data[i] = (income: cur.income + tx.amount, expense: cur.expense);
+            } else {
+              data[i] = (income: cur.income, expense: cur.expense + tx.amount);
+            }
+            break;
+          }
+        }
+      }
+
+      return data.entries.map((e) => ChartDataPoint(x: e.key, income: e.value.income, expense: e.value.expense)).toList();
+    }
+
+    if (viewMode == TransactionsPeriod.monthly) {
+      const months = 12;
+      final monthStarts = List.generate(months, (i) {
+        final dt = DateTime(now.year, now.month - (months - 1 - i), 1);
+        return dt;
+      });
+
+      final Map<int, ({double income, double expense})> data = {for (var i = 0; i < months; i++) i: (income: 0.0, expense: 0.0)};
+
+      for (var tx in this) {
+        for (var i = 0; i < monthStarts.length; i++) {
+          final start = monthStarts[i];
+          final end = DateTime(start.year, start.month + 1, 1);
+          final txDate = tx.date.toLocal();
+          if (!txDate.isBefore(start) && txDate.isBefore(end)) {
+            final cur = data[i]!;
+            if (tx.type == TransactionType.income) {
+              data[i] = (income: cur.income + tx.amount, expense: cur.expense);
+            } else {
+              data[i] = (income: cur.income, expense: cur.expense + tx.amount);
+            }
+            break;
+          }
+        }
+      }
+
+      return data.entries.map((e) => ChartDataPoint(x: e.key, income: e.value.income, expense: e.value.expense)).toList();
+    }
+
+    const years = 3;
+    final startYears = List.generate(years, (i) => DateTime(now.year - (years - 1 - i), 1, 1));
+
+    final Map<int, ({double income, double expense})> data = {for (var i = 0; i < years; i++) i: (income: 0.0, expense: 0.0)};
+
+    for (var tx in this) {
+      for (var i = 0; i < startYears.length; i++) {
+        final start = startYears[i];
+        final end = DateTime(start.year + 1, 1, 1);
+          final txDate = tx.date.toLocal();
+          if (!txDate.isBefore(start) && txDate.isBefore(end)) {
+          final cur = data[i]!;
+          if (tx.type == TransactionType.income) {
+            data[i] = (income: cur.income + tx.amount, expense: cur.expense);
+          } else {
+            data[i] = (income: cur.income, expense: cur.expense + tx.amount);
+          }
+          break;
         }
       }
     }
 
-    return groupedData.entries.map((e) {
-      return ChartDataPoint(
-        x: e.key,
-        income: e.value.income,
-        expense: e.value.expense,
-      );
-    }).toList();
+    return data.entries.map((e) => ChartDataPoint(x: e.key, income: e.value.income, expense: e.value.expense)).toList();
   }
 }
