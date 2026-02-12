@@ -1,5 +1,7 @@
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
+import 'package:finance_tracker/data/models/balance/balance.dart';
 import 'package:finance_tracker/data/models/extensions/transactions_extension.dart';
+import 'package:finance_tracker/data/models/transaction/transaction.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/filter_button.dart';
 import 'package:finance_tracker/presentation/widgets/green_container.dart';
@@ -9,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
+import 'package:finance_tracker/data/models/transactions_get_count/transactions_get_count.dart';
 import 'package:finance_tracker/core/const/app_colors.dart';
-import 'package:finance_tracker/data/models/transaction/transaction.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
@@ -22,25 +24,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedTransactions = 0;
+  String _selectedPeriod = 'daily';
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionsBloc, TransactionsState>(
       builder: (context, state) {
-        final currentPeriod = state.maybeWhen(
-          loading: (period, _) => period,
-          updated: (_, period) => period,
-          orElse: () => 'daily',
+        final view = state.maybeWhen(
+          loading: (v) => v,
+          updated: (v) => v,
+          orElse: () => null,
         );
-
         
-        final transactions = state.maybeWhen(
-          loading: (currentPeriod, transactions) => transactions ?? [],
-          updated: (transactions, _) => transactions,
-          orElse: () => <Transaction>[],
-        );
+        final totalBalance = view?.balance ?? Balance();
+        final List<Transaction> transactions = view?.transactions ?? <Transaction>[];
+        final countTransactions = view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49);
+        final hasReachedMax = view?.hasReachedMax ?? false;
 
-        final balance = transactions.totalBalance.toStringAsFixed(2);
+        final balance = totalBalance.totalBalance.toStringAsFixed(2);
         final expense = transactions.totalExpense.toStringAsFixed(2);
 
         return Column(
@@ -181,11 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           const SizedBox(height: 40.0),
-                          const GreenContainer(
-                            widget: Text('Future widget'),
-                            radius: BorderRadius.all(Radius.circular(12)),
-                          ),
-                          const SizedBox(height: 20.0),
                           Expanded(
                             child: Column(
                                   children: [
@@ -200,19 +196,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                             context,
                                             'Daily',
                                             'daily',
-                                            currentPeriod!,
+                                            _selectedPeriod,
+                                            countTransactions,
+                                            onPressed: () {
+                                              setState(() {
+                                                _selectedPeriod = 'daily';
+                                              });
+                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'daily', count: countTransactions));
+                                            },
                                           ),
                                           buildFilterButton(
                                             context,
                                             'Weekly',
                                             'weekly',
-                                            currentPeriod,
+                                            _selectedPeriod,
+                                            countTransactions,
+                                            onPressed: () {
+                                              setState(() {
+                                                _selectedPeriod = 'weekly';
+                                              });
+                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'weekly', count: countTransactions));
+                                            },
                                           ),
                                           buildFilterButton(
                                             context,
                                             'Monthly',
                                             'monthly',
-                                            currentPeriod,
+                                            _selectedPeriod,
+                                            countTransactions,
+                                            onPressed: () {
+                                              setState(() {
+                                                _selectedPeriod = 'monthly';
+                                              });
+                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'monthly', count: countTransactions));
+                                            },
                                           ),
                                         ],
                                       ),
@@ -223,24 +240,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(height: 10),
                                     Expanded(
                                       child: state.maybeWhen(
-                                        loading: (_, _) => const Center(
+                                        loading: (view) => const Center(
                                           child: CircularProgressIndicator(),
                                         ),
                                         error: (msg) =>
                                             Center(child: Text('Error: $msg')),
-                                        updated: (transactions, _) =>
-                                            transactions.isEmpty
-                                            ? const Center(
-                                                child: Text("No transactions"),
-                                              )
-                                            : ListView.builder(
-                                                itemCount: transactions.length,
-                                                itemBuilder: (context, index) {
-                                                  return buildTransactionItem(
-                                                    transactions[index],
+                                        updated: (view) {
+                                          final transactions = view.transactions ?? <Transaction>[];
+                                          if (transactions.isEmpty) {
+                                            return const Center(
+                                              child: Text('No transactions found'),
+                                            );
+                                          }
+                                          
+                                          final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
+                                          final shouldShowSpinner = !hasReachedMax && transactions.length >= pageSize;
+
+                                          return NotificationListener<ScrollNotification>(
+                                            onNotification: (notification) {
+                                              if (shouldShowSpinner && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
+                                                context.read<TransactionsBloc>().add(LoadMoreTransactionsEvent());
+                                              }
+                                              return true;
+                                            },
+
+                                            child: ListView.builder(
+                                              itemCount: transactions.length + (shouldShowSpinner ? 1 : 0),
+                                              physics: const AlwaysScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                if (index < transactions.length) {
+                                                  return buildTransactionItem(transactions[index]);
+                                                } else {
+                                                  return const Padding(
+                                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                                    child: Center(child: CircularProgressIndicator()),
                                                   );
-                                                },
-                                              ),
+                                                }
+                                              },
+                                            ),
+                                          );
+                                        },
                                         orElse: () => const SizedBox.shrink(),
                                       ),
                                     ),
