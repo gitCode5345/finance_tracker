@@ -2,6 +2,7 @@ import 'package:finance_tracker/business/bloc/category_bloc/category_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/data/models/category/category.dart';
 import 'package:finance_tracker/data/models/extensions/transactions_extension.dart';
+import 'package:finance_tracker/data/models/transaction/transaction.dart';
 import 'package:finance_tracker/presentation/screens/add_transaction/add_transaction_screen.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
@@ -61,15 +62,30 @@ class TransactionsByCategory extends StatelessWidget {
                     children: [
                       Expanded(
                         child: state.maybeWhen(
-                          loading: (_, _) => Center(child: CircularProgressIndicator()),
-                          updated: (transactions, _) {
+                          loading: (view) => Center(child: CircularProgressIndicator()),
+                          updated: (view) {
+                            final transactions = view.transactions ?? <Transaction>[];
                             final grouped = transactions.groupByYearAndMonth();
 
                             if (grouped.isEmpty) {
                               return const Center(child: Text('No transactions found'));
                             }
 
-                            return buildTransactions(grouped);
+                            final hasReachedMax = state.maybeWhen(
+                              loading: (v) => v?.hasReachedMax ?? false,
+                              updated: (v) => v.hasReachedMax,
+                              orElse: () => false,
+                            );
+
+                            return NotificationListener<ScrollNotification>(
+                              onNotification: (notification) {
+                                if (!hasReachedMax && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
+                                  context.read<TransactionsBloc>().add(LoadMoreTransactionsEvent());
+                                }
+                                return true;
+                              },
+                              child: buildTransactions(grouped),
+                            );
                           },
                           orElse: () => Center(child: Text('Something went wrong')),
                         ),
