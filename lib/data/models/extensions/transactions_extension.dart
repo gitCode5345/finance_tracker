@@ -51,7 +51,7 @@ extension TransactionsByPeriod on List<Transaction> {
     return where((transaction) {
       switch (period) {
         case TransactionsPeriod.daily:
-           return transaction.date.year == now.year &&
+          return transaction.date.year == now.year &&
                  transaction.date.month == now.month &&
                  transaction.date.day == now.day;
         case TransactionsPeriod.weekly:

@@ -33,8 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
         final view = state.maybeWhen(
           loading: (v) => v,
           updated: (v) => v,
-          orElse: () => null,
+          orElse: () => null
         );
+
+        if (view?.currentPeriod != null && view?.currentPeriod != _selectedPeriod) {
+          _selectedPeriod = view!.currentPeriod!;
+        }
         
         final totalBalance = view?.balance ?? Balance();
         final List<Transaction> transactions = view?.transactions ?? <Transaction>[];
@@ -51,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 top: MediaQuery.of(context).padding.top + 5,
                 left: 24.0,
                 right: 24.0,
-                bottom: 24.0,
+                bottom: 24.0
               ),
               children: [
                 Column(
@@ -61,26 +65,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Welcome, ${widget.user.firstName}!',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.textPrimary,
                             fontFamily: 'Poppins',
                             fontSize: 24,
                             height: 1.5,
                             fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                          ),
+                            fontStyle: FontStyle.normal
+                          )
                         ),
                         IconButton(
                           style: IconButton.styleFrom(
                             foregroundColor: Colors.black,
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.white
                           ),
                           onPressed: () {},
-                          icon: Icon(Icons.notifications_none),
-                        ),
-                      ],
+                          icon: const Icon(Icons.notifications_none)
+                        )
+                      ]
                     ),
-                    SizedBox(height: 24.0),
+                    const SizedBox(height: 24.0),
                     IntrinsicHeight(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,13 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    'assets/images/Income.svg',
-                                    width: 12,
-                                    height: 12,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
+                                  SvgPicture.asset('assets/images/Income.svg', width: 12, height: 12),
+                                  const SizedBox(width: 4),
+                                  const Text(
                                     'Total balance',
                                     style: TextStyle(
                                       color: AppColors.textPrimary,
@@ -103,42 +103,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 16,
                                       height: 1.5,
                                       fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                ],
+                                      fontStyle: FontStyle.normal
+                                    )
+                                  )
+                                ]
                               ),
                               Text(
                                 '$balance\$',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.backgroundLight,
                                   fontFamily: 'Poppins',
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
                                   fontStyle: FontStyle.normal,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ],
+                                  height: 1.5
+                                )
+                              )
+                            ]
                           ),
-                          VerticalDivider(
+                          const VerticalDivider(
                             color: AppColors.secondary,
                             indent: 5.0,
                             endIndent: 5.0,
                             thickness: 2,
-                            width: 42,
+                            width: 42
                           ),
                           Column(
                             children: [
                               Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    'assets/images/Expense.svg',
-                                    width: 12,
-                                    height: 12,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
+                                  SvgPicture.asset('assets/images/Expense.svg', width: 12, height: 12),
+                                  const SizedBox(width: 4),
+                                  const Text(
                                     'Total expense',
                                     style: TextStyle(
                                       color: AppColors.textPrimary,
@@ -146,31 +142,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 16,
                                       height: 1.5,
                                       fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  ),
-                                ],
+                                      fontStyle: FontStyle.normal
+                                    )
+                                  )
+                                ]
                               ),
                               Text(
                                 '$expense\$',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.accentBlue,
                                   fontFamily: 'Poppins',
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
                                   fontStyle: FontStyle.normal,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  height: 1.5
+                                )
+                              )
+                            ]
+                          )
+                        ]
+                      )
                     ),
-                    SizedBox(height: 10.0),
-                  ],
-                ),
-              ],
+                    const SizedBox(height: 10.0)
+                  ]
+                )
+              ]
             ),
             Expanded(
               child: BodyContainerWidget(
@@ -184,119 +180,104 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 40.0),
                           Expanded(
                             child: Column(
-                                  children: [
-                                    GreenContainer(
-                                      width: maxWidth,
-                                      height: 60.0,
-                                      padding: const EdgeInsets.all(8.0),
-                                      widget: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          buildFilterButton(
-                                            context,
-                                            'Daily',
-                                            'daily',
-                                            _selectedPeriod,
-                                            countTransactions,
-                                            onPressed: () {
-                                              setState(() {
-                                                _selectedPeriod = 'daily';
-                                              });
-                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'daily', count: countTransactions));
-                                            },
-                                          ),
-                                          buildFilterButton(
-                                            context,
-                                            'Weekly',
-                                            'weekly',
-                                            _selectedPeriod,
-                                            countTransactions,
-                                            onPressed: () {
-                                              setState(() {
-                                                _selectedPeriod = 'weekly';
-                                              });
-                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'weekly', count: countTransactions));
-                                            },
-                                          ),
-                                          buildFilterButton(
-                                            context,
-                                            'Monthly',
-                                            'monthly',
-                                            _selectedPeriod,
-                                            countTransactions,
-                                            onPressed: () {
-                                              setState(() {
-                                                _selectedPeriod = 'monthly';
-                                              });
-                                              context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'monthly', count: countTransactions));
-                                            },
-                                          ),
-                                        ],
+                              children: [
+                                GreenContainer(
+                                  width: maxWidth,
+                                  height: 60.0,
+                                  padding: const EdgeInsets.all(8.0),
+                                  radius: const BorderRadius.all(Radius.circular(22)),
+                                  widget: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildFilterButton(
+                                        context,
+                                        'Daily',
+                                        'daily',
+                                        _selectedPeriod,
+                                        countTransactions: countTransactions,
+                                        onPressed: () {
+                                          setState(() => _selectedPeriod = 'daily');
+                                          context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'daily', count: countTransactions));
+                                        }
                                       ),
-                                      radius: const BorderRadius.all(
-                                        Radius.circular(22),
+                                      buildFilterButton(
+                                        context,
+                                        'Weekly',
+                                        'weekly',
+                                        _selectedPeriod,
+                                        countTransactions: countTransactions,
+                                        onPressed: () {
+                                          setState(() => _selectedPeriod = 'weekly');
+                                          context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'weekly', count: countTransactions));
+                                        }
                                       ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Expanded(
-                                      child: state.maybeWhen(
-                                        loading: (view) => const Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                        error: (msg) =>
-                                            Center(child: Text('Error: $msg')),
-                                        updated: (view) {
-                                          final transactions = view.transactions ?? <Transaction>[];
-                                          if (transactions.isEmpty) {
-                                            return const Center(
-                                              child: Text('No transactions found'),
-                                            );
+                                      buildFilterButton(
+                                        context,
+                                        'Monthly',
+                                        'monthly',
+                                        _selectedPeriod,
+                                        countTransactions: countTransactions,
+                                        onPressed: () {
+                                          setState(() => _selectedPeriod = 'monthly');
+                                          context.read<TransactionsBloc>().add(TransactionsEvent.getTransactions(period: 'monthly', count: countTransactions));
+                                        }
+                                      )
+                                    ]
+                                  )
+                                ),
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: state.maybeWhen(
+                                    loading: (view) => const Center(child: CircularProgressIndicator()),
+                                    error: (msg) => Center(child: Text('Error: $msg')),
+                                    updated: (view) {
+                                      final transactions = view.transactions ?? <Transaction>[];
+                                      if (transactions.isEmpty) {
+                                        return const Center(child: Text('No transactions found'));
+                                      }
+                                      final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
+                                      final shouldShowSpinner = !hasReachedMax && transactions.length >= pageSize;
+
+                                      return NotificationListener<ScrollNotification>(
+                                        onNotification: (notification) {
+                                          if (shouldShowSpinner && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
+                                            context.read<TransactionsBloc>().add(LoadMoreTransactionsEvent());
                                           }
-                                          
-                                          final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
-                                          final shouldShowSpinner = !hasReachedMax && transactions.length >= pageSize;
-
-                                          return NotificationListener<ScrollNotification>(
-                                            onNotification: (notification) {
-                                              if (shouldShowSpinner && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
-                                                context.read<TransactionsBloc>().add(LoadMoreTransactionsEvent());
-                                              }
-                                              return true;
-                                            },
-
-                                            child: ListView.builder(
-                                              itemCount: transactions.length + (shouldShowSpinner ? 1 : 0),
-                                              physics: const AlwaysScrollableScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                if (index < transactions.length) {
-                                                  return buildTransactionItem(transactions[index]);
-                                                } else {
-                                                  return const Padding(
-                                                    padding: EdgeInsets.symmetric(vertical: 20),
-                                                    child: Center(child: CircularProgressIndicator()),
-                                                  );
-                                                }
-                                              },
-                                            ),
-                                          );
+                                          return true;
                                         },
-                                        orElse: () => const SizedBox.shrink(),
-                                      ),
-                                    ),
-                                  ],
+                                        child: ListView.builder(
+                                          itemCount: transactions.length + (shouldShowSpinner ? 1 : 0),
+                                          physics: const AlwaysScrollableScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            if (index < transactions.length) {
+                                              return buildTransactionItem(transactions[index]);
+                                            } else {
+                                              return const Padding(
+                                                padding: EdgeInsets.symmetric(vertical: 20),
+                                                child: Center(child: CircularProgressIndicator())
+                                              );
+                                            }
+                                          }
+                                        )
+                                      );
+                                    },
+                                    orElse: () => const SizedBox.shrink()
+                                  )
                                 )
+                              ]
+                            )
                           ),
-                          const SizedBox(height: 5),
-                        ],
-                      ),
+                          const SizedBox(height: 5)
+                        ]
+                      )
                     );
-                  },
-                ),
-              ),
-            ),
-          ],
+                  }
+                )
+              )
+            )
+          ]
         );
-      },
+      }
     );
   }
 }

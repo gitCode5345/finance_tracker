@@ -22,6 +22,7 @@ class GreenContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       alignment: aligment,
       padding: padding,
       width: width,

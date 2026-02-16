@@ -1,5 +1,6 @@
 import 'package:finance_tracker/business/bloc/category_bloc/category_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
+import 'package:finance_tracker/core/validators/validators.dart';
 import 'package:finance_tracker/data/models/category/category.dart';
 import 'package:finance_tracker/data/models/transaction/transaction.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
@@ -38,7 +39,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               top: 50.0,
               left: 24.0,
               right: 24.0,
-              bottom: 24.0,
+              bottom: 24.0
             ),
             children: [
               Text(
@@ -49,19 +50,19 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   fontSize: 20,
                   height: 1.5,
                   fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                ),
+                  fontStyle: FontStyle.normal
+                )
               ),
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
                   style: IconButton.styleFrom(
                     foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.white
                   ),
                   onPressed: () {},
-                  icon: Icon(Icons.notifications_none),
-                ),
+                  icon: Icon(Icons.notifications_none)
+                )
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -71,10 +72,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     iconSize: 32.0
                   ),
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.arrow_back),
-                ),
-              ),
-            ],
+                  icon: Icon(Icons.arrow_back)
+                )
+              )
+            ]
           ),
           Expanded(
             child: BodyContainerWidget(
@@ -82,7 +83,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).padding.top + 5,
                   left: 20,
-                  right: 20,
+                  right: 20
                 ),
                 child: Form(
                   key: _formKey,
@@ -99,11 +100,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textSecondary,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                                fontStyle: FontStyle.normal
+                              )
+                            )
+                          ]
+                        )
                       ),
                       TextFormField(
                         readOnly: true,
@@ -117,28 +118,26 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                               headerColor: AppColors.primary,
                               backgroundColor: Colors.white,
                               itemStyle: TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                              doneStyle: TextStyle(color: Colors.white, fontSize: 16),
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                              ),
+                              doneStyle: TextStyle(color: Colors.white, fontSize: 16)
                             ),
                             onConfirm: (date) {
                               _dateController.text = DateFormat('dd/MM/yyyy HH:mm').format(date);
                             },
                             currentTime: DateTime.now(),
-                            locale: picker.LocaleType.en,
+                            locale: picker.LocaleType.en
                           );
                         },
                         controller: _dateController,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide.none
                           ),
-                          floatingLabelBehavior:
-                              FloatingLabelBehavior.never,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           filled: true,
                           fillColor: AppColors.secondary,
                           hintText: 'Select a date',
@@ -147,9 +146,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             height: 1.5,
-                            color: AppColors.textHint,
-                          ),
-                        ),
+                            color: AppColors.textHint
+                          )
+                        )
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -163,11 +162,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textSecondary,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                                fontStyle: FontStyle.normal
+                              )
+                            )
+                          ]
+                        )
                       ),
                       BlocBuilder<CategoryBloc, CategoryState>(
                         builder: (context, state) {
@@ -175,13 +174,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             loaded: (categories) {
                               return DropdownButtonFormField<Category>(
                                 initialValue: selectedCategory,
-                                icon: SvgPicture.asset(
-                                  'assets/images/arrow_down.svg',
-                                ),
+                                icon: SvgPicture.asset('assets/images/arrow_down.svg'),
                                 items: categories.map((category) {
                                   return DropdownMenuItem<Category>(
                                     value: category,
-                                    child: Text(category.name),
+                                    child: Text(category.name)
                                   );
                                 }).toList(),
                                 onChanged: (Category? newValue) {
@@ -191,19 +188,17 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(30.0),
-                                    ),
-                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                    borderSide: BorderSide.none
                                   ),
                                   filled: true,
-                                  fillColor: AppColors.secondary,
-                                ),
+                                  fillColor: AppColors.secondary
+                                )
                               );
                             },
-                            orElse: () => SizedBox.shrink(),
+                            orElse: () => SizedBox.shrink()
                           );
-                        },
+                        }
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -217,23 +212,21 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textSecondary,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                                fontStyle: FontStyle.normal
+                              )
+                            )
+                          ]
+                        )
                       ),
                       TextFormField(
+                        validator: (value) => Validators.amount(value),
                         controller: _amountController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide.none
                           ),
-                          floatingLabelBehavior:
-                              FloatingLabelBehavior.never,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           filled: true,
                           fillColor: AppColors.secondary,
                           hintText: 'Enter amount',
@@ -242,9 +235,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             height: 1.5,
-                            color: AppColors.textHint,
-                          ),
-                        ),
+                            color: AppColors.textHint
+                          )
+                        )
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -258,23 +251,21 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textSecondary,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                                fontStyle: FontStyle.normal
+                              )
+                            )
+                          ]
+                        )
                       ),
                       TextFormField(
+                        validator: (value) => Validators.text(value),
                         controller: _titleController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30.0),
-                            ),
-                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide.none
                           ),
-                          floatingLabelBehavior:
-                              FloatingLabelBehavior.never,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           filled: true,
                           fillColor: AppColors.secondary,
                           hintText: 'Enter title',
@@ -283,9 +274,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             height: 1.5,
-                            color: AppColors.textHint,
-                          ),
-                        ),
+                            color: AppColors.textHint
+                          )
+                        )
                       ),
                       SizedBox(height: 40),
                       SizedBox(
@@ -297,13 +288,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           textAlignVertical: TextAlignVertical.top,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                              borderSide: BorderSide.none
                             ),
-                            floatingLabelBehavior:
-                                FloatingLabelBehavior.never,
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
                             filled: true,
                             fillColor: AppColors.secondary,
                             hintText: 'Enter note',
@@ -312,10 +300,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500,
                               height: 1.5,
-                              color: AppColors.textHint,
-                            ),
-                          ),
-                        ),
+                              color: AppColors.textHint
+                            )
+                          )
+                        )
                       ),
                       SizedBox(height: 40),
                       Padding(
@@ -325,13 +313,13 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             backgroundColor: AppColors.primary,
                             side: BorderSide.none,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(30.0)
                             ),
-                            minimumSize: Size(200.0, 50.0),
+                            minimumSize: Size(200.0, 50.0)
                           ),
                           onPressed: () {
                             context.read<TransactionsBloc>().add(
-                              TransactionsEvent.saveTransaction(
+                              SaveTransactionEvent(
                                 transaction: Transaction(
                                   id: null,
                                   date: DateFormat('dd/MM/yyyy HH:mm').parse(_dateController.text),
@@ -340,9 +328,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                   note: _noteController.text,
                                   categoryId: selectedCategory!.id!,
                                   category: selectedCategory,
-                                  type: selectedCategory!.type,
-                                ),
-                              ),
+                                  type: selectedCategory!.type
+                                )
+                              )
                             );
                             Navigator.pop(context);
                           },
@@ -353,19 +341,19 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w600,
                               fontSize: 20.0,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                              color: AppColors.textSecondary
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  )
+                )
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }

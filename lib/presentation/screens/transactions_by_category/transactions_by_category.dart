@@ -25,19 +25,19 @@ class TransactionsByCategory extends StatelessWidget {
               top: MediaQuery.of(context).padding.top + 5,
               left: 20,
               right: 20,
-              bottom: 20,
+              bottom: 20
             ),
             children: [
               Text(
                 category.name,
-                style: TextStyle(
-                color: AppColors.textPrimary,
-                fontFamily: 'Poppins',
-                fontSize: 20,
-                height: 1.5,
-                fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.normal,
-              ),
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontFamily: 'Poppins',
+                  fontSize: 20,
+                  height: 1.5,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal
+                )
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -46,13 +46,11 @@ class TransactionsByCategory extends StatelessWidget {
                     foregroundColor: Colors.white,
                     iconSize: 32.0
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
-              ),
-            ],
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back)
+                )
+              )
+            ]
           ),
           Expanded(
             child: BodyContainerWidget(
@@ -62,21 +60,18 @@ class TransactionsByCategory extends StatelessWidget {
                     children: [
                       Expanded(
                         child: state.maybeWhen(
-                          loading: (view) => Center(child: CircularProgressIndicator()),
+                          loading: (view) => const Center(child: CircularProgressIndicator()),
                           updated: (view) {
                             final transactions = view.transactions ?? <Transaction>[];
                             final grouped = transactions.groupByYearAndMonth();
-
                             if (grouped.isEmpty) {
                               return const Center(child: Text('No transactions found'));
                             }
-
                             final hasReachedMax = state.maybeWhen(
                               loading: (v) => v?.hasReachedMax ?? false,
                               updated: (v) => v.hasReachedMax,
-                              orElse: () => false,
+                              orElse: () => false
                             );
-
                             return NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
                                 if (!hasReachedMax && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
@@ -84,11 +79,11 @@ class TransactionsByCategory extends StatelessWidget {
                                 }
                                 return true;
                               },
-                              child: buildTransactions(grouped),
+                              child: buildTransactions(grouped)
                             );
                           },
-                          orElse: () => Center(child: Text('Something went wrong')),
-                        ),
+                          orElse: () => const Center(child: Text('Something went wrong'))
+                        )
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -96,17 +91,12 @@ class TransactionsByCategory extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             side: BorderSide.none,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            minimumSize: const Size(200.0, 50.0),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                            minimumSize: const Size(200.0, 50.0)
                           ),
                           onPressed: () {
                             context.read<CategoryBloc>().add(const CategoryEvent.loadCategories());
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => AddTransactionScreen()
-                              )
-                            );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTransactionScreen()));
                           },
                           child: const Text(
                             'Add expense',
@@ -114,19 +104,19 @@ class TransactionsByCategory extends StatelessWidget {
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
                               fontSize: 20.0,
-                              color: AppColors.textButton,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                              color: AppColors.textButton
+                            )
+                          )
+                        )
+                      )
+                    ]
                   );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+                }
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }

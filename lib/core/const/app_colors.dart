@@ -18,5 +18,4 @@ abstract class AppColors {
 
   static const Color leftTitles = Color.fromRGBO(109, 182, 254, 1.0);
   static const Color borderGrafik = Color.fromRGBO(14, 62, 62, 1.0);
-
 }

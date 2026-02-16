@@ -1,8 +1,8 @@
 import 'package:finance_tracker/app_view.dart';
+import 'package:finance_tracker/business/bloc/analytics_bloc/analytics_bloc.dart';
 import 'package:finance_tracker/business/bloc/category_bloc/category_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/core/const/transactions_period.dart';
-import 'package:finance_tracker/data/models/transactions_get_count/transactions_get_count.dart';
 import 'package:finance_tracker/data/services/category/category_service.dart';
 import 'package:finance_tracker/data/services/transactions/transactions_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,21 +17,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
+
+    final authService = AuthService();
+    final transactionsService = TransactionsService();
+    final categoryService = CategoryService();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            authService: AuthService(),
+            authService: authService,
           )..add(const AuthEvent.checkAuthEvent()),
         ),
         BlocProvider<TransactionsBloc>(
           create: (context) => TransactionsBloc(
-            transactionsService: TransactionsService()
+            transactionsService: transactionsService,
           ),
         ),
         BlocProvider<CategoryBloc>(
           create: (context) => CategoryBloc(
-            categoryService: CategoryService()
+            categoryService: categoryService,
+          ),
+        ),
+        BlocProvider<AnalyticsBloc>(
+          create: (context) => AnalyticsBloc(
+            transactionsService: transactionsService,
           ),
         ),
       ],
@@ -41,7 +51,11 @@ class MyApp extends StatelessWidget {
             listener: (context, state) {
               state.maybeWhen(
                 authenticated: (user) {
-                  context.read<TransactionsBloc>().add(GetTransactionsEvent(period: TransactionsPeriod.daily, count: TransactionsGetCount(firstPage: 0, lastPage: 49)));
+                  context.read<TransactionsBloc>().add(
+                    GetTransactionsEvent(
+                      period: TransactionsPeriod.daily, 
+                    ),
+                  );
                   context.read<CategoryBloc>().add(LoadCategories());
                 },
                 orElse: () {},
@@ -49,7 +63,7 @@ class MyApp extends StatelessWidget {
             },
           ),
         ],
-        child: MyAppView(),
+        child: const MyAppView(),
       ),
     );
   }

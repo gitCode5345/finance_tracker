@@ -21,10 +21,10 @@ class ProfileScreen extends StatelessWidget {
             top: MediaQuery.of(context).padding.top + 5,
             left: 20,
             right: 20,
-            bottom: 50,
+            bottom: 50
           ),
           children: [
-            Text(
+            const Text(
               'Profile',
               style: TextStyle(
                 color: AppColors.textPrimary,
@@ -32,21 +32,21 @@ class ProfileScreen extends StatelessWidget {
                 fontSize: 20,
                 height: 1.5,
                 fontWeight: FontWeight.w600,
-                fontStyle: FontStyle.normal,
-              ),
+                fontStyle: FontStyle.normal
+              )
             ),
             Align(
               alignment: Alignment.topRight,
               child: IconButton(
                 style: IconButton.styleFrom(
                   foregroundColor: Colors.black,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.white
                 ),
                 onPressed: () {},
-                icon: Icon(Icons.notifications_none),
-              ),
-            ),
-          ],
+                icon: const Icon(Icons.notifications_none)
+              )
+            )
+          ]
         ),
         Expanded(
           child: Stack(
@@ -55,23 +55,23 @@ class ProfileScreen extends StatelessWidget {
               BodyContainerWidget(
                 child: Column(
                   children: [
-                    SizedBox(height: 80.0),
+                    const SizedBox(height: 80.0),
                     Text(
-                      textAlign: TextAlign.center,
                       '${user.firstName} ${user.lastName}',
-                      style: TextStyle(
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.textPrimary,
-                      ),
+                        color: AppColors.textPrimary
+                      )
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'ID: ',
                           style: TextStyle(
                             fontFamily: 'Poppins',
@@ -79,23 +79,23 @@ class ProfileScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal,
                             height: 1.5,
-                            color: AppColors.textButton,
-                          ),
+                            color: AppColors.textButton
+                          )
                         ),
                         Text(
-                          user.id!,
-                          style: TextStyle(
+                          user.id ?? '',
+                          style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 13,
                             fontWeight: FontWeight.w300,
                             fontStyle: FontStyle.normal,
                             height: 1.5,
-                            color: AppColors.textButton,
-                          ),
+                            color: AppColors.textButton
+                          )
                         )
-                      ],
+                      ]
                     ),
-                    SizedBox(height: 32.0,),
+                    const SizedBox(height: 32.0),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final maxWidth = constraints.maxWidth * 0.9;
@@ -107,73 +107,73 @@ class ProfileScreen extends StatelessWidget {
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EditProfileScreen(user: user),
-                                  ),
+                                    builder: (context) => EditProfileScreen(user: user)
+                                  )
                                 ),
                                 leading: SvgPicture.asset(
                                   'assets/images/profile_edit.svg',
                                   width: 57,
-                                  height: 57,
+                                  height: 57
                                 ),
-                                title: Text(
+                                title: const Text(
                                   'Edit Profile',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.normal,
-                                    color: AppColors.textPrimary,
-                                  ),
-                                ),
+                                    color: AppColors.textPrimary
+                                  )
+                                )
                               ),
-                              SizedBox(height: 30.0,),
+                              const SizedBox(height: 30.0),
                               ListTile(
                                 onTap: () => context.read<AuthBloc>().add(LogoutUser()),
                                 leading: SvgPicture.asset(
                                   'assets/images/logout_btn.svg',
                                   width: 57,
-                                  height: 57,
+                                  height: 57
                                 ),
-                                title: Text(
+                                title: const Text(
                                   'Logout',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.normal,
-                                    color: AppColors.textPrimary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                    color: AppColors.textPrimary
+                                  )
+                                )
+                              )
+                            ]
+                          )
                         );
-                      },
+                      }
                     ),
-                    SizedBox(height: 32.0,),
-                  ],
+                    const SizedBox(height: 32.0)
+                  ]
                 )
               ),
               Positioned(
-              top: -50,
-              left: 0,
-              right: 0,
-              child: CircleAvatar(
-                radius: 50,
-                child: ClipOval(
-                  child: SvgPicture.asset(
-                    'assets/images/profile_edit.svg',
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            ],
-          ),
+                top: -50,
+                left: 0,
+                right: 0,
+                child: CircleAvatar(
+                  radius: 50,
+                  child: ClipOval(
+                    child: SvgPicture.asset(
+                      'assets/images/profile_edit.svg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover
+                    )
+                  )
+                )
+              )
+            ]
+          )
         )
-      ],
+      ]
     );
   }
 }

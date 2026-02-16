@@ -30,7 +30,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           loading: (v) => v,
           updated: (v) => v,
           silentUpdated: (v) => v,
-          orElse: () => null,
+          orElse: () => null
         );
 
         final balance = view?.balance ?? const Balance();
@@ -43,7 +43,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 5,
                 left: 20,
-                right: 20,
+                right: 20
               ),
               children: [
                 Column(
@@ -51,7 +51,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Transactions',
                           style: TextStyle(
                             color: AppColors.textPrimary,
@@ -59,35 +59,35 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                             fontSize: 20,
                             height: 1.5,
                             fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                          ),
+                            fontStyle: FontStyle.normal
+                          )
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             style: IconButton.styleFrom(
                               foregroundColor: Colors.black,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.white
                             ),
                             onPressed: () {},
-                            icon: Icon(Icons.notifications_none),
-                          ),
+                            icon: const Icon(Icons.notifications_none)
+                          )
                         ),
-                        SizedBox(height: 8.0),
-                      ],
+                        const SizedBox(height: 8.0)
+                      ]
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12.0)
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Total Balance',
                             style: TextStyle(
                               color: AppColors.textPrimary,
@@ -95,25 +95,25 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               fontSize: 15,
                               height: 1.5,
                               fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                            ),
+                              fontStyle: FontStyle.normal
+                            )
                           ),
-                          SizedBox(height: 2.0),
+                          const SizedBox(height: 2.0),
                           Text(
                             balance.totalBalance.toStringAsFixed(2),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.textPrimary,
                               fontFamily: 'Poppins',
                               fontSize: 24,
                               height: 1.5,
                               fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-                        ],
-                      ),
+                              fontStyle: FontStyle.normal
+                            )
+                          )
+                        ]
+                      )
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -124,24 +124,17 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                 tappedIncomeBlock = !tappedIncomeBlock;
                                 tappedExpenseBlock = false;
                               });
-
                               if (tappedIncomeBlock) {
-                                context.read<TransactionsBloc>().add(
-                                    GetTransactionsByTypeSilentEvent(
-                                        type: TransactionType.income));
+                                context.read<TransactionsBloc>().add(GetTransactionsByTypeSilentEvent(type: TransactionType.income));
                               } else {
-                                context
-                                    .read<TransactionsBloc>()
-                                    .add(const GetAllTransactionsEvent());
+                                context.read<TransactionsBloc>().add(const GetAllTransactionsEvent());
                               }
                             },
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: tappedIncomeBlock
-                                    ? AppColors.accentBlue
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(12.0),
+                                color: tappedIncomeBlock ? AppColors.accentBlue : Colors.white,
+                                borderRadius: BorderRadius.circular(12.0)
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -151,47 +144,41 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                     SvgPicture.asset(
                                       'assets/images/Income.svg',
                                       colorFilter: ColorFilter.mode(
-                                        tappedIncomeBlock
-                                            ? Colors.white
-                                            : AppColors.primary,
-                                        BlendMode.srcIn,
+                                        tappedIncomeBlock ? Colors.white : AppColors.primary,
+                                        BlendMode.srcIn
                                       ),
-                                      height: 24,
+                                      height: 24
                                     ),
                                     Text(
                                       'Income',
                                       style: TextStyle(
-                                        color: tappedIncomeBlock
-                                            ? Colors.white
-                                            : AppColors.textPrimary,
+                                        color: tappedIncomeBlock ? Colors.white : AppColors.textPrimary,
                                         fontFamily: 'Poppins',
                                         fontSize: 15,
                                         height: 1.5,
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FontStyle.normal,
-                                      ),
+                                        fontStyle: FontStyle.normal
+                                      )
                                     ),
-                                    SizedBox(height: 2.0),
+                                    const SizedBox(height: 2.0),
                                     Text(
                                       balance.income.toStringAsFixed(2),
                                       style: TextStyle(
-                                        color: tappedIncomeBlock
-                                            ? Colors.white
-                                            : AppColors.textPrimary,
+                                        color: tappedIncomeBlock ? Colors.white : AppColors.textPrimary,
                                         fontFamily: 'Poppins',
                                         fontSize: 20,
                                         height: 1.5,
                                         fontWeight: FontWeight.w600,
-                                        fontStyle: FontStyle.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                                        fontStyle: FontStyle.normal
+                                      )
+                                    )
+                                  ]
+                                )
+                              )
+                            )
+                          )
                         ),
-                        SizedBox(width: 12.0),
+                        const SizedBox(width: 12.0),
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -199,7 +186,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                 tappedExpenseBlock = !tappedExpenseBlock;
                                 tappedIncomeBlock = false;
                               });
-
                               if (tappedExpenseBlock) {
                                 context.read<TransactionsBloc>().add(GetTransactionsByTypeSilentEvent(type: TransactionType.expense));
                               } else {
@@ -209,10 +195,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: tappedExpenseBlock
-                                    ? AppColors.accentBlue
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(12.0),
+                                color: tappedExpenseBlock ? AppColors.accentBlue : Colors.white,
+                                borderRadius: BorderRadius.circular(12.0)
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -222,53 +206,47 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                     SvgPicture.asset(
                                       'assets/images/Expense.svg',
                                       colorFilter: ColorFilter.mode(
-                                        tappedExpenseBlock
-                                            ? Colors.white
-                                            : AppColors.accentBlue,
-                                        BlendMode.srcIn,
+                                        tappedExpenseBlock ? Colors.white : AppColors.accentBlue,
+                                        BlendMode.srcIn
                                       ),
-                                      height: 24,
+                                      height: 24
                                     ),
                                     Text(
                                       'Expenses',
                                       style: TextStyle(
-                                        color: tappedExpenseBlock
-                                            ? Colors.white
-                                            : AppColors.textPrimary,
+                                        color: tappedExpenseBlock ? Colors.white : AppColors.textPrimary,
                                         fontFamily: 'Poppins',
                                         fontSize: 15,
                                         height: 1.5,
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FontStyle.normal,
-                                      ),
+                                        fontStyle: FontStyle.normal
+                                      )
                                     ),
-                                    SizedBox(height: 2.0),
+                                    const SizedBox(height: 2.0),
                                     Text(
                                       balance.expense.toStringAsFixed(2),
                                       style: TextStyle(
-                                        color: tappedExpenseBlock
-                                            ? Colors.white
-                                            : AppColors.textPrimary,
+                                        color: tappedExpenseBlock ? Colors.white : AppColors.textPrimary,
                                         fontFamily: 'Poppins',
                                         fontSize: 20,
                                         height: 1.5,
                                         fontWeight: FontWeight.w600,
-                                        fontStyle: FontStyle.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                                        fontStyle: FontStyle.normal
+                                      )
+                                    )
+                                  ]
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Expanded(
               child: BodyContainerWidget(
                 child: Padding(
@@ -281,27 +259,21 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               loading: (v) => v?.hasReachedMax ?? false,
                               updated: (v) => v.hasReachedMax,
                               silentUpdated: (v) => v.hasReachedMax,
-                              orElse: () => false,
+                              orElse: () => false
                             );
-
-                            if (!hasReachedMax &&
-                                notification.metrics.pixels >=
-                                    notification.metrics.maxScrollExtent -
-                                        200) {
-                              context
-                                  .read<TransactionsBloc>()
-                                  .add(LoadMoreTransactionsEvent());
+                            if (!hasReachedMax && notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
+                              context.read<TransactionsBloc>().add(LoadMoreTransactionsEvent());
                             }
                             return true;
                           },
-                          child: buildTransactions(groupedTransactions),
-                        ),
-                ),
-              ),
-            ),
-          ],
+                          child: buildTransactions(groupedTransactions)
+                        )
+                )
+              )
+            )
+          ]
         );
-      },
+      }
     );
   }
 }

@@ -5,7 +5,6 @@ part 'balance.g.dart';
 
 @freezed
 abstract class Balance with _$Balance {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Balance({
     @Default(0.0) double totalBalance,
     @Default(0.0) double expense,

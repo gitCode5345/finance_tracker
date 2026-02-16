@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/images/logo_welcome_screen.svg',
                       width: 110,
-                      height: 110,
+                      height: 110
                     ),
                     const SizedBox(),
                     const Text(
@@ -35,9 +35,9 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: 52,
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.normal,
-                        color: AppColors.primary,
+                        color: AppColors.primary
                       ),
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.center
                     ),
                     const SizedBox(),
                     const Text(
@@ -47,75 +47,67 @@ class WelcomeScreen extends StatelessWidget {
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.textSubtitle,
+                        color: AppColors.textSubtitle
                       ),
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.center
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         side: BorderSide.none,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(30.0)
                         ),
-                        minimumSize: Size(200.0, 50.0),
+                        minimumSize: const Size(200.0, 50.0)
                       ),
-                      onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignInScreen(),
-                          ),
-                        ),
-                      },
-                      child: Text(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignInScreen())
+                      ),
+                      child: const Text(
                         'Log in',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
                           fontSize: 20.0,
-                          color: AppColors.textButton,
-                        ),
-                      ),
+                          color: AppColors.textButton
+                        )
+                      )
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: AppColors.secondary,
                         side: BorderSide.none,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(30.0)
                         ),
-                        minimumSize: Size(200.0, 50.0),
+                        minimumSize: const Size(200.0, 50.0)
                       ),
-                      onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                        ),
-                      },
-                      child: Text(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignUpScreen())
+                      ),
+                      child: const Text(
                         'Sign up',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
                           fontSize: 20.0,
-                          color: AppColors.textButton,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                          color: AppColors.textButton
+                        )
+                      )
+                    )
+                  ]
+                )
+              )
+            )
           );
-        },
-      ),
+        }
+      )
     );
   }
 }

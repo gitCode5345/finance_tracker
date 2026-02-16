@@ -208,8 +208,8 @@ return $default(_that.totalBalance,_that.expense,_that.income);case _:
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(fieldRename: FieldRename.snake)
 class _Balance implements Balance {
   const _Balance({this.totalBalance = 0.0, this.expense = 0.0, this.income = 0.0});
   factory _Balance.fromJson(Map<String, dynamic> json) => _$BalanceFromJson(json);

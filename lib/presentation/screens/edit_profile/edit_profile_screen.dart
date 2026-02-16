@@ -42,18 +42,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Profile updated successfully!'),
-                  backgroundColor: AppColors.primary,
-                ),
+                  backgroundColor: AppColors.primary
+                )
               );
               Navigator.pop(context);
             }
           },
           error: (error) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(error), backgroundColor: Colors.red),
+              SnackBar(content: Text(error), backgroundColor: Colors.red)
             );
           },
-          orElse: () {},
+          orElse: () {}
         );
       },
       child: Scaffold(
@@ -61,11 +61,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             HeaderWidget(
               padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 5,
-              left: 20,
-              right: 20,
-              bottom: 40,
-            ),
+                top: MediaQuery.of(context).padding.top + 5,
+                left: 20,
+                right: 20,
+                bottom: 40
+              ),
               children: [
                 const Text(
                   'Edit Profile',
@@ -74,8 +74,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     fontFamily: 'Poppins',
                     fontSize: 20,
                     height: 1.5,
-                    fontWeight: FontWeight.w600,
-                  ),
+                    fontWeight: FontWeight.w600
+                  )
                 ),
                 Align(
                   alignment: Alignment.topLeft,
@@ -85,21 +85,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       iconSize: 32.0
                     ),
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back),
-                  ),
+                    icon: const Icon(Icons.arrow_back)
+                  )
                 ),
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
                     style: IconButton.styleFrom(
                       foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.white
                     ),
                     onPressed: () {},
-                    icon: const Icon(Icons.notifications_none),
-                  ),
-                ),
-              ],
+                    icon: const Icon(Icons.notifications_none)
+                  )
+                )
+              ]
             ),
             Expanded(
               child: Stack(
@@ -116,8 +116,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             fontFamily: 'Poppins',
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                          ),
+                            color: AppColors.textPrimary
+                          )
                         ),
                         const SizedBox(height: 8.0),
                         Row(
@@ -129,8 +129,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 fontFamily: 'Poppins',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.textButton,
-                              ),
+                                color: AppColors.textButton
+                              )
                             ),
                             Text(
                               widget.user.id ?? '',
@@ -138,10 +138,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 fontFamily: 'Poppins',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w300,
-                                color: AppColors.textButton,
-                              ),
+                                color: AppColors.textButton
+                              )
                             )
-                          ],
+                          ]
                         ),
                         const SizedBox(height: 32.0),
                         Expanded(
@@ -158,28 +158,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     TextFormField(
                                       controller: _phoneNumberController,
                                       validator: (value) => Validators.phone(value),
-                                      decoration: _buildInputDecoration('+1 234 567 8900'),
+                                      decoration: _buildInputDecoration('+1 234 567 8900')
                                     ),
                                     const SizedBox(height: 20),
                                     _buildLabel('Full name'),
                                     TextFormField(
                                       controller: _fullNameController,
                                       validator: (value) => Validators.fullName(value),
-                                      decoration: _buildInputDecoration('Full name'),
+                                      decoration: _buildInputDecoration('Full name')
                                     ),
                                     const SizedBox(height: 20),
                                     _buildLabel('Date of Birth'),
                                     TextFormField(
                                       controller: _dateOfBirthController,
                                       validator: (value) => Validators.date(value),
-                                      decoration: _buildInputDecoration('DD/MM/YYYY'),
+                                      decoration: _buildInputDecoration('DD/MM/YYYY')
                                     ),
                                     const SizedBox(height: 20),
                                     _buildLabel('Email'),
                                     TextFormField(
                                       controller: _emailController,
                                       validator: (value) => Validators.email(value),
-                                      decoration: _buildInputDecoration('example@example.com'),
+                                      decoration: _buildInputDecoration('example@example.com')
                                     ),
                                     const SizedBox(height: 40),
                                     Center(
@@ -188,9 +188,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           backgroundColor: AppColors.primary,
                                           side: BorderSide.none,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(30.0),
+                                            borderRadius: BorderRadius.circular(30.0)
                                           ),
-                                          minimumSize: const Size(200.0, 50.0),
+                                          minimumSize: const Size(200.0, 50.0)
                                         ),
                                         onPressed: () {
                                           if (_formKey.currentState?.validate() ?? false) {
@@ -205,9 +205,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                   lastName: lastName,
                                                   phone: _phoneNumberController.text,
                                                   dateOfBirth: _dateOfBirthController.text,
-                                                  email: _emailController.text,
-                                                ),
-                                              ),
+                                                  email: _emailController.text
+                                                )
+                                              )
                                             );
                                           }
                                         },
@@ -217,20 +217,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w600,
                                             fontSize: 20.0,
-                                            color: AppColors.textPrimary,
-                                          ),
-                                        ),
-                                      ),
+                                            color: AppColors.textPrimary
+                                          )
+                                        )
+                                      )
                                     ),
-                                    const SizedBox(height: 20),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                                    const SizedBox(height: 20)
+                                  ]
+                                )
+                              )
+                            )
+                          )
+                        )
+                      ]
+                    )
                   ),
                   Positioned(
                     top: -50,
@@ -243,17 +243,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           'assets/images/profile_edit.svg',
                           width: 100,
                           height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                          fit: BoxFit.cover
+                        )
+                      )
+                    )
+                  )
+                ]
+              )
             )
-          ],
-        ),
-      ),
+          ]
+        )
+      )
     );
   }
 
@@ -266,9 +266,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           fontFamily: 'Poppins',
           fontSize: 15.0,
           fontWeight: FontWeight.w500,
-          color: AppColors.textSecondary,
-        ),
-      ),
+          color: AppColors.textSecondary
+        )
+      )
     );
   }
 
@@ -276,7 +276,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return InputDecoration(
       border: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(30.0)),
-        borderSide: BorderSide.none,
+        borderSide: BorderSide.none
       ),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       filled: true,
@@ -286,8 +286,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         fontFamily: 'Poppins',
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
-        color: AppColors.textHint,
-      ),
+        color: AppColors.textHint
+      )
     );
   }
 }

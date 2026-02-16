@@ -19,6 +19,17 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   String? _currentCategoryId;
   bool _isCategoryView = false;
 
+  TransactionsView? get _currentView => state.maybeWhen(
+    loading: (view) => view,
+    updated: (view) => view,
+    silentUpdated: (view) => view,
+    orElse: () => null,
+  );
+
+
+  TransactionsGetCount get _currentCount => 
+    _currentView?.countTransactions ?? const TransactionsGetCount(firstPage: 0, lastPage: 49);
+
   TransactionsBloc({required this.transactionsService}) : super(const _Initial()) {
     on<GetTransactionsEvent>(onGetTransaction);
     on<GetTransactionsSilentEvent>(onGetTransactionSilent);
@@ -90,7 +101,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
       emit(Loading(view: TransactionsView(currentPeriod: _currentPeriod, transactions: previousTransactions, balance: balance, countTransactions: countTransactions, hasReachedMax: false)));
 
-      final transactions = await transactionsService.getAllTransactions(countTransactions);
+      final transactions = await transactionsService.getAllTransactions(count: countTransactions);
 
       final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
       final reachedMax = transactions.length < pageSize;
@@ -200,86 +211,66 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> onSaveTransaction(SaveTransactionEvent e, Emitter emit) async {
     try {
-      final currentBalance = state.maybeMap(
-        updated: (s) => s.view.balance,
-        loading: (s) => s.view?.balance ?? Balance(),
-        orElse: () => Balance(),
-      );
-
-      final countTransactions = state.maybeWhen(
-        loading: (view) => view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49),
-        updated: (view) => view.countTransactions,
-        orElse: () => TransactionsGetCount(firstPage: 0, lastPage: 49),
-      );
-
-      emit(Loading(view: TransactionsView(currentPeriod: _currentPeriod, balance: currentBalance, countTransactions: countTransactions, hasReachedMax: false)));
+      final view = _currentView;
+      emit(Loading(view: view?.copyWith(hasReachedMax: false)));
       await transactionsService.addTransaction(e.transaction);
-      
-      List<Transaction> transactions;
-      if (_isCategoryView && _currentCategoryId != null) {
-        transactions = await transactionsService.getTransactionsByCategory(
+
+      final transactions = _isCategoryView && _currentCategoryId != null
+        ? await transactionsService.getTransactionsByCategory(
           _currentCategoryId!,
-          period: _currentPeriod.isEmpty ? null : _currentPeriod,
-          count: countTransactions,
-        );
-      } else {
-        transactions = await transactionsService.getTransactionsByPeriod(_currentPeriod, countTransactions);
-      }
+          count: _currentCount
+        )
+        : await transactionsService.getTransactionsByPeriod(
+            _currentPeriod,
+            _currentCount
+          );
 
       final balance = await transactionsService.getTotalBalance();
-      final countTransactionsAfter = state.maybeWhen(
-        loading: (view) => view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49),
-        updated: (view) => view.countTransactions,
-        orElse: () => TransactionsGetCount(firstPage: 0, lastPage: 49),
-      );
-      final pageSize = countTransactionsAfter.lastPage - countTransactionsAfter.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
 
-      emit(Updated(TransactionsView(currentPeriod: _currentPeriod, transactions: transactions, balance: balance, countTransactions: countTransactionsAfter, hasReachedMax: reachedMax)));
+      emit(Updated(
+        TransactionsView(
+          currentPeriod: _currentPeriod, 
+          transactions: transactions, 
+          balance: balance, 
+          countTransactions: _currentCount, 
+          hasReachedMax: transactions.length < (_currentCount.lastPage - _currentCount.firstPage + 1))));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
   }
 
   Future<void> onLoadMoreTransactions(LoadMoreTransactionsEvent e, Emitter emit) async {
-    final currentState = state.mapOrNull(updated: (value) => value);
-    if (currentState == null) return;
-    final oldLastPage = currentState.view.countTransactions.lastPage;
-    final newFirstPage = oldLastPage + 1;
-    final newLastPage = newFirstPage + 49;
+    final view = _currentView;
+    if (view == null || view.hasReachedMax) return;
 
-    final newCount = TransactionsGetCount(firstPage: newFirstPage, lastPage: newLastPage);
+    final newCount = TransactionsGetCount(
+      firstPage: view.countTransactions.lastPage + 1,
+      lastPage: view.countTransactions.lastPage + 50,
+    );
 
     try {
-      List<Transaction> newTransactions = [];
-      
+      List<Transaction> newTransactions;
       if (_isCategoryView && _currentCategoryId != null) {
+        newTransactions = await transactionsService.getTransactionsByCategory(
+          _currentCategoryId!,
+          period: _currentPeriod,
+          count: newCount,
+        );
       } else if (_currentPeriod.isNotEmpty) {
         newTransactions = await transactionsService.getTransactionsByPeriod(_currentPeriod, newCount);
       } else {
-        newTransactions = await transactionsService.getAllTransactions(newCount);
+        newTransactions = await transactionsService.getAllTransactions(count: newCount);
       }
 
-        if (newTransactions.isEmpty) {
-          emit(Updated(TransactionsView(currentPeriod: _currentPeriod, transactions: currentState.view.transactions, balance: currentState.view.balance, countTransactions: currentState.view.countTransactions, hasReachedMax: true)));
-          return;
-        }
+      if (newTransactions.isEmpty) {
+        emit(Updated(view.copyWith(hasReachedMax: true)));
+        return;
+      }
 
-      final allTransactions = [...(currentState.view.transactions ?? <Transaction>[]), ...newTransactions];
-
-      final pageSize = newCount.lastPage - newCount.firstPage + 1;
-      final reachedMax = newTransactions.length < pageSize;
-
-      emit(Updated(
-        TransactionsView(
-          currentPeriod: _currentPeriod,
-          transactions: allTransactions,
-          balance: currentState.view.balance,
-          countTransactions: newCount,
-          hasReachedMax: reachedMax,
-        ),
-      ));
-
+      emit(Updated(view.copyWith(
+        transactions: [...?view.transactions, ...newTransactions],
+        countTransactions: newCount,
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }

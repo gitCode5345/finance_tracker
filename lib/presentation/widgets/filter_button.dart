@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:finance_tracker/business/bloc/transactions_bloc/transactions_bloc.dart';
 import 'package:finance_tracker/core/const/app_colors.dart';
 
-Widget buildFilterButton(BuildContext context, String title, String value, String activePeriod, TransactionsGetCount countTransactions, {VoidCallback? onPressed}) {
+Widget buildFilterButton(BuildContext context, String title, String value, String activePeriod, {VoidCallback? onPressed, TransactionsGetCount? countTransactions}) {
   final isActive = value == activePeriod;
 
   return Expanded(
@@ -13,7 +13,7 @@ Widget buildFilterButton(BuildContext context, String title, String value, Strin
       child: TextButton(
         onPressed: onPressed ?? () {
           context.read<TransactionsBloc>().add(
-            TransactionsEvent.getTransactions(period: value, count: countTransactions),
+            GetTransactionsEvent(period: value, count: countTransactions),
           );
         },
         style: TextButton.styleFrom(
