@@ -11,14 +11,34 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryService categoryService;
   CategoryBloc({required this.categoryService}) : super(_Initial()) {
     on<LoadCategories>(onLoadCategories);
+    on<AddCategoryEvent>(onAddCategory);
+    on<DeleteCategoryEvent>(onDeleteCategory);
   }
   Future<void> onLoadCategories(LoadCategories e, Emitter emit) async {
     try {
-      emit(_Loading());
+      emit(Loading());
       final data = await categoryService.getAllCategories();
-      emit(_Loaded(data));
+      emit(Loaded(data));
     } catch (e) {
-      emit(_Error(e.toString()));
+      emit(Error(e.toString()));
+    }
+  }
+
+  Future<void> onAddCategory(AddCategoryEvent e, Emitter emit) async {
+    try {
+      await categoryService.addCategory(e.category);
+      add(const LoadCategories());
+    } catch (e) {
+      emit(Error(e.toString()));
+    }
+  }
+
+  Future<void> onDeleteCategory(DeleteCategoryEvent e, Emitter emit) async {
+    try {
+      await categoryService.deleteCategory(e.categoryId);
+      add(const LoadCategories());
+    } catch (e) {
+      emit(Error(e.toString()));
     }
   }
 }
