@@ -48,6 +48,47 @@ class TransactionsService {
     );
   }
 
+  ({DateTime start, DateTime end}) _getAnalyticsRange(String period) {
+    final now = DateTime.now();
+    
+    switch (period) {
+      case TransactionsPeriod.daily:
+        final start = now.subtract(const Duration(days: 6));
+        return (start: DateTime(start.year, start.month, start.day), end: now);
+        
+      case TransactionsPeriod.weekly:
+        final start = now.subtract(const Duration(days: 7));
+        return (start: DateTime(start.year, start.month, start.day), end: now);
+        
+      case TransactionsPeriod.monthly:
+        final start = DateTime(now.year - 1, now.month + 1, 1);
+        return (start: start, end: now);
+
+      case TransactionsPeriod.yearly:
+        final start = DateTime(now.year - 2, 1, 1);
+        return (start: start, end: now);
+
+      default:
+        return (start: now, end: now);
+    }
+  }
+
+  Future<List<Transaction>> getTransactionsForAnalytics(String period) async {
+    if (user == null) return [];
+
+    final range = _getAnalyticsRange(period);
+
+    final data = await _client
+        .from('Transactions')
+        .select('*, category:Categories(*)')
+        .eq('user_id', user!.id)
+        .gte('date', range.start.toIso8601String())
+        .lte('date', range.end.toIso8601String())
+        .order('date', ascending: true);
+
+    return data.map<Transaction>((json) => Transaction.fromJson(json)).toList();
+  }
+
   Future<Balance> getTotalBalance() async {
     if (user == null) return Balance();
 
@@ -88,9 +129,7 @@ class TransactionsService {
         .order('date', ascending: false)
         .range(count.firstPage, count.lastPage);
 
-    return data
-        .map<Transaction>((json) => Transaction.fromJson(json))
-        .toList();
+    return data.map<Transaction>((json) => Transaction.fromJson(json)).toList();
   }
 
   Future<List<Transaction>> getTransactionsByCategory(String categoryId, {String? period, required TransactionsGetCount count}) async {
@@ -112,25 +151,26 @@ class TransactionsService {
     final data = await query.order('date', ascending: false)
         .range(count.firstPage, count.lastPage);
 
-    return data
-        .map((e) => Transaction.fromJson(e))
-        .toList();
+    return data.map((e) => Transaction.fromJson(e)).toList();
   }
 
 
-  Future<List<Transaction>> getAllTransactions(TransactionsGetCount count) async {
+  Future<List<Transaction>> getAllTransactions({TransactionsGetCount? count}) async {
     if (user == null) return [];
 
-    final data = await _client
+    final query = _client
         .from('Transactions')
         .select('*, category:Categories(*)')
         .eq('user_id', user!.id)
-        .order('date', ascending: false)
-        .range(count.firstPage, count.lastPage);
+        .order('date', ascending: false);
 
-    return data
-        .map<Transaction>((json) => Transaction.fromJson(json))
-        .toList();
+    if (count != null) {
+      query.range(count.firstPage, count.lastPage);
+    }
+
+    final data = await query;
+
+    return data.map<Transaction>((json) => Transaction.fromJson(json)).toList();
   }
 
   Future<void> addTransaction(Transaction transaction) async {
