@@ -71,4 +71,22 @@ abstract class Validators {
     }
     return null;
   }
+
+  static String? amount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Amount is required';
+    }
+    final amountRegex = RegExp(r'^\d+(\.\d{1,2})?$');
+    if (!amountRegex.hasMatch(value.replaceAll(' ', ''))) {
+      return 'Enter a valid amount';
+    }
+    return null;
+  }
+
+  static String? text(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field cannot be empty';
+    }
+    return null;
+  }
 }
