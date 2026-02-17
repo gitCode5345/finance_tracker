@@ -23,7 +23,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int selectedPageIndex = 0;
-  late final List<Widget> pages;
+  late List<Widget> pages;
 
   @override
   void initState() {
@@ -35,6 +35,23 @@ class _MainScreenState extends State<MainScreen> {
       CategoriesScreen(),
       ProfileScreen(user: widget.user)
     ];
+  }
+
+  @override
+  void didUpdateWidget(covariant MainScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.user != oldWidget.user) {
+      setState(() {
+        pages = [
+          HomeScreen(user: widget.user),
+          AnalyticsScreen(user: widget.user),
+          TransactionsScreen(),
+          CategoriesScreen(),
+          ProfileScreen(user: widget.user)
+        ];
+      });
+    }
   }
 
   @override
