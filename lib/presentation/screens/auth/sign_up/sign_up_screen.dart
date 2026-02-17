@@ -1,6 +1,7 @@
 import 'package:finance_tracker/business/bloc/auth_bloc/auth_bloc.dart';
 import 'package:finance_tracker/core/validators/validators.dart';
 import 'package:finance_tracker/data/models/user/user.dart';
+import 'package:finance_tracker/presentation/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:finance_tracker/presentation/widgets/body_container_widget.dart';
 import 'package:finance_tracker/presentation/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
@@ -241,7 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: [
         const Text('Already have an account?', style: TextStyle(fontFamily: 'LeagueSpartan', fontSize: 14.0, color: AppColors.textButton)),
         TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder:(context) => const SignInScreen())),
           child: const Text('Sign In', style: TextStyle(fontFamily: 'LeagueSpartan', fontWeight: FontWeight.w600, fontSize: 14.0, color: AppColors.primary))
         )
       ]

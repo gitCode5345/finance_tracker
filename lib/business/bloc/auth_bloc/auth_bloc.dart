@@ -13,9 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService authService;
   StreamSubscription<supabase.AuthState>? _authSubscription;
 
-  AuthBloc({
-    required this.authService,
-  }) : super(const AuthState.initial()) {
+  AuthBloc({required this.authService}) : super(const AuthState.initial()) {
     on<CheckAuth>(_onCheckAuth);
     on<RegisterUser>(_onRegisterUser);
     on<LoginUser>(_onLoginUser);

@@ -9,6 +9,7 @@ part 'category_bloc.freezed.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryService categoryService;
+  
   CategoryBloc({required this.categoryService}) : super(_Initial()) {
     on<LoadCategories>(onLoadCategories);
     on<AddCategoryEvent>(onAddCategory);

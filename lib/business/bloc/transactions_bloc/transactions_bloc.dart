@@ -30,11 +30,11 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   }
 
   TransactionsView get _safeView => state.maybeWhen(
-        loading: (view) => view ?? _defaultView,
-        updated: (view) => view,
-        silentUpdated: (view) => view,
-        orElse: () => _defaultView,
-      );
+      loading: (view) => view ?? _defaultView,
+      updated: (view) => view,
+      silentUpdated: (view) => view,
+      orElse: () => _defaultView,
+    );
 
   TransactionsView get _defaultView => TransactionsView(
         balance: const Balance(),
