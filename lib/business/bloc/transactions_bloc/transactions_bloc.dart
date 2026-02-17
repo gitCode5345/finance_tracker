@@ -13,22 +13,9 @@ part 'transactions_bloc.freezed.dart';
 class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   final TransactionsService transactionsService;
 
-  TransactionsService get service => transactionsService;
-
   String _currentPeriod = 'daily';
   String? _currentCategoryId;
   bool _isCategoryView = false;
-
-  TransactionsView? get _currentView => state.maybeWhen(
-    loading: (view) => view,
-    updated: (view) => view,
-    silentUpdated: (view) => view,
-    orElse: () => null,
-  );
-
-
-  TransactionsGetCount get _currentCount => 
-    _currentView?.countTransactions ?? const TransactionsGetCount(firstPage: 0, lastPage: 49);
 
   TransactionsBloc({required this.transactionsService}) : super(const _Initial()) {
     on<GetTransactionsEvent>(onGetTransaction);
@@ -42,26 +29,37 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     on<RefreshTransactionsEvent>(onRefreshTransactions);
   }
 
-  Future<void> onGetTransactionSilent(GetTransactionsSilentEvent e, Emitter emit) async {
-    try {
-      final count = e.count ?? TransactionsGetCount(firstPage: 0, lastPage: 49);
-
-      final currentView = state.maybeWhen(
+  TransactionsView get _safeView => state.maybeWhen(
+        loading: (view) => view ?? _defaultView,
         updated: (view) => view,
-        loading: (view) => view,
         silentUpdated: (view) => view,
-        orElse: () => null,
+        orElse: () => _defaultView,
       );
 
-      emit(Loading(view: currentView));
+  TransactionsView get _defaultView => TransactionsView(
+        balance: const Balance(),
+        countTransactions: const TransactionsGetCount(firstPage: 0, lastPage: 49),
+        transactions: [],
+        currentPeriod: _currentPeriod,
+      );
+
+  void _emitLoading(Emitter emit) => emit(Loading(view: _safeView.copyWith(hasReachedMax: false)));
+
+  Future<void> onGetTransactionSilent(GetTransactionsSilentEvent e, Emitter emit) async {
+    try {
+      _emitLoading(emit);
+      final count = e.count ?? _safeView.countTransactions;
 
       final transactions = await transactionsService.getTransactionsByPeriod(e.period, count);
       final balance = await transactionsService.getTotalBalance();
 
-      final pageSize = count.lastPage - count.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
-
-      emit(TransactionsState.silentUpdated(TransactionsView(currentPeriod: e.period, transactions: transactions, balance: balance, countTransactions: count, hasReachedMax: reachedMax)));
+      emit(TransactionsState.silentUpdated(_safeView.copyWith(
+        currentPeriod: e.period,
+        transactions: transactions,
+        balance: balance,
+        countTransactions: count,
+        hasReachedMax: transactions.length < (count.lastPage - count.firstPage + 1),
+      )));
     } catch (ex) {
       emit(Error(error: ex.toString()));
     }
@@ -72,41 +70,19 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     await _loadTransactions(emit);
   }
 
-
   Future<void> onGetAllTransactions(GetAllTransactionsEvent e, Emitter emit) async {
     try {
       _isCategoryView = false;
       _currentCategoryId = null;
+      _emitLoading(emit);
 
-      final previousTransactions = state.maybeWhen(
-        loading: (view) => view?.transactions ?? <Transaction>[],
-        updated:(view) => view.transactions,
-        silentUpdated: (view) => view.transactions,
-        orElse: () => <Transaction>[],
-      );
+      final transactions = await transactionsService.getAllTransactions(count: _safeView.countTransactions);
 
-      final balance = state.maybeWhen(
-        loading: (view) => view?.balance ?? Balance(),
-        updated: (view) => view.balance,
-        silentUpdated: (view) => view.balance,
-        orElse: () => Balance(),
-      );
-
-      final countTransactions = state.maybeWhen(
-        loading: (view) => view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49),
-        updated: (view) => view.countTransactions,
-        silentUpdated: (view) => view.countTransactions,
-        orElse: () => TransactionsGetCount(firstPage: 0, lastPage: 49),
-      );
-
-      emit(Loading(view: TransactionsView(currentPeriod: _currentPeriod, transactions: previousTransactions, balance: balance, countTransactions: countTransactions, hasReachedMax: false)));
-
-      final transactions = await transactionsService.getAllTransactions(count: countTransactions);
-
-      final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
-
-      emit(Updated(TransactionsView(currentPeriod: _currentPeriod, transactions: transactions, balance: balance, countTransactions: countTransactions, hasReachedMax: reachedMax)));
+      emit(Updated(_safeView.copyWith(
+        currentPeriod: _currentPeriod,
+        transactions: transactions,
+        hasReachedMax: transactions.length < (_safeView.countTransactions.lastPage - _safeView.countTransactions.firstPage + 1),
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
@@ -116,30 +92,18 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     try {
       _currentCategoryId = e.categoryId;
       _isCategoryView = true;
-
-        final balance = state.maybeWhen(
-            loading: (view) => view?.balance ?? Balance(),
-            updated: (view) => view.balance,
-            orElse: () => Balance(),
-          );
-
-        final countTransactions = state.maybeWhen(
-            loading: (view) => view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49),
-            updated: (view) => view.countTransactions,
-            orElse: () => TransactionsGetCount(firstPage: 0, lastPage: 49),
-          );
-
-      emit(Loading(view: TransactionsView(currentPeriod: _currentPeriod, balance: balance, countTransactions: countTransactions, hasReachedMax: false)));
+      _emitLoading(emit);
 
       final transactions = await transactionsService.getTransactionsByCategory(
-        e.categoryId, 
+        e.categoryId,
         period: e.period.isEmpty ? null : e.period,
-        count: countTransactions,
+        count: _safeView.countTransactions,
       );
-      final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
 
-      emit(Updated(TransactionsView(currentPeriod: _currentPeriod, transactions: transactions, balance: balance, countTransactions: countTransactions, hasReachedMax: reachedMax)));
+      emit(Updated(_safeView.copyWith(
+        transactions: transactions,
+        hasReachedMax: transactions.length < (_safeView.countTransactions.lastPage - _safeView.countTransactions.firstPage + 1),
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
@@ -147,32 +111,13 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> onGetTransactionsByType(GetTransactionsByTypeEvent e, Emitter emit) async {
     try {
-      final previousTransactions = state.maybeWhen(
-        loading: (view) => (txs: view?.transactions ?? <Transaction>[]),
-        updated:(view) => (txs: view.transactions),
-        silentUpdated: (view) => (txs: view.transactions),
-        orElse: () => (txs: <Transaction>[]),
-      );
+      _emitLoading(emit);
+      final transactions = await transactionsService.getTransactionsByType(e.type, count: _safeView.countTransactions);
 
-      final balance = state.maybeWhen(
-        loading: (view) => view?.balance ?? Balance(),
-        updated: (view) => view.balance,
-        silentUpdated: (view) => view.balance,
-        orElse: () => Balance(),
-      );
-
-      final countTransactions = state.maybeWhen(
-        loading: (view) => view?.countTransactions ?? TransactionsGetCount(firstPage: 0, lastPage: 49),
-        updated: (view) => view.countTransactions,
-        orElse: () => TransactionsGetCount(firstPage: 0, lastPage: 49),
-      );
-
-      emit(Loading(view: TransactionsView(balance: balance, transactions: previousTransactions.txs, countTransactions: countTransactions, hasReachedMax: false)));
-      final transactions = await transactionsService.getTransactionsByType(e.type, count: countTransactions);
-      final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
-
-      emit(Updated(TransactionsView(balance: balance, transactions: transactions, countTransactions: countTransactions, hasReachedMax: reachedMax)));
+      emit(Updated(_safeView.copyWith(
+        transactions: transactions,
+        hasReachedMax: transactions.length < (_safeView.countTransactions.lastPage - _safeView.countTransactions.firstPage + 1),
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
@@ -180,30 +125,17 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> onGetTransactionsByTypeSilent(GetTransactionsByTypeSilentEvent e, Emitter emit) async {
     try {
-      final countTransactions = e.count ?? TransactionsGetCount(firstPage: 0, lastPage: 49);
+      _emitLoading(emit);
+      final count = e.count ?? _safeView.countTransactions;
 
-      final previousTransactions = state.maybeWhen(
-        loading: (view) => view?.transactions ?? <Transaction>[],
-        updated: (view) => view.transactions,
-        silentUpdated: (view) => view.transactions,
-        orElse: () => <Transaction>[],
-      );
+      final transactions = await transactionsService.getTransactionsByType(e.type, period: e.period, count: count);
 
-      final balance = state.maybeWhen(
-        loading: (view) => view?.balance ?? Balance(),
-        updated: (view) => view.balance,
-        silentUpdated: (view) => view.balance,
-        orElse: () => Balance(),
-      );
-
-      emit(Loading(view: TransactionsView(balance: balance, transactions: previousTransactions, countTransactions: countTransactions, hasReachedMax: false)));
-
-      final transactions = await transactionsService.getTransactionsByType(e.type, period: e.period, count: countTransactions);
-
-      final pageSize = countTransactions.lastPage - countTransactions.firstPage + 1;
-      final reachedMax = transactions.length < pageSize;
-
-      emit(TransactionsState.silentUpdated(TransactionsView(balance: balance, transactions: transactions, countTransactions: countTransactions, hasReachedMax: reachedMax, currentPeriod: e.period)));
+      emit(TransactionsState.silentUpdated(_safeView.copyWith(
+        transactions: transactions,
+        countTransactions: count,
+        currentPeriod: e.period,
+        hasReachedMax: transactions.length < (count.lastPage - count.firstPage + 1),
+      )));
     } catch (ex) {
       emit(Error(error: ex.toString()));
     }
@@ -211,37 +143,28 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
 
   Future<void> onSaveTransaction(SaveTransactionEvent e, Emitter emit) async {
     try {
-      final view = _currentView;
-      emit(Loading(view: view?.copyWith(hasReachedMax: false)));
+      _emitLoading(emit);
       await transactionsService.addTransaction(e.transaction);
 
       final transactions = _isCategoryView && _currentCategoryId != null
-        ? await transactionsService.getTransactionsByCategory(
-          _currentCategoryId!,
-          count: _currentCount
-        )
-        : await transactionsService.getTransactionsByPeriod(
-            _currentPeriod,
-            _currentCount
-          );
+          ? await transactionsService.getTransactionsByCategory(_currentCategoryId!, count: _safeView.countTransactions)
+          : await transactionsService.getTransactionsByPeriod(_currentPeriod, _safeView.countTransactions);
 
       final balance = await transactionsService.getTotalBalance();
 
-      emit(Updated(
-        TransactionsView(
-          currentPeriod: _currentPeriod, 
-          transactions: transactions, 
-          balance: balance, 
-          countTransactions: _currentCount, 
-          hasReachedMax: transactions.length < (_currentCount.lastPage - _currentCount.firstPage + 1))));
+      emit(Updated(_safeView.copyWith(
+        transactions: transactions,
+        balance: balance,
+        hasReachedMax: transactions.length < (_safeView.countTransactions.lastPage - _safeView.countTransactions.firstPage + 1),
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
   }
 
   Future<void> onLoadMoreTransactions(LoadMoreTransactionsEvent e, Emitter emit) async {
-    final view = _currentView;
-    if (view == null || view.hasReachedMax) return;
+    final view = _safeView;
+    if (view.hasReachedMax) return;
 
     final newCount = TransactionsGetCount(
       firstPage: view.countTransactions.lastPage + 1,
@@ -251,11 +174,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     try {
       List<Transaction> newTransactions;
       if (_isCategoryView && _currentCategoryId != null) {
-        newTransactions = await transactionsService.getTransactionsByCategory(
-          _currentCategoryId!,
-          period: _currentPeriod,
-          count: newCount,
-        );
+        newTransactions = await transactionsService.getTransactionsByCategory(_currentCategoryId!, period: _currentPeriod, count: newCount);
       } else if (_currentPeriod.isNotEmpty) {
         newTransactions = await transactionsService.getTransactionsByPeriod(_currentPeriod, newCount);
       } else {
@@ -284,34 +203,19 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
     try {
       _isCategoryView = false;
       _currentCategoryId = null;
+      _emitLoading(emit);
 
       const initialCount = TransactionsGetCount(firstPage: 0, lastPage: 49);
-
-      final previous = state.maybeWhen(
-        loading: (view) => TransactionsView(
-          currentPeriod: view?.currentPeriod,
-          transactions: view?.transactions ?? <Transaction>[],
-          balance: view?.balance ?? Balance(),
-          countTransactions: view?.countTransactions ?? initialCount,
-          hasReachedMax: view?.hasReachedMax ?? false,
-        ),
-        updated: (view) => view,
-        silentUpdated: (view) => view,
-        orElse: () => TransactionsView(transactions: <Transaction>[], balance: Balance(), countTransactions: initialCount),
-      );
-
-      emit(Loading(view: TransactionsView(
-        currentPeriod: _currentPeriod,
-        transactions: previous.transactions,
-        balance: previous.balance,
-        countTransactions: initialCount,
-        hasReachedMax: false,
-      )));
-
       final transactions = await transactionsService.getTransactionsByPeriod(_currentPeriod, initialCount);
       final balance = await transactionsService.getTotalBalance();
 
-      emit(Updated(TransactionsView(transactions: transactions, currentPeriod: _currentPeriod, balance: balance, countTransactions: initialCount, hasReachedMax: false)));
+      emit(Updated(_safeView.copyWith(
+        currentPeriod: _currentPeriod,
+        transactions: transactions,
+        balance: balance,
+        countTransactions: initialCount,
+        hasReachedMax: false,
+      )));
     } catch (e) {
       emit(Error(error: e.toString()));
     }
