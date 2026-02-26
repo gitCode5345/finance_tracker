@@ -7,7 +7,7 @@ class GreenContainer extends StatelessWidget {
   final double width;
   final double height;
   final BorderRadius radius;
-  final AlignmentGeometry? aligment;
+  final AlignmentGeometry? alignment;
 
   const GreenContainer({
     super.key,
@@ -16,14 +16,14 @@ class GreenContainer extends StatelessWidget {
     required this.radius,
     this.width = 100,
     this.height = 100,
-    this.aligment
+    this.alignment,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      alignment: aligment,
+      alignment: alignment,
       padding: padding,
       width: width,
       height: height,

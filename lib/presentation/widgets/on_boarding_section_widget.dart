@@ -97,7 +97,7 @@ class _OnBoardingSectionWidgetState extends State<OnBoardingSectionWidget> {
                           } else {
                             isLastPage = index == _pages.length - 1;
                             controller?.nextPage(
-                              duration: Duration(microseconds: 500),
+                              duration: Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
                           }

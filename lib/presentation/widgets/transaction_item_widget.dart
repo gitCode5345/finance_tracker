@@ -48,7 +48,7 @@ Widget buildTransactionItem(Transaction tx) {
             ),
           ),
           Text(
-            tx.type == TransactionType.expense ?'-${tx.amount}' : '${tx.amount}',
+            tx.type == TransactionType.expense ? '- ${tx.amount}' : '${tx.amount}',
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],

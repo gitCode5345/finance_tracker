@@ -8,7 +8,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await dotenv.load();
+  await dotenv.load(fileName: '.env');
 
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL', fallback: ''),
